@@ -1,0 +1,1009 @@
+[
+    {
+        "id": "chandrasekaranDynamicCalibrationTechnique2005",
+        "abstract": "This paper presents the development of a dynamic calibration technique for thermal shear-stress sensors using acoustic plane wave excitation. The technique permits the independent variation in the mean and fluctuating shear stresses. The theoretical development and the practical implementation of the technique are presented. The studied configuration has the capability to dynamically calibrate shear-stress sensors up to 20 kHz. An illustrative application of this technique to an uncompensated silicon micromachined thermal shear-stress sensor operated in constant current mode is discussed. Specifically, the sensor has been statically calibrated over a range of wall shear stress from 7 to 80 mPa. A dynamic calibration of the sensor over a range of 2–12 mPa has been performed up to 7 kHz.",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    3
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Chandrasekaran",
+                "given": "V."
+            },
+            {
+                "family": "Cain",
+                "given": "A."
+            },
+            {
+                "family": "Nishida",
+                "given": "T."
+            },
+            {
+                "family": "Cattafesta",
+                "given": "L. N."
+            },
+            {
+                "family": "Sheplak",
+                "given": "M."
+            }
+        ],
+        "citation-key": "chandrasekaranDynamicCalibrationTechnique2005",
+        "container-title": "Experiments in Fluids",
+        "container-title-short": "Exp Fluids",
+        "DOI": "10.1007/s00348-005-0969-5",
+        "ISSN": "1432-1114",
+        "issue": "1",
+        "issued": {
+            "date-parts": [
+                [
+                    2005,
+                    7,
+                    1
+                ]
+            ]
+        },
+        "language": "en",
+        "page": "56-65",
+        "source": "Springer Link",
+        "title": "Dynamic calibration technique for thermal shear-stress sensors with mean flow",
+        "type": "article-journal",
+        "URL": "https://doi.org/10.1007/s00348-005-0969-5",
+        "volume": "39"
+    },
+    {
+        "id": "chandrasekharanMicroscaleDifferentialCapacitive2011",
+        "abstract": "This paper presents the development of a floating-element-based capacitively sensed direct wall-shear-stress sensor intended for measurements in a turbulent boundary layer. The design principle is presented, followed by details of the fabrication, packaging, and characterization process. The sensor is designed with an asymmetric comb finger structure and metalized electrodes. The fabrication process uses deep reactive ion etching on a silicon-on-insulator wafer, resulting in a simple two-mask fabrication process. The sensor is dynamically characterized with acoustically generated Stokes layer excitation. At a bias voltage of 10 V, the sensor exhibits a linear dynamic sensitivity of 7.66 mV/Pa up to the testing limit of 1.9 Pa, a flat frequency response with resonance at 6.2 kHz, and a pressure rejection of 64 dB. The sensor has a noise floor of 14.9 μPa/√(Hz) at 1 kHz and a dynamic range >;102 dB. The sensor outperforms previous sensors by nearly two orders of magnitude in noise floor and an order of magnitude in dynamic range.",
+        "author": [
+            {
+                "family": "Chandrasekharan",
+                "given": "Vijay"
+            },
+            {
+                "family": "Sells",
+                "given": "Jeremy"
+            },
+            {
+                "family": "Meloy",
+                "given": "Jessica"
+            },
+            {
+                "family": "Arnold",
+                "given": "David P."
+            },
+            {
+                "family": "Sheplak",
+                "given": "Mark"
+            }
+        ],
+        "citation-key": "chandrasekharanMicroscaleDifferentialCapacitive2011",
+        "container-title": "Journal of Microelectromechanical Systems",
+        "DOI": "10.1109/JMEMS.2011.2140356",
+        "ISSN": "1941-0158",
+        "issue": "3",
+        "issued": {
+            "date-parts": [
+                [
+                    2011,
+                    6
+                ]
+            ]
+        },
+        "page": "622-635",
+        "source": "IEEE Xplore",
+        "title": "A Microscale Differential Capacitive Direct Wall-Shear-Stress Sensor",
+        "type": "article-journal",
+        "volume": "20"
+    },
+    {
+        "id": "chenInstrumentationGradeShearStress2016",
+        "author": [
+            {
+                "family": "Chen",
+                "given": "Tai-An"
+            },
+            {
+                "family": "Barnard",
+                "given": "Casey"
+            },
+            {
+                "family": "Mills",
+                "given": "David"
+            },
+            {
+                "family": "Horowitz",
+                "given": "Stephen"
+            },
+            {
+                "family": "Sheplak",
+                "given": "Mark"
+            }
+        ],
+        "citation-key": "chenInstrumentationGradeShearStress2016",
+        "issued": {
+            "date-parts": [
+                [
+                    2016,
+                    12,
+                    5
+                ]
+            ]
+        },
+        "language": "en",
+        "page": "29",
+        "source": "Zotero",
+        "title": "Instrumentation-Grade Shear Stress Sensors for Direct Measurement of Mean and Fluctuating Skin Friction",
+        "type": "article-journal",
+        "URL": "https://itea.org/images/pdf/conferences/2016%20TIW/Proceedings/CHEN.pdf"
+    },
+    {
+        "id": "ghouila-houriDeveloppementMicrocapteursFrottement2018",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    3
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Ghouila-Houri",
+                "given": "Cécile"
+            }
+        ],
+        "citation-key": "ghouila-houriDeveloppementMicrocapteursFrottement2018",
+        "genre": "Theses",
+        "issued": {
+            "date-parts": [
+                [
+                    2018,
+                    10
+                ]
+            ]
+        },
+        "publisher": "Ecole centrale de Lille",
+        "source": "HAL Archives Ouvertes",
+        "title": "Développement de micro-capteurs de frottement pariétal et de pression pour les mesures en écoulements turbulents et le contrôle de décollement",
+        "type": "thesis",
+        "URL": "https://hal.archives-ouvertes.fr/tel-03188107"
+    },
+    {
+        "id": "katritsisWallShearStress2007",
+        "abstract": "In arterial blood flow, the wall shear stress expresses the force per unit area exerted by the wall on the fluid in a direction on the local tangent plane. There is substantial evidence that the wall shear stress induced by the pulsatile blood flow in the arterial system affects the atherogenic process. It is now widely accepted that the vessel segments that appear to be at the highest risk for development of atherosclerosis are those with low wall shear stress or oscillating wall shear stress. The purpose of this article is to define wall shear stress, to introduce relevant concepts of fluid mechanics to nonexperts, and to critically review the various methods that have been used for the assessment of wall shear stress in animal and human blood circulation, paying special attention to the case of coronary arteries.",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    9
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Katritsis",
+                "given": "Demosthenes"
+            },
+            {
+                "family": "Kaiktsis",
+                "given": "Lambros"
+            },
+            {
+                "family": "Chaniotis",
+                "given": "Andreas"
+            },
+            {
+                "family": "Pantos",
+                "given": "John"
+            },
+            {
+                "family": "Efstathopoulos",
+                "given": "Efstathios P."
+            },
+            {
+                "family": "Marmarelis",
+                "given": "Vasilios"
+            }
+        ],
+        "citation-key": "katritsisWallShearStress2007",
+        "collection-title": "Special Articles",
+        "container-title": "Progress in Cardiovascular Diseases",
+        "container-title-short": "Progress in Cardiovascular Diseases",
+        "DOI": "10.1016/j.pcad.2006.11.001",
+        "ISSN": "0033-0620",
+        "issue": "5",
+        "issued": {
+            "date-parts": [
+                [
+                    2007,
+                    3,
+                    1
+                ]
+            ]
+        },
+        "language": "en",
+        "page": "307-329",
+        "source": "ScienceDirect",
+        "title": "Wall Shear Stress: Theoretical Considerations and Methods of Measurement",
+        "title-short": "Wall Shear Stress",
+        "type": "article-journal",
+        "URL": "https://www.sciencedirect.com/science/article/pii/S0033062006001253",
+        "volume": "49"
+    },
+    {
+        "id": "liuMultipleDegreeFreedom2007",
+        "abstract": "The development of a tunable, multiple degree of freedom (MDOF) electromechanical Helmholtz resonator (EMHR) is presented. An EMHR consists of an orifice, backing cavity, and a compliant piezoelectric composite diaphragm. Electromechanical tuning of the acoustic impedance is achieved via passive electrical networks shunted across the piezoceramic. For resistive and capacitive loads, the EMHR is a 2DOF system possessing one acoustic and one mechanical DOF. When inductive ladder networks are employed, multiple electrical DOF are added. The dynamics of the multi-energy domain system are modeled using lumped elements and are represented in an equivalent electrical circuit, which is used to analyze the tunable acoustic input impedance of the EMHR. The two-microphone method is used to measure the acoustic impedance of two EMHR designs with a variety of resistive, capacitive, and inductive shunts. For the first design, the data demonstrate that the tuning range of the second resonant frequency for an EMHR with non-inductive shunts is limited by short- and open-circuit conditions, while an inductive shunt results in a 3DOF system possessing an enhanced tuning range. The second design achieves stronger coupling between the Helmholtz resonator and the piezoelectric backplate, and both resonant frequencies can be tuned with different non-inductive loads.",
+        "author": [
+            {
+                "family": "Liu",
+                "given": "Fei"
+            },
+            {
+                "family": "Horowitz",
+                "given": "Stephen"
+            },
+            {
+                "family": "Nishida",
+                "given": "Toshikazu"
+            },
+            {
+                "family": "Cattafesta",
+                "given": "Louis"
+            },
+            {
+                "family": "Sheplak",
+                "given": "Mark"
+            }
+        ],
+        "citation-key": "liuMultipleDegreeFreedom2007",
+        "container-title": "The Journal of the Acoustical Society of America",
+        "container-title-short": "The Journal of the Acoustical Society of America",
+        "DOI": "10.1121/1.2735116",
+        "issued": {
+            "date-parts": [
+                [
+                    2007,
+                    8,
+                    1
+                ]
+            ]
+        },
+        "page": "291-301",
+        "source": "ResearchGate",
+        "title": "A multiple degree of freedom electromechanical Helmholtz resonator",
+        "type": "article-journal",
+        "volume": "122"
+    },
+    {
+        "id": "magalottiBuildingPlaneWaveTube1999",
+        "author": [
+            {
+                "family": "Magalotti",
+                "given": "Roberto"
+            },
+            {
+                "family": "Zuccatti",
+                "given": "Carlo"
+            },
+            {
+                "family": "Pasini",
+                "given": "Paolo"
+            }
+        ],
+        "citation-key": "magalottiBuildingPlaneWaveTube1999",
+        "container-title": "J. Audio Eng. Soc",
+        "issue": "7/8",
+        "issued": {
+            "date-parts": [
+                [
+                    1999
+                ]
+            ]
+        },
+        "page": "596–601",
+        "title": "Building a Plane-Wave Tube: Experimental and Theoretical Aspects",
+        "type": "article-journal",
+        "URL": "http://www.aes.org/e-lib/browse.cfm?elib=12097",
+        "volume": "47"
+    },
+    {
+        "id": "meloyExperimentalVerificationMEMS2011",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    3
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Meloy",
+                "given": "Jessica"
+            },
+            {
+                "family": "Griffin",
+                "given": "John"
+            },
+            {
+                "family": "Cattafesta",
+                "given": "Louis"
+            },
+            {
+                "family": "",
+                "given": "Jeremy Sells"
+            },
+            {
+                "family": "Sheplak",
+                "given": "Mark"
+            },
+            {
+                "family": "Chandrasekharan",
+                "given": "Vijay"
+            }
+        ],
+        "citation-key": "meloyExperimentalVerificationMEMS2011",
+        "collection-title": "Fluid Dynamics and Co-located Conferences",
+        "container-title": "41st AIAA Fluid Dynamics Conference and Exhibit",
+        "DOI": "10.2514/6.2011-3995",
+        "issued": {
+            "date-parts": [
+                [
+                    2011,
+                    6,
+                    27
+                ]
+            ]
+        },
+        "publisher": "American Institute of Aeronautics and Astronautics",
+        "source": "arc.aiaa.org (Atypon)",
+        "title": "Experimental Verification of a MEMS Based Skin Friction Sensor for Quantitative Wall Shear Stress Measurement",
+        "type": "chapter",
+        "URL": "https://arc.aiaa.org/doi/10.2514/6.2011-3995"
+    },
+    {
+        "id": "millsCharacterizationFullyDifferentialCapacitive2018a",
+        "abstract": "This paper describes the development and experimental characterization of a fully-differential wall shear stress sensor system designed to be non-invasive to low-speed aerodynamic flows. The differential capacitive microelectromechanical systems (MEMS) sensor is fabricated using\na novel, low-cost approach to creating backside electrical contacts, providing a hydraulically smooth surface without the use of through-silicon vias. Fully-differential sensor electronics provide improved common-mode rejection, increased shear stress sensitivity, and reduced minimum detectable signal, thus increasing the dynamic range of the sensing system. A differential charge amplifier provides improved performance compared to both single-ended buffer and differential voltage amplifier configurations. Initial characterization of the sensor system with a differential charge amplifier yields a wall shear stress sensitivity of 196.0 mV/Pa and a minimum detectable signal of 12.8 μPa at 1 kHz, providing a dynamic range of 138 dB based on a 100 Pa maximum shear stress. Dynamic calibration also provides a pressure rejection ratio of 101.9 dB, representing a significant reduction in pressure sensitivity for the current sensor design. Stability testing of the system for mean shear stress measurement demonstrates a measurement accuracy of ±0.032% full scale (±3.2 mPa) over a 60 min period.",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    3
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Mills",
+                "given": "David A."
+            },
+            {
+                "family": "Patterson",
+                "given": "William C."
+            },
+            {
+                "family": "Keane",
+                "given": "Casey"
+            },
+            {
+                "family": "Sheplak",
+                "given": "Mark"
+            }
+        ],
+        "citation-key": "millsCharacterizationFullyDifferentialCapacitive2018a",
+        "collection-title": "AIAA SciTech Forum",
+        "container-title": "2018  AIAA Aerospace Sciences Meeting",
+        "DOI": "10.2514/6.2018-0301",
+        "issued": {
+            "date-parts": [
+                [
+                    2018,
+                    1,
+                    7
+                ]
+            ]
+        },
+        "publisher": "American Institute of Aeronautics and Astronautics",
+        "source": "arc.aiaa.org (Atypon)",
+        "title": "Characterization of a Fully-Differential Capacitive Wall Shear Stress Sensor for Low-Speed Wind Tunnels",
+        "type": "chapter",
+        "URL": "https://arc.aiaa.org/doi/10.2514/6.2018-0301"
+    },
+    {
+        "id": "millsCharacterizationHydraulicallySmooth2017",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    3
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Mills",
+                "given": "David A."
+            },
+            {
+                "family": "Barnard",
+                "given": "Casey"
+            },
+            {
+                "family": "Sheplak",
+                "given": "Mark"
+            }
+        ],
+        "citation-key": "millsCharacterizationHydraulicallySmooth2017",
+        "collection-title": "AIAA SciTech Forum",
+        "container-title": "55th AIAA Aerospace Sciences Meeting",
+        "DOI": "10.2514/6.2017-0478",
+        "issued": {
+            "date-parts": [
+                [
+                    2017,
+                    1,
+                    5
+                ]
+            ]
+        },
+        "publisher": "American Institute of Aeronautics and Astronautics",
+        "source": "arc.aiaa.org (Atypon)",
+        "title": "Characterization of a Hydraulically Smooth Wall Shear Stress Sensor for Low-Speed Wind Tunnel Applications",
+        "type": "chapter",
+        "URL": "https://arc.aiaa.org/doi/10.2514/6.2017-0478"
+    },
+    {
+        "id": "naughtonModernDevelopmentsShearstress2002",
+        "abstract": "This paper reviews three relatively modern categories of skin-friction measurement techniques that are broadly classified as microelectromechanical systems (MEMS)-based sensors, oil-film interferometry, and liquid crystal coatings. The theory, development, limitations, uncertainties, and misconceptions of each of these techniques are presented. Current and future uses of the techniques are also discussed. From this review, it is evident that MEMS-based techniques possess great promise, but require further development to become reliable measurement tools. Oil-film techniques have enhanced capabilities and greater accuracy compared to conventional shear-stress measurement techniques (i.e., Preston tube, Clauser plot, etc.) and, as a result, are being employed with increasing frequency. Liquid crystal coatings are capable of making measurements of mean shear-stress vector distributions over a region of a model, but complex calibration and testing requirements limit their usefulness.",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    3
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Naughton",
+                "given": "Jonathan W."
+            },
+            {
+                "family": "Sheplak",
+                "given": "Mark"
+            }
+        ],
+        "citation-key": "naughtonModernDevelopmentsShearstress2002",
+        "container-title": "Progress in Aerospace Sciences",
+        "container-title-short": "Progress in Aerospace Sciences",
+        "DOI": "10.1016/S0376-0421(02)00031-3",
+        "ISSN": "0376-0421",
+        "issue": "6",
+        "issued": {
+            "date-parts": [
+                [
+                    2002,
+                    8,
+                    1
+                ]
+            ]
+        },
+        "language": "en",
+        "page": "515-570",
+        "source": "ScienceDirect",
+        "title": "Modern developments in shear-stress measurement",
+        "type": "article-journal",
+        "URL": "https://www.sciencedirect.com/science/article/pii/S0376042102000313",
+        "volume": "38"
+    },
+    {
+        "id": "padmanabhanMicromachinedSensorsStatic1997",
+        "abstract": "We present in this paper the design and test results of micromachined individual sensors and sensor arrays for shear stress measurements in air flows. The authors previously (1996) reported on the sensing principle and fabrication process. The floating-element sensors have since been extensively tested in laminar flows. Static calibrations have shown this sensor to have a maximum nonlinearity of 1% over four orders of wall shear stress (0.0014-10 Pa). In addition, for the first time, the dynamic response of this sensor has also been experimentally verified to 4 kHz. An improved sensing scheme has been developed and has been successfully implemented in a second generation of sensor arrays.",
+        "author": [
+            {
+                "family": "Padmanabhan",
+                "given": "A."
+            },
+            {
+                "family": "Sheplak",
+                "given": "M."
+            },
+            {
+                "family": "Breuer",
+                "given": "K.S."
+            },
+            {
+                "family": "Schmidt",
+                "given": "M.A."
+            }
+        ],
+        "citation-key": "padmanabhanMicromachinedSensorsStatic1997",
+        "container-title": "Proceedings of International Solid State Sensors and Actuators Conference (Transducers '97)",
+        "DOI": "10.1109/SENSOR.1997.613601",
+        "event-title": "Proceedings of International Solid State Sensors and Actuators Conference (Transducers '97)",
+        "issued": {
+            "date-parts": [
+                [
+                    1997,
+                    6
+                ]
+            ]
+        },
+        "page": "137-140 vol.1",
+        "source": "IEEE Xplore",
+        "title": "Micromachined sensors for static and dynamic shear-stress measurements in aerodynamic flows",
+        "type": "paper-conference",
+        "volume": "1"
+    },
+    {
+        "id": "pernodSimulationsCoupleesFluidestructure2019",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    22
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Pernod",
+                "given": "Laetitia"
+            }
+        ],
+        "citation-key": "pernodSimulationsCoupleesFluidestructure2019",
+        "genre": "Theses",
+        "issued": {
+            "date-parts": [
+                [
+                    2019,
+                    3
+                ]
+            ]
+        },
+        "publisher": "Ecole Centrale de Nantes (ECN); Université Bretagne Loire",
+        "source": "HAL Archives Ouvertes",
+        "title": "Simulations couplées fluide-structure et étude expérimentale d'un hydrofoil composite sous écoulement hydrodynamique",
+        "type": "thesis",
+        "URL": "https://hal.archives-ouvertes.fr/tel-02353045"
+    },
+    {
+        "id": "schmidtDesignCalibrationMicrofabricated1988",
+        "abstract": "A microfabricated floating-element shear-stress sensor for measurements in turbulent boundary-layers is reported. Using surface micromachining of polyimide, a 500- mu m*500- mu m probe has been fabricated incorporating a differential-capacitor readout circuit. A model for the sensor response is described and is used for the design of an element to measure shear stresses of 1 Pa in air. The sensor is packaged for calibration in laminar flow, and electrical results obtained match the expected response.<>",
+        "author": [
+            {
+                "family": "Schmidt",
+                "given": "M.A."
+            },
+            {
+                "family": "Howe",
+                "given": "R.T."
+            },
+            {
+                "family": "Senturia",
+                "given": "S.D."
+            },
+            {
+                "family": "Haritonidis",
+                "given": "J.H."
+            }
+        ],
+        "citation-key": "schmidtDesignCalibrationMicrofabricated1988",
+        "container-title": "IEEE Transactions on Electron Devices",
+        "DOI": "10.1109/16.2527",
+        "ISSN": "1557-9646",
+        "issue": "6",
+        "issued": {
+            "date-parts": [
+                [
+                    1988,
+                    6
+                ]
+            ]
+        },
+        "page": "750-757",
+        "source": "IEEE Xplore",
+        "title": "Design and calibration of a microfabricated floating-element shear-stress sensor",
+        "type": "article-journal",
+        "volume": "35"
+    },
+    {
+        "id": "sexlUeberRichardsonEntdeckten1930",
+        "abstract": "Unter dem im Titel genannten Effekt ist folgendes zu verstehen: E. G. Richardson hat bei Untersuchungen der Amplituden von Luftschwingungen in Helmholtzschen Resonatoren gefunden, daß entgegen allen Erwartungen die Amplituden ihr Maximum nicht im zentralen Teil erreichen, sondern in einer der Wand nahen Schicht, um dann gegen die Wand zu auf Null herabzusinken. Ferner wurden empirische Gesetzmäßigkeiten für dieses Maximum aufgestellt. Es wird nun gezeigt, daß alle diese Gesetzmäßigkeiten qualitativ und quantitativ aus den Stokes-Navierschen Grundgleichungen der Hydrodynamik, als für eine oszillierende Laminarströmung in einem Kreisrohr charakteristisch, hergeleitet werden können.",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    15
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Sexl",
+                "given": "Theodor"
+            }
+        ],
+        "citation-key": "sexlUeberRichardsonEntdeckten1930",
+        "container-title": "Zeitschrift für Physik",
+        "container-title-short": "Z. Physik",
+        "DOI": "10.1007/BF01340631",
+        "ISSN": "0044-3328",
+        "issue": "5",
+        "issued": {
+            "date-parts": [
+                [
+                    1930,
+                    5,
+                    1
+                ]
+            ]
+        },
+        "language": "de",
+        "page": "349-362",
+        "source": "Springer Link",
+        "title": "Über den von E. G. Richardson entdeckten „Annulareffekt“",
+        "type": "article-journal",
+        "URL": "https://doi.org/10.1007/BF01340631",
+        "volume": "61"
+    },
+    {
+        "id": "sheplakDynamicCalibrationShear1998",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    3
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Sheplak",
+                "given": "Mark"
+            },
+            {
+                "family": "Padmanabhan",
+                "given": "Aravind"
+            },
+            {
+                "family": "Schmidt",
+                "given": "Martin"
+            },
+            {
+                "family": "Breuer",
+                "given": "Kenneth"
+            }
+        ],
+        "citation-key": "sheplakDynamicCalibrationShear1998",
+        "collection-title": "Aerospace Sciences Meetings",
+        "container-title": "36th AIAA Aerospace Sciences Meeting and Exhibit",
+        "DOI": "10.2514/6.1998-585",
+        "issued": {
+            "date-parts": [
+                [
+                    1998,
+                    1,
+                    12
+                ]
+            ]
+        },
+        "publisher": "American Institute of Aeronautics and Astronautics",
+        "source": "arc.aiaa.org (Atypon)",
+        "title": "Dynamic calibration of a shear stress sensor using Stokes layer excitation",
+        "type": "chapter",
+        "URL": "https://arc.aiaa.org/doi/10.2514/6.1998-585"
+    },
+    {
+        "id": "siderNaturalnessIntrinsicalityDuplication1993",
+        "author": [
+            {
+                "family": "Sider",
+                "given": "Theodore Ronald"
+            }
+        ],
+        "citation-key": "siderNaturalnessIntrinsicalityDuplication1993",
+        "container-title": "Doctoral Dissertations Available from Proquest",
+        "issued": {
+            "date-parts": [
+                [
+                    1993,
+                    1,
+                    1
+                ]
+            ]
+        },
+        "page": "1-275",
+        "title": "Naturalness, intrinsicality, and duplication",
+        "type": "article-journal",
+        "URL": "https://scholarworks.umass.edu/dissertations/AAI9329668"
+    },
+    {
+        "id": "siderNaturalnessIntrinsicalityDuplication1993a",
+        "author": [
+            {
+                "family": "Sider",
+                "given": "Theodore R."
+            }
+        ],
+        "citation-key": "siderNaturalnessIntrinsicalityDuplication1993a",
+        "genre": "PhD Thesis",
+        "issued": {
+            "date-parts": [
+                [
+                    1993
+                ]
+            ]
+        },
+        "publisher": "University of Massachusetts",
+        "source": "PhilPapers",
+        "title": "Naturalness, Intrinsicality, and Duplication",
+        "type": "thesis"
+    },
+    {
+        "id": "siginerOscillatingFlowSimple1991",
+        "abstract": "Poiseuille flow of an elastico-viscous liquid in a straight, circular pipe driven by a pressure gradient oscillating about a non-zero mean is investigated. The simple fluid of the multiple integral type presents a flow enhancement which depends on the frequency and amplitude of the oscillation, magnitude of the mean pressure gradient and the material functions of the fluid. A closed form expression for the flow rate alteration, independent of any explicit representations for the material functions, is developed at the lowest order in the perturbation algorithm where nonlinear effects appear. Asymptotic analyses of the flow rate enhancement at small and large frequencies are presented.",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    15
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Siginer",
+                "given": "A."
+            }
+        ],
+        "citation-key": "siginerOscillatingFlowSimple1991",
+        "container-title": "International Journal of Engineering Science",
+        "container-title-short": "International Journal of Engineering Science",
+        "DOI": "10.1016/0020-7225(91)90126-N",
+        "ISSN": "0020-7225",
+        "issue": "12",
+        "issued": {
+            "date-parts": [
+                [
+                    1991,
+                    1,
+                    1
+                ]
+            ]
+        },
+        "language": "en",
+        "page": "1557-1567",
+        "source": "ScienceDirect",
+        "title": "Oscillating flow of a simple fluid in a pipe",
+        "type": "article-journal",
+        "URL": "https://www.sciencedirect.com/science/article/pii/002072259190126N",
+        "volume": "29"
+    },
+    {
+        "id": "strakaGenerationDetectionCharacterization2019",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    22
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Straka",
+                "given": "Ivo"
+            }
+        ],
+        "citation-key": "strakaGenerationDetectionCharacterization2019",
+        "issued": {
+            "date-parts": [
+                [
+                    2019
+                ]
+            ]
+        },
+        "language": "cs",
+        "publisher": "Univerzita Palackého v Olomouci, Přírodovědecká fakulta",
+        "source": "theses.cz",
+        "title": "Generation, Detection and Characterization of Photonic Quantum States",
+        "type": "thesis",
+        "URL": "https://theses.cz/id/6sc3bn/"
+    },
+    {
+        "id": "ummelsStochasticMultiplayerGames2010",
+        "abstract": "Annotation Stochastic games provide a versatile model for reactive systems that are a'ected by random events. This dissertation advances the algorithmic theory of stochastic games to incorporate multiple players, whose objectives are not necessarily conflicting. The basis of this work is a comprehensive complexitytheoretic analysis of the standard game-theoretic solution concepts in the context of stochastic games over a finite state space. One main result is that the constrained existence of a Nash equilibrium becomes undecidable in this setting. This impossibility result is accompanied by several positive results, including e(cient algorithms for natural special cases. This title can be previewed in Google Books - http://books.google.com/books?vid=ISBN9789085550402",
+        "author": [
+            {
+                "family": "Ummels",
+                "given": "Michael"
+            }
+        ],
+        "call-number": "QA269 .U46 2010eb",
+        "citation-key": "ummelsStochasticMultiplayerGames2010",
+        "event-place": "Amsterdam",
+        "ISBN": "978-90-485-1387-1",
+        "issued": {
+            "date-parts": [
+                [
+                    2010
+                ]
+            ]
+        },
+        "note": "OCLC: 719992555",
+        "number-of-pages": "1",
+        "publisher": "Pallas Publications",
+        "publisher-place": "Amsterdam",
+        "source": "Library Catalog (Blacklight)",
+        "title": "Stochastic multiplayer games: theory and algorithms",
+        "title-short": "Stochastic multiplayer games",
+        "type": "book"
+    },
+    {
+        "id": "ummelsStochasticMultiplayerGames2010a",
+        "abstract": "Annotation Stochastic games provide a versatile model for reactive systems that are a'ected by random events. This dissertation advances the algorithmic theory of stochastic games to incorporate multiple players, whose objectives are not necessarily conflicting. The basis of this work is a comprehensive complexitytheoretic analysis of the standard game-theoretic solution concepts in the context of stochastic games over a finite state space. One main result is that the constrained existence of a Nash equilibrium becomes undecidable in this setting. This impossibility result is accompanied by several positive results, including e(cient algorithms for natural special cases. This title can be previewed in Google Books - http://books.google.com/books?vid=ISBN9789085550402",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    22
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Ummels",
+                "given": "Michael"
+            }
+        ],
+        "citation-key": "ummelsStochasticMultiplayerGames2010a",
+        "DOI": "10.5117/9789085550402",
+        "event-place": "Amsterdam",
+        "ISBN": "978-90-8555-040-2",
+        "issued": {
+            "date-parts": [
+                [
+                    2010
+                ]
+            ]
+        },
+        "language": "en",
+        "publisher": "Amsterdam University Press",
+        "publisher-place": "Amsterdam",
+        "source": "DOI.org (Crossref)",
+        "title": "Stochastic Multiplayer Games : Theory and Algorithms",
+        "title-short": "Stochastic Multiplayer Games",
+        "type": "book",
+        "URL": "http://dare.uva.nl/aup/nl/record/372416"
+    },
+    {
+        "id": "ummelsStochasticMultiplayerGames2010b",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    22
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Ummels",
+                "given": "Michael"
+            }
+        ],
+        "citation-key": "ummelsStochasticMultiplayerGames2010b",
+        "DOI": "10.5117/9789085550402",
+        "event-place": "Amsterdam",
+        "ISBN": "978-90-8555-040-2",
+        "issued": {
+            "date-parts": [
+                [
+                    2010
+                ]
+            ]
+        },
+        "language": "en",
+        "publisher": "Amsterdam University Press",
+        "publisher-place": "Amsterdam",
+        "source": "DOI.org (Crossref)",
+        "title": "Stochastic Multiplayer Games : Theory and Algorithms",
+        "title-short": "Stochastic Multiplayer Games",
+        "type": "book",
+        "URL": "http://dare.uva.nl/aup/nl/record/372416"
+    },
+    {
+        "id": "viardDispositifsFluidiquesControle2010",
+        "abstract": "Dans ce mémoire, une étude des conditions de contrôles d’écoulements aérodynamiques par des réseaux de générateurs de tourbillons fluidiques pulsés est menée pour établir un cahier des charges des micro-actionneurs instrumentés de faible coût, indispensables à la réalisation de ce type de contrôle actif à l’échelle industrielle. Une discussion des problématiques rencontrées dans la mise en place de ces dispositifs permet de définir des solutions techniques pertinentes. Une micro-valve encapsulée, constituée d’un canal micro-fluidique en silicium dont l’ouverture est contrôlée par un résonateur annulaire en PDMS, actionnée par différents dispositifs macroscopiques magnétiques, est alors modélisée, fabriquée et caractérisée. Le dispositif permet de générer des jets d’air pulsés complètement contrôlés jusqu’à des vitesses de 150m/s sur la gamme de fréquence [0 ; 500 Hz]. Des réseaux de ces micro-actionneurs polyvalents sont ensuite utilisés en soufflerie pour démontrer sur différents profils aérodynamiques classiques l’intérêt du contrôle par jet pulsé. Le recollement du flux d’air décollé est obtenu sur chacune de ces maquettes pour des conditions réalistes et avec un rendement fluidique supérieur à celui des jets continus.Un débitmètre massique composé d’un capteur de température, d’un capteur de frottement pariétal et d’un capteur de pression de type Pirani, réalisés dans le même procédé de fabrication, est intégré au micro-actionneur. Il permet de caractériser in-situ les jets d’air produits.Enfin un prototype répondant complètement au cahier des charges industriel est obtenu. Sa taille est minimisée par l’optimisation de l’actionneur grâce à un algorithme génétique",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    3
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "Viard",
+                "given": "Romain"
+            }
+        ],
+        "citation-key": "viardDispositifsFluidiquesControle2010",
+        "genre": "phdthesis",
+        "issued": {
+            "date-parts": [
+                [
+                    2010,
+                    5,
+                    28
+                ]
+            ]
+        },
+        "language": "fr",
+        "publisher": "Ecole Centrale de Lille",
+        "source": "tel.archives-ouvertes.fr",
+        "title": "Dispositifs fluidiques de contrôle actif d’écoulements à base de microsystèmes magnéto-électro-mécanique (MMEMS) : (conception, réalisation, tests)",
+        "title-short": "Dispositifs fluidiques de contrôle actif d’écoulements à base de microsystèmes magnéto-électro-mécanique (MMEMS)",
+        "type": "thesis",
+        "URL": "https://tel.archives-ouvertes.fr/tel-00665215"
+    },
+    {
+        "id": "whiteViscousFluidFlow1974",
+        "abstract": "Viscous Fluid Flow, 4th Edition by Frank White and Joseph Majdalani (9780073529318) Preview the textbook, purchase or get a FREE instructor-only desk copy.",
+        "accessed": {
+            "date-parts": [
+                [
+                    2022,
+                    11,
+                    14
+                ]
+            ]
+        },
+        "author": [
+            {
+                "family": "White",
+                "given": "Franck"
+            },
+            {
+                "family": "Majdalani",
+                "given": "Joseph"
+            }
+        ],
+        "citation-key": "whiteViscousFluidFlow1974",
+        "ISBN": "978-0-07-352931-8",
+        "issued": {
+            "date-parts": [
+                [
+                    1974
+                ]
+            ]
+        },
+        "language": "en",
+        "publisher": "McGraw-Hill",
+        "source": "www.mheducation.com",
+        "title": "Viscous Fluid Flow",
+        "type": "book",
+        "URL": "https://www.mheducation.com/highered/product/viscous-fluid-flow-white-majdalani/M9780073529318.html"
+    }
+]

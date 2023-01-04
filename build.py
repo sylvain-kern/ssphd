@@ -1,0 +1,125 @@
+import shutil
+import os
+import pandoc
+from pandoc.types import Pandoc, Header
+
+def get_destination(source):
+    return source.split('.')[0]+'/'
+
+def generate_nav(source):
+    destination = get_destination(source)
+    if not os.path.exists(destination):
+        os.mkdir(destination)
+    # print('pandoc "' + source + '" -o "'+ destination +'nav.md" --number-sections --template="toc-template.md" --toc')
+    os.system('pandoc "' + source + '" -o "'+ destination +'nav.md" --number-sections --template="'+destination+'toc-template.md" --toc')
+    os.system('pandoc "' + destination + 'nav.md" -o "' + destination + 'nav.html" --filter links-filter-toc.py')
+
+
+def get_nav(source):
+    destination = get_destination(source)
+    with open(destination+'nav.html', 'r') as n:
+        nav = n.read()
+    return nav
+
+def get_split_dict(source):
+    with open(source, 'r', encoding='utf8') as f:
+        tree = pandoc.read(f.read(), format='json')
+    [meta, blocks] = tree
+    dict = {}
+
+    for i in range(len(blocks)):
+        if isinstance(blocks[i], Header):
+            level = blocks[i][0]
+            if level == 1:
+                content = []
+                h1Label = blocks[i][1][0]
+                fatherLabel = None
+                currentLabel = h1Label
+                content.append(blocks[i])
+            if level == 2:
+                content = []
+                h2Label = blocks[i][1][0]
+                fatherLabel = h1Label
+                currentLabel = h2Label
+                content.append(blocks[i])
+
+        if not(isinstance(blocks[i], Header)):
+            # print(type(blocks[i]))
+            content.append(blocks[i])
+        elif not blocks[i][0] <= 2:
+            content.append(blocks[i])
+
+        dictitem = {currentLabel : (
+                level,
+                fatherLabel,
+                Pandoc(meta, content)
+            )
+        }
+
+        dict.update(dictitem)
+
+    return(dict)
+
+def split_json(source):
+    splitteddict = get_split_dict(source)
+    dirname = get_destination(source)
+    if not os.path.exists(dirname):
+        os.mkdir(dirname)
+    for key in splitteddict:
+        item = splitteddict[key]
+        if item[1] == None:
+            path = key
+        else:
+            path = item[1]+'/'+key
+            if not os.path.exists(dirname+item[1]):
+                os.mkdir(dirname+item[1])
+        filename = dirname + path + '.json'
+        output = pandoc.write(item[2],file=filename , format='json')
+
+def split_md(source):
+    splitteddict = get_split_dict(source)
+    dirname = get_destination(source)
+    if not os.path.exists(dirname):
+        os.mkdir(dirname)
+    for key in splitteddict:
+        item = splitteddict[key]
+        if item[1] == None:
+            path = key
+        else:
+            path = item[1]+'/'+key
+            if not os.path.exists(dirname+item[1]):
+                os.mkdir(dirname+item[1])
+        filename = dirname + path + '.md'
+        output = pandoc.write(item[2],file=filename , format='markdown')
+
+def build_html(source):
+    dirname = get_destination(source)
+    for (root, dirs, files) in os.walk(dirname):
+        if not root.endswith('/'):
+            root = root+'/'
+        for file in files:
+            if file.endswith('.json') and not file=='refs.json':
+                command = 'pandoc "' + root + file + '" -s -o "'+ root + file.split('.')[0] +'.html" --title="Titre!" --template="'+dirname+'template-section.html" --css="style.css" --katex --bibliography="refs.json" --csl="nature.csl" --citeproc --metadata-file="'+dirname+'meta.yaml" --filter pandoc-sidenote -V base="file:///'+dirname+'"'
+                print(command)
+                print()
+                os.system(command)
+                print()
+                print()
+
+def pre_filters(source):
+    destname = source.split('.')[0]+'_prefiltered.json'
+    print(destname)
+    command = 'pandoc "' + source + '" -o "' + destname + '" --filter savelinkdict.py --filter pandoc-xnos --filter links-filter.py --number-sections --filter pandoc-secnos'
+    os.system(command)
+    print(command)
+    return destname
+
+def main(source):
+    prefiltered = pre_filters(source)
+    generate_nav(prefiltered)
+    split_json(prefiltered)
+    build_html(prefiltered)
+
+
+if __name__=='__main__':
+    main(source = 'C:/Users/sylva/Documents/latex shit/htmlcss/minimal.md')

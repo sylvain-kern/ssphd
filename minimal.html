@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="la" xml:lang="la">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc-markdown-css-theme" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <base href="">
+  <title>test</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./highlighting.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" />
+  
+  <!-- pandoc-eqnos: equation style -->
+  <style>
+    .eqnos { display: inline-block; position: relative; width: 100%; }
+    .eqnos br { display: none; }
+    .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
+  </style>
+</head>
+<body>
+
+<header>
+    <div id='sidebar'>
+        <nav id="TOC" role="doc-toc">
+        <ul> <li><a href="h1-main-title.html#h1-main-title" id="toc-h1-main-title"><span class="toc-section-number">1</span> H1: main title</a> <ul> <li><a href="h1-main-title/all-headings-this-is-level-two.html#all-headings-this-is-level-two" id="toc-all-headings-this-is-level-two"><span class="toc-section-number">1.1</span> All headings (this is level two)</a> <ul> <li><a href="h1-main-title/all-headings-this-is-level-two.html#level-three" id="toc-level-three"><span class="toc-section-number">1.1.1</span> Level three</a></li> </ul></li> <li><a href="h1-main-title/harmony-counterpoint-paragraph-flow-balance.html#harmony-counterpoint-paragraph-flow-balance" id="toc-harmony-counterpoint-paragraph-flow-balance"><span class="toc-section-number">1.2</span> Harmony &amp; counterpoint (paragraph flow &amp; balance)</a> <ul> <li><a href="h1-main-title/harmony-counterpoint-paragraph-flow-balance.html#line-length-test" id="toc-line-length-test"><span class="toc-section-number">1.2.1</span> Line length test</a></li> </ul></li> <li><a href="h1-main-title/unnumbered-section.html#unnumbered-section" id="toc-unnumbered-section">Unnumbered section</a></li> <li><a href="h1-main-title/markdown-features.html#markdown-features" id="toc-markdown-features"><span class="toc-section-number">1.3</span> Markdown features</a> <ul> <li><a href="h1-main-title/markdown-features.html#tectis-praemonuisse-plura" id="toc-tectis-praemonuisse-plura"><span class="toc-section-number">1.3.1</span> Tectis praemonuisse plura</a></li> </ul></li> <li><a href="h1-main-title/notes.html#notes" id="toc-notes"><span class="toc-section-number">1.4</span> Notes</a> <ul> <li><a href="h1-main-title/notes.html#side-note-symbols" id="toc-side-note-symbols"><span class="toc-section-number">1.4.1</span> Side note symbols</a></li> </ul></li> <li><a href="h1-main-title/wide-content.html#wide-content" id="toc-wide-content"><span class="toc-section-number">1.5</span> Wide content</a></li> <li><a href="h1-main-title/pictures.html#pictures" id="toc-pictures"><span class="toc-section-number">1.6</span> Pictures</a> <ul> <li><a href="h1-main-title/pictures.html#uncaptioned" id="toc-uncaptioned"><span class="toc-section-number">1.6.1</span> Uncaptioned</a></li> </ul></li> <li><a href="h1-main-title/tables.html#tables" id="toc-tables"><span class="toc-section-number">1.7</span> Tables</a> <ul> <li><a href="h1-main-title/tables.html#wide-table-test" id="toc-wide-table-test"><span class="toc-section-number">1.7.1</span> Wide table test</a></li> <li><a href="h1-main-title/tables.html#merge-cells" id="toc-merge-cells"><span class="toc-section-number">1.7.2</span> Merge cells ?</a></li> <li><a href="h1-main-title/tables.html#margin-tables" id="toc-margin-tables"><span class="toc-section-number">1.7.3</span> Margin tables ?</a></li> </ul></li> <li><a href="h1-main-title/code.html#code" id="toc-code"><span class="toc-section-number">1.8</span> Code</a></li> <li><a href="h1-main-title/math.html#math" id="toc-math"><span class="toc-section-number">1.9</span> Math</a> <ul> <li><a href="h1-main-title/math.html#chonky-formulae" id="toc-chonky-formulae"><span class="toc-section-number">1.9.1</span> Chonky formulae</a></li> <li><a href="h1-main-title/math.html#labelled" id="toc-labelled"><span class="toc-section-number">1.9.2</span> Labelled</a></li> <li><a href="h1-main-title/math.html#margin-math" id="toc-margin-math"><span class="toc-section-number">1.9.3</span> Margin math ?</a></li> <li><a href="h1-main-title/math.html#math-in-note" id="toc-math-in-note"><span class="toc-section-number">1.9.4</span> Math in note</a></li> </ul></li> <li><a href="h1-main-title/margin.html#margin" id="toc-margin"><span class="toc-section-number">1.10</span> Margin</a></li> <li><a href="h1-main-title/content-with-citations.html#content-with-citations" id="toc-content-with-citations"><span class="toc-section-number">1.11</span> Content with citations</a></li> <li><a href="h1-main-title/cross-references.html#cross-references" id="toc-cross-references"><span class="toc-section-number">1.12</span> Cross-references</a> <ul> <li><a href="h1-main-title/cross-references.html#to-headers-using-pandoc-secnos-filter" id="toc-to-headers-using-pandoc-secnos-filter"><span class="toc-section-number">1.12.1</span> To headers using <code>pandoc-secnos</code> filter</a></li> </ul></li> <li><a href="h1-main-title/abbreviations-not-yet-working.html#abbreviations-not-yet-working" id="toc-abbreviations-not-yet-working"><span class="toc-section-number">1.13</span> Abbreviations (not yet working)</a></li> <li><a href="h1-main-title/smart-typography.html#smart-typography" id="toc-smart-typography"><span class="toc-section-number">1.14</span> Smart typography</a></li> <li><a href="h1-main-title/esoteric-but-not-that-much.html#esoteric-but-not-that-much" id="toc-esoteric-but-not-that-much"><span class="toc-section-number">1.15</span> Esoteric (but not that much ?)</a> <ul> <li><a href="h1-main-title/esoteric-but-not-that-much.html#plots" id="toc-plots"><span class="toc-section-number">1.15.1</span> Plots :</a></li> <li><a href="h1-main-title/esoteric-but-not-that-much.html#mermaid" id="toc-mermaid"><span class="toc-section-number">1.15.2</span> Mermaid ?</a></li> </ul></li> </ul></li> <li><a href="rippledoc-example.html#rippledoc-example" id="toc-rippledoc-example"><span class="toc-section-number">2</span> Rippledoc example</a> <ul> <li><a href="rippledoc-example/an-h2-header.html#an-h2-header" id="toc-an-h2-header"><span class="toc-section-number">2.1</span> An h2 header</a> <ul> <li><a href="rippledoc-example/an-h2-header.html#an-h3-header" id="toc-an-h3-header"><span class="toc-section-number">2.1.1</span> An h3 header</a></li> </ul></li> <li><a href="rippledoc-example/test-links.html#test-links" id="toc-test-links"><span class="toc-section-number">2.2</span> Test links</a></li> </ul></li> </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+<div id='top-nav'>
+    <a href='index.html'>index</a>/<a href='../'>father section</a>/
+</div>
+<h1 data-number="1" id="h1-main-title"><span
+class="header-section-number">1</span> H1: main title</h1>
+<h2 data-number="1.1" id="all-headings-this-is-level-two"><span
+class="header-section-number">1.1</span> All headings (this is level
+two)</h2>
+<h3 data-number="1.1.1" id="level-three"><span
+class="header-section-number">1.1.1</span> Level three</h3>
+<h4 data-number="1.1.1.1" id="level-four"><span
+class="header-section-number">1.1.1.1</span> Level four</h4>
+<h5 data-number="1.1.1.1.1" id="level-five"><span
+class="header-section-number">1.1.1.1.1</span> Level five</h5>
+<h6 data-number="1.1.1.1.1.1" id="level-six"><span
+class="header-section-number">1.1.1.1.1.1</span> Level six</h6>
+<h2 data-number="1.2"
+id="harmony-counterpoint-paragraph-flow-balance"><span
+class="header-section-number">1.2</span> Harmony &amp; counterpoint
+(paragraph flow &amp; balance)</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem
+dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet
+proin fermentum leo vel orci porta non pulvinar. Phasellus egestas
+tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu
+consequat ac felis donec et odio pellentesque diam. Sit amet nulla
+facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus.
+Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis
+ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas
+egestas fringilla phasellus. Non nisi est sit amet facilisis.</p>
+<p>Aliquet nibh praesent tristique magna sit. Ullamcorper a lacus
+vestibulum sed arcu non. Sed risus pretium quam vulputate. In aliquam
+sem fringilla ut. Volutpat blandit aliquam etiam erat velit scelerisque
+in dictum non. Nec ultrices dui sapien eget mi. Massa placerat duis
+ultricies lacus sed turpis. Nulla facilisi etiam dignissim diam quis
+enim lobortis scelerisque. Tempus iaculis urna id volutpat lacus. Nulla
+facilisi cras fermentum odio eu.</p>
+<p>Dignissim diam quis enim lobortis scelerisque fermentum dui faucibus.
+Diam quam nulla porttitor massa id. Ultrices mi tempus imperdiet nulla
+malesuada pellentesque. Quam lacus suspendisse faucibus interdum posuere
+lorem ipsum. Lorem dolor sed viverra ipsum nunc aliquet bibendum enim
+facilisis. Blandit cursus risus at ultrices mi. Justo laoreet sit amet
+cursus sit amet. Senectus et netus et malesuada fames ac. Faucibus
+scelerisque eleifend donec pretium vulputate. Rutrum quisque non tellus
+orci ac auctor augue. Mi tempus imperdiet nulla malesuada pellentesque
+elit eget gravida. Praesent tristique magna sit amet purus gravida quis
+blandit.</p>
+<p>Amet purus gravida quis blandit. Tincidunt dui ut ornare lectus sit
+amet. Duis ultricies lacus sed turpis tincidunt id aliquet risus
+feugiat. Tortor vitae purus faucibus ornare suspendisse sed nisi lacus
+sed. Fringilla ut morbi tincidunt augue interdum. Id diam maecenas
+ultricies mi eget mauris pharetra et. Pellentesque nec nam aliquam sem
+et. Eleifend mi in nulla posuere. Et netus et malesuada fames ac turpis
+egestas. Platea dictumst vestibulum rhoncus est pellentesque elit
+ullamcorper. Quis risus sed vulputate odio ut.</p>
+<p>Urna neque viverra justo nec ultrices. Pulvinar proin gravida
+hendrerit lectus a. Velit ut tortor pretium viverra suspendisse potenti
+nullam. Eget gravida cum sociis natoque penatibus et. Aliquet sagittis
+id consectetur purus ut. Sagittis eu volutpat odio facilisis mauris.
+Eget dolor morbi non arcu. Eget velit aliquet sagittis id consectetur
+purus ut faucibus. Urna porttitor rhoncus dolor purus non enim praesent
+elementum. Senectus et netus et malesuada fames ac turpis egestas.</p>
+<p>Tempus iaculis urna id volutpat lacus laoreet. Senectus et netus et
+malesuada fames ac turpis egestas maecenas. Nisi est sit amet facilisis
+magna etiam tempor orci eu. Nibh praesent tristique magna sit amet. Eget
+egestas purus viverra accumsan in nisl. Ullamcorper eget nulla facilisi
+etiam dignissim diam quis. Ipsum suspendisse ultrices gravida dictum.
+Pellentesque dignissim enim sit amet venenatis urna cursus eget. Nec
+tincidunt praesent semper feugiat. Elementum nisi quis eleifend quam
+adipiscing. Sed risus pretium quam vulputate dignissim suspendisse in
+est ante. Massa ultricies mi quis hendrerit dolor magna eget est lorem.
+Condimentum lacinia quis vel eros donec ac odio tempor orci. Sagittis
+purus sit amet volutpat consequat mauris. Interdum consectetur libero id
+faucibus nisl tincidunt eget. Feugiat nibh sed pulvinar proin gravida
+hendrerit. Congue eu consequat ac felis donec et odio. Bibendum arcu
+vitae elementum curabitur vitae. Elit scelerisque mauris pellentesque
+pulvinar pellentesque habitant morbi tristique.</p>
+<p>Eleifend donec pretium vulputate sapien nec. Nunc sed id semper risus
+in hendrerit gravida. A diam maecenas sed enim ut. Tempor orci dapibus
+ultrices in iaculis nunc sed augue. At consectetur lorem donec massa
+sapien faucibus et molestie ac. Natoque penatibus et magnis dis
+parturient montes. Tellus in hac habitasse platea dictumst vestibulum
+rhoncus. Risus viverra adipiscing at in tellus. Dignissim sodales ut eu
+sem integer vitae justo eget. Metus aliquam eleifend mi in nulla
+posuere. Turpis nunc eget lorem dolor sed viverra ipsum. Sed velit
+dignissim sodales ut eu sem. Vitae purus faucibus ornare suspendisse sed
+nisi. Id ornare arcu odio ut sem. Ut venenatis tellus in metus vulputate
+eu scelerisque felis. Cursus metus aliquam eleifend mi in. Donec
+adipiscing tristique risus nec feugiat. Nibh nisl condimentum id
+venenatis a condimentum vitae sapien pellentesque.</p>
+<p>Cras fermentum odio eu feugiat pretium. Sed id semper risus in
+hendrerit gravida. Dolor sed viverra ipsum nunc. Non blandit massa enim
+nec dui nunc mattis. Nunc consequat interdum varius sit amet mattis.
+Vulputate dignissim suspendisse in est ante in nibh. Habitant morbi
+tristique senectus et netus et malesuada. Venenatis lectus magna
+fringilla urna porttitor rhoncus. Lobortis elementum nibh tellus
+molestie nunc non blandit massa enim. Volutpat lacus laoreet non
+curabitur gravida arcu ac. Amet consectetur adipiscing elit pellentesque
+habitant. Sed tempus urna et pharetra pharetra. Quam pellentesque nec
+nam aliquam. Id velit ut tortor pretium viverra suspendisse potenti
+nullam ac.</p>
+<h3 data-number="1.2.1" id="line-length-test"><span
+class="header-section-number">1.2.1</span> Line length test</h3>
+<p>azertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbn</p>
+<h2 class="unnumbered" id="unnumbered-section">Unnumbered section</h2>
+<p>Eleifend donec pretium vulputate sapien nec. Nunc sed id semper risus
+in hendrerit gravida. A diam maecenas sed enim ut. Tempor orci dapibus
+ultrices in iaculis nunc sed augue. At consectetur lorem donec massa
+sapien faucibus et molestie ac. Natoque penatibus et magnis dis
+parturient montes. Tellus in hac habitasse platea dictumst vestibulum
+rhoncus. Risus viverra adipiscing at in tellus. Dignissim sodales ut eu
+sem integer vitae justo eget. Metus aliquam eleifend mi in nulla
+posuere. Turpis nunc eget lorem dolor sed viverra ipsum. Sed velit
+dignissim sodales ut eu sem. Vitae purus faucibus ornare suspendisse sed
+nisi. Id ornare arcu odio ut sem. Ut venenatis tellus in metus vulputate
+eu scelerisque felis. Cursus metus aliquam eleifend mi in. Donec
+adipiscing tristique risus nec feugiat. Nibh nisl condimentum id
+venenatis a condimentum vitae sapien pellentesque.</p>
+<p>Cras fermentum odio eu feugiat pretium. Sed id semper risus in
+hendrerit gravida. Dolor sed viverra ipsum nunc. Non blandit massa enim
+nec dui nunc mattis. Nunc consequat interdum varius sit amet mattis.
+Vulputate dignissim suspendisse in est ante in nibh. Habitant morbi
+tristique senectus et netus et malesuada. Venenatis lectus magna
+fringilla urna porttitor rhoncus. Lobortis elementum nibh tellus
+molestie nunc non blandit massa enim. Volutpat lacus laoreet non
+curabitur gravida arcu ac. Amet consectetur adipiscing elit pellentesque
+habitant. Sed tempus urna et pharetra pharetra. Quam pellentesque nec
+nam aliquam. Id velit ut tortor pretium viverra suspendisse potenti
+nullam ac.</p>
+<h2 data-number="1.3" id="markdown-features"><span
+class="header-section-number">1.3</span> Markdown features</h2>
+<p>Lorem markdownum Niobe, in quae peracta, matrem ubi vates,
+blanditiis? <strong>Dabitur omnia aper</strong> cacumina sensisse in
+idque passim datum, lupis terrent Aurora Maia.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">association_ascii_domain</span><span class="op">(</span>hoverHibernateMatrix<span class="op">);</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">left_memory</span><span class="op">(</span>design<span class="op">,</span> ideReciprocalAtm<span class="op">);</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">var</span> kilohertzHost <span class="op">=</span> type_requirements_slashdot<span class="op">;</span></span></code></pre></div>
+<p>Aestus virgo cur languore <strong>laudamus doluisse</strong> tempora
+canis, ausorum habent ab quoque dextra. Cum fecissem excussit patriosque
+quodque, et etiam subtemen <strong>quoque</strong>, papyriferi ululasse,
+erat arida ab maerentes: Lichan.</p>
+<blockquote>
+<p>Inspiratque undas; feroxque seges graviore, tradidit et umero
+mandere: exuere atram magis <em>auctor excita</em>, o. Virque in in <a
+href="http://www.numferens.io/">discedentem haec deceptus</a> nec
+inconcessaeque perosus flammas exarsit.</p>
+</blockquote>
+<h3 data-number="1.3.1" id="tectis-praemonuisse-plura"><span
+class="header-section-number">1.3.1</span> Tectis praemonuisse
+plura</h3>
+<p>Dixerat hoc turbida mento nostri dolet fessos. Arcu sedit dumque.
+Amor campus posco. Dilapsa est aquarum coimus cecidit et classis nos,
+regia nec erat lavit undis ratis demugitaeque laetaque.</p>
+<ul>
+<li>Parente dixit</li>
+<li>Marem vix virides nihil cornua navis vultus</li>
+<li>Si non</li>
+<li>Fixit quas dilapsum iunctum imitata satis</li>
+</ul>
+<p>Par armat fuit nomen in Aegides lingua colatur, non humani, anser ab
+<strong>sibi</strong> Munychiosque <em>summa</em>. Dixit Mavortis
+auratum se frequens haerenti exosae: quam et aequore, tuli ira omnis
+Neptunus florentia calido tacti.</p>
+<ol type="1">
+<li>Flammas trepidosque variabant terrae nisi ablatum cessit</li>
+<li>Cinyra Herculeos in Pelasgi vultu adfixa</li>
+<li>Telamonius adhuc questuque non Erysicthone deus permulcet</li>
+<li>Quem mentisque</li>
+</ol>
+<p>Quodsi rosarum gaudere quoque frigore timido cognoverat, insurgere
+esse: septem. Ianigenam in <strong>vestros</strong> mihi tot fecit, qui
+freta conferat, <strong>penates</strong> nomen quo Telamon fenestris,
+duae. Relinquitur voce graviore, me <strong>puto</strong>, discedit in
+sumpta corpore.</p>
+<p>Rule:</p>
+<hr />
+<p>Quodsi rosarum gaudere quoque frigore timido cognoverat, insurgere
+esse: septem. Ianigenam in <strong>vestros</strong> mihi tot fecit, qui
+freta conferat, <strong>penates</strong> nomen quo Telamon fenestris,
+duae. Relinquitur voce graviore, me <strong>puto</strong>, discedit in
+sumpta corpore.</p>
+<p>Wide rule:</p>
+<div class="wide">
+<hr />
+</div>
+<p>Quodsi rosarum gaudere quoque frigore timido cognoverat, insurgere
+esse: septem. Ianigenam in <strong>vestros</strong> mihi tot fecit, qui
+freta conferat, <strong>penates</strong> nomen quo Telamon fenestris,
+duae. Relinquitur voce graviore, me <strong>puto</strong>, discedit in
+sumpta corpore.</p>
+<h2 data-number="1.4" id="notes"><span
+class="header-section-number">1.4</span> Notes</h2>
+<p>For example this is a side note<span
+class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"/><span
+class="sidenote">This is the text in the side note. It is smaller and
+only supports inline elements, like <strong>bold</strong> or <a
+href="rippledoc-example/an-h2-header.html#">links</a>, but not lists or
+code blocks.<br />
+<br />
+</span></span>. Side notes are numbered, and the number shows at the
+anchor point in the body text at all screen widths.</p>
+<p>On the other hand, margin notes are not numbered. Instead, they hang
+to the left and are only vaguely connected to the text, like this.<span
+class="sidenote-wrapper"><label for="sn-1" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-1" class="margin-toggle"/><span
+class="marginnote"><code>pandoc-sidenote</code> detects margin notes
+when the note starts with the text <code>{-}</code>. This is inspired by
+the syntax Pandoc uses for unnumbered headings.<br />
+<br />
+</span></span></p>
+<h3 data-number="1.4.1" id="side-note-symbols"><span
+class="header-section-number">1.4.1</span> Side note symbols</h3>
+<p><span
+class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-9" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-9" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-11" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-11" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-12" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-12" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span> <span
+class="sidenote-wrapper"><label for="sn-13" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-13" class="margin-toggle"/><span
+class="sidenote">this is a note.<br />
+<br />
+</span></span></p>
+<h2 data-number="1.5" id="wide-content"><span
+class="header-section-number">1.5</span> Wide content</h2>
+<div class="wide">
+<p>Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas
+proxima iam. Postquam superi desiluit, flentibus posuerunt ferum!
+Fratremque derepta habet aquarum. Lacertis horrentia Mavortius
+sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod
+laboribus fecit, gravis aures supplex Pallas proxima iam.</p>
+</div>
+<div class="wide">
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> zsh <span class="ex">-c</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="va">)</span><span class="st">&quot;</span></span></code></pre></div>
+</div>
+<h2 data-number="1.6" id="pictures"><span
+class="header-section-number">1.6</span> Pictures</h2>
+<p>A reference to the <a
+href="h1-main-title/pictures.html#fig:label1">image</a>, and another <a
+href="h1-main-title/pictures.html#fig:label2">reference</a>.</p>
+<div id="fig:label1" class="fignos">
+<figure>
+<img src="pic/usa-census.png" alt="Figure 1: Caption" />
+<figcaption aria-hidden="true"><span>Figure 1:</span>
+Caption</figcaption>
+</figure>
+</div>
+<div id="fig:label2" class="fignos">
+<figure>
+<img src="pic/usa-census.png" class="wide"
+alt="Figure 2: This is a second image" />
+<figcaption aria-hidden="true"><span>Figure 2:</span> This is a second
+image</figcaption>
+</figure>
+</div>
+<div id="fig:label3" class="fignos">
+<figure>
+<img src="pic/usa-census.png" style="width:50.0%"
+alt="Figure 3: This is a reduced image" />
+<figcaption aria-hidden="true"><span>Figure 3:</span> This is a reduced
+image</figcaption>
+</figure>
+</div>
+<div id="fig:label" class="fignos">
+<figure>
+<img src="pic/usa-census.png" class="margin"
+alt="Figure 4: This is (meant to be) a margin image" />
+<figcaption aria-hidden="true"><span>Figure 4:</span> This is (meant to
+be) a margin image</figcaption>
+</figure>
+</div>
+<p>See figures <a href="h1-main-title/pictures.html#fig:label1">1</a>
+and <a href="h1-main-title/pictures.html#fig:label2">2</a></p>
+<p>Maxed out references : fig. <a
+href="h1-main-title/pictures.html#fig:label1">1</a>.</p>
+<h3 data-number="1.6.1" id="uncaptioned"><span
+class="header-section-number">1.6.1</span> Uncaptioned</h3>
+<figure>
+<img src="pic/usa-census.png" />
+</figure>
+<h2 data-number="1.7" id="tables"><span
+class="header-section-number">1.7</span> Tables</h2>
+<p>Text before. I can reference the following table with its label : see
+table <a href="h1-main-title/tables.html#tbl:label3">1</a>.</p>
+<div id="tbl:label3" class="tablenos">
+<table id="tbl:label3">
+<caption><span>Table 1:</span> Caption of table. </caption>
+<thead>
+<tr class="header">
+<th>Header 1</th>
+<th style="text-align: center;">Header 2</th>
+<th style="text-align: right;">Header 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>bold style</strong></td>
+<td style="text-align: center;"><code>code block</code></td>
+<td style="text-align: right;">3.73</td>
+</tr>
+<tr class="even">
+<td>|escape pipe</td>
+<td style="text-align: center;">`backtick</td>
+<td style="text-align: right;">220.34</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Text after. Lorem markdownum quod laboribus fecit, gravis aures
+supplex Pallas proxima iam. Postquam superi desiluit, flentibus
+posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia
+Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem
+markdownum quod laboribus fecit, gravis aures supplex Pallas proxima
+iam.</p>
+<h3 data-number="1.7.1" id="wide-table-test"><span
+class="header-section-number">1.7.1</span> Wide table test</h3>
+<p>Check the stats table <a
+href="h1-main-title/tables.html#tbl:label4">2</a>.</p>
+<div class="wide">
+<div id="tbl:label4" class="tablenos">
+<table id="tbl:label4">
+<caption><span>Table 2:</span> La météo. </caption>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mois</th>
+<th>jan.</th>
+<th>fév.</th>
+<th>mars</th>
+<th>avril</th>
+<th>mai</th>
+<th>juin</th>
+<th>jui.</th>
+<th>août</th>
+<th>sep.</th>
+<th>oct.</th>
+<th>nov.</th>
+<th>déc.</th>
+<th>année</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Temp. minimale moyenne (°C)</td>
+<td>−0.8</td>
+<td>−0.6</td>
+<td>2.5</td>
+<td>5.2</td>
+<td>9.8</td>
+<td>12.8</td>
+<td>14.5</td>
+<td>14.1</td>
+<td>10.6</td>
+<td>7.1</td>
+<td>2.8</td>
+<td>0.3</td>
+<td>6.6</td>
+</tr>
+<tr class="even">
+<td>Temp. moyenne (°C)</td>
+<td>1.9</td>
+<td>2.9</td>
+<td>7</td>
+<td>10.5</td>
+<td>15</td>
+<td>18.1</td>
+<td>20.1</td>
+<td>19.8</td>
+<td>15.8</td>
+<td>11.2</td>
+<td>5.8</td>
+<td>2.8</td>
+<td>10.9</td>
+</tr>
+<tr class="odd">
+<td>Temp. maximale moyenne (°C)</td>
+<td>4.5</td>
+<td>6.4</td>
+<td>11.1</td>
+<td>15.7</td>
+<td>20.2</td>
+<td>23.4</td>
+<td>25.7</td>
+<td>25.4</td>
+<td>21</td>
+<td>15.3</td>
+<td>8.8</td>
+<td>5.2</td>
+<td>15.3</td>
+</tr>
+<tr class="even">
+<td>Record de froid (°C)</td>
+<td>−23.6</td>
+<td>−22.3</td>
+<td>−16.7</td>
+<td>−5.6</td>
+<td>−2.4</td>
+<td>1.1</td>
+<td>4.9</td>
+<td>4.8</td>
+<td>−1.3</td>
+<td>−7.6</td>
+<td>−10.8</td>
+<td>−23.4</td>
+<td>−23.6</td>
+</tr>
+<tr class="odd">
+<td>Record de chaleur (°C)</td>
+<td>17.5</td>
+<td>21.1</td>
+<td>25.7</td>
+<td>30</td>
+<td>33.8</td>
+<td>38.8</td>
+<td>38.9</td>
+<td>38.7</td>
+<td>33.4</td>
+<td>29.1</td>
+<td>22.1</td>
+<td>18.3</td>
+<td>38.9</td>
+</tr>
+<tr class="even">
+<td>Nb. de jours avec gel</td>
+<td>16.4</td>
+<td>15.1</td>
+<td>9</td>
+<td>2.2</td>
+<td>0.1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1.7</td>
+<td>7.5</td>
+<td>13.8</td>
+<td>65.8</td>
+</tr>
+<tr class="odd">
+<td>Ensoleillement (h)</td>
+<td>58.1</td>
+<td>83.8</td>
+<td>134.8</td>
+<td>180</td>
+<td>202.5</td>
+<td>223.8</td>
+<td>228.6</td>
+<td>219.6</td>
+<td>164.5</td>
+<td>98.7</td>
+<td>55.3</td>
+<td>43.1</td>
+<td>1692.7</td>
+</tr>
+<tr class="even">
+<td>Précipitations (mm)</td>
+<td>32.2</td>
+<td>34.5</td>
+<td>42.8</td>
+<td>45.9</td>
+<td>81.9</td>
+<td>71.6</td>
+<td>72.7</td>
+<td>61.4</td>
+<td>63.5</td>
+<td>61.5</td>
+<td>47</td>
+<td>50</td>
+<td>664.6</td>
+</tr>
+<tr class="odd">
+<td>Nb. de jours avec précipitations</td>
+<td>8.4</td>
+<td>8.1</td>
+<td>9.1</td>
+<td>9.2</td>
+<td>11.5</td>
+<td>10.8</td>
+<td>9.9</td>
+<td>10.2</td>
+<td>8.6</td>
+<td>9.5</td>
+<td>9.3</td>
+<td>9.8</td>
+<td>114.9</td>
+</tr>
+<tr class="even">
+<td>Humidité relative (%)</td>
+<td>86</td>
+<td>82</td>
+<td>76</td>
+<td>72</td>
+<td>73</td>
+<td>74</td>
+<td>72</td>
+<td>76</td>
+<td>80</td>
+<td>85</td>
+<td>86</td>
+<td>86</td>
+<td>79</td>
+</tr>
+<tr class="odd">
+<td>Nb. de jours avec neige</td>
+<td>7.8</td>
+<td>6.7</td>
+<td>4</td>
+<td>1.5</td>
+<td>0.1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3.4</td>
+<td>6.3</td>
+<td>29.8</td>
+</tr>
+<tr class="even">
+<td>Nb. de jours d’orage</td>
+<td>0.1</td>
+<td>0.2</td>
+<td>0.5</td>
+<td>1.5</td>
+<td>5</td>
+<td>6.1</td>
+<td>6.2</td>
+<td>5.5</td>
+<td>2.7</td>
+<td>0.5</td>
+<td>0.2</td>
+<td>0.2</td>
+<td>28.7</td>
+</tr>
+<tr class="odd">
+<td>Nb. de jours avec brouillard</td>
+<td>9.1</td>
+<td>5.7</td>
+<td>3.4</td>
+<td>1.9</td>
+<td>2</td>
+<td>1.4</td>
+<td>1</td>
+<td>2.6</td>
+<td>6.7</td>
+<td>12.4</td>
+<td>10</td>
+<td>8.8</td>
+<td>65</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 data-number="1.7.2" id="merge-cells"><span
+class="header-section-number">1.7.2</span> Merge cells ?</h3>
+<table>
+<thead>
+<tr class="header">
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>^</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Nope.</p>
+<h3 data-number="1.7.3" id="margin-tables"><span
+class="header-section-number">1.7.3</span> Margin tables ?</h3>
+<div class="margin">
+<div id="tbl:margin" class="tablenos">
+<table id="tbl:margin">
+<caption><span>Table 3:</span> Margin table test. </caption>
+<thead>
+<tr class="header">
+<th>Header 1</th>
+<th style="text-align: center;">Header 2</th>
+<th style="text-align: right;">Header 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>bold style</strong></td>
+<td style="text-align: center;"><code>code block</code></td>
+<td style="text-align: right;">3.73</td>
+</tr>
+<tr class="even">
+<td>|escape pipe</td>
+<td style="text-align: center;">`backtick</td>
+<td style="text-align: right;">220.34</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Yeah baby</p>
+<h2 data-number="1.8" id="code"><span
+class="header-section-number">1.8</span> Code</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;Hello world!&quot;</span><span class="op">);</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas
+proxima iam. Postquam superi desiluit, flentibus posuerunt ferum!
+Fratremque derepta habet aquarum. Lacertis horrentia Mavortius
+sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod
+laboribus fecit, gravis aures supplex Pallas proxima iam.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> (<span class="kw">max-width</span>: <span class="dv">1350</span><span class="dt">px</span>) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  header<span class="op">,</span> main<span class="op">,</span> footer {</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span>: <span class="dv">50</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.sidenote</span><span class="op">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.marginnote</span><span class="op">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  figcaption {</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-right</span>: <span class="dv">-55</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span>: <span class="dv">50</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.wide</span> {</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span>: <span class="dv">155</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">/* intermédiaire : le main text est collé à gauche (burger ?) mais quand même les sidenotes */</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> (<span class="kw">max-width</span>: <span class="dv">1000</span><span class="dt">px</span>) {</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  header<span class="op">,</span> main<span class="op">,</span> footer {</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-left</span>: <span class="dv">20</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span>: <span class="dv">65</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-right</span>: <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.sidenote</span><span class="op">,</span> <span class="fu">.marginnote</span><span class="op">,</span> figcaption {</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-right</span>: <span class="dv">-45</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span>: <span class="dv">40</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.wide</span> {</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span>: <span class="dv">145</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Python:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> factorial(n):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">int</span>(n<span class="op">==</span><span class="dv">0</span>) <span class="kw">or</span> n<span class="op">*</span>factorial(n<span class="op">-</span><span class="dv">1</span>)</span></code></pre></div>
+<p>Wide code:</p>
+<div class="wide">
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> zsh <span class="ex">-c</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="va">)</span><span class="st">&quot;</span></span></code></pre></div>
+</div>
+<h2 data-number="1.9" id="math"><span
+class="header-section-number">1.9</span> Math</h2>
+<p>Inline : <span class="math inline">y = ax + b</span>. Block:</p>
+<p><span class="math display">
+e^{i\pi}+1 = 0
+</span></p>
+<p>Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas
+proxima iam. Postquam superi desiluit, flentibus posuerunt ferum!
+Fratremque derepta habet aquarum. Lacertis horrentia Mavortius
+sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod
+laboribus fecit, gravis aures supplex Pallas proxima iam. This is inline
+in the flow: <span class="math inline">e^x = \frac{\sum_{n = 0}^{\infty}
+\frac{x^n}{n!}}{\sum_{n = 0}^{\infty}0}</span>. Lorem markdownum quod
+laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam
+superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet
+aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea
+mollia candidus.</p>
+<p><span class="math display">
+e^x = \sum_{n = 0}^{\infty} \frac{x^n}{n!}.
+</span></p>
+<p><span class="math display">
+\tau_\text w(\omega)=-\frac{1}{c} \sqrt{j \omega \nu} \tanh \left(a
+\sqrt{\frac{j \omega}{\nu}}\right) \frac{e^{j k d_s}-R e^{-j k
+d_s}}{1+R} p^{\prime} e^{j \omega t}
+</span></p>
+<h3 data-number="1.9.1" id="chonky-formulae"><span
+class="header-section-number">1.9.1</span> Chonky formulae</h3>
+<div class="wide">
+<p><span class="math display">
+\frac{J_{p}^{\text {diff }}(X n)}{J_{g}(X n)}=\frac{\frac{\alpha L
+n}{(\alpha L n+1)} e^{-\alpha X n}}{\left(e^{-\alpha X
+n}-1\right)}=\frac{\frac{50000 * 0,0001}{50000 * 0,0001+1} e^{-50000 *
+0,0001}}{\left(e^{-500000000001}-1\right)}=-1,6 * 10^{-22} \ll 1
+</span></p>
+</div>
+<h3 data-number="1.9.2" id="labelled"><span
+class="header-section-number">1.9.2</span> Labelled</h3>
+<p>Here’s a reference to eq. <a
+href="h1-main-title/math.html#eq:description">1</a>:</p>
+<p><span id="eq:description" class="eqnos"><span class="math display">
+M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}
+</span><span class="eqnos-number">(1)</span></span> </p>
+<h3 data-number="1.9.3" id="margin-math"><span
+class="header-section-number">1.9.3</span> Margin math ?</h3>
+<p>Math displayed in the margin!</p>
+<div class="margin">
+<p><span id="eq:margin" class="eqnos"><span class="math display">
+e^{i\pi}+1 = 0
+</span><span class="eqnos-number">(2)</span></span> </p>
+<p>Yeah baby!</p>
+</div>
+<h3 data-number="1.9.4" id="math-in-note"><span
+class="header-section-number">1.9.4</span> Math in note</h3>
+<p>For example this is a side note<span
+class="sidenote-wrapper"><label for="sn-14" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-14" class="margin-toggle"/><span
+class="sidenote">This is the text in the side note. It is smaller and
+only supports inline elements, like <strong>bold</strong> or <a
+href="rippledoc-example/an-h2-header.html#">links</a>, or math: <span
+class="math inline">e^{i\pi} +1 = 0</span> !<br />
+<br />
+</span></span>. Side notes are numbered, and the number shows at the
+anchor point in the body text at all screen widths.</p>
+<h2 data-number="1.10" id="margin"><span
+class="header-section-number">1.10</span> Margin</h2>
+<p>Margin environment:</p>
+<div class="margin">
+<p>Unreferenced, unformatted margin stuff, uncaptioned image :</p>
+</div>
+<div class="margin">
+<figure>
+<img src="./pic/usa-census.png" />
+</figure>
+</div>
+<p>Dixerat hoc turbida mento nostri dolet fessos. Arcu sedit dumque.
+Amor campus posco. Dilapsa est aquarum coimus cecidit et classis nos,
+regia nec erat lavit undis ratis demugitaeque laetaque.</p>
+<p>Also works with class :</p>
+<figure>
+<img src="./pic/usa-census.png" class="margin" />
+</figure>
+<ul>
+<li>Parente dixit</li>
+<li>Marem vix virides nihil cornua navis vultus</li>
+<li>Si non</li>
+<li>Fixit quas dilapsum iunctum imitata satis</li>
+</ul>
+<p>Par armat fuit nomen in Aegides lingua colatur, non humani, anser ab
+<strong>sibi</strong> Munychiosque <em>summa</em>. Dixit Mavortis
+auratum se frequens haerenti exosae: quam et aequore, tuli ira omnis
+Neptunus florentia calido tacti.</p>
+<ol type="1">
+<li>Flammas trepidosque variabant terrae nisi ablatum cessit</li>
+<li>Cinyra Herculeos in Pelasgi vultu adfixa</li>
+<li>Telamonius adhuc questuque non Erysicthone deus permulcet</li>
+<li>Quem mentisque</li>
+</ol>
+<p>Quodsi rosarum gaudere quoque frigore timido cognoverat, insurgere
+esse: septem. Ianigenam in <strong>vestros</strong> mihi tot fecit, qui
+freta conferat, <strong>penates</strong> nomen quo Telamon fenestris,
+duae. Relinquitur voce graviore, me <strong>puto</strong>, discedit in
+sumpta corpore.</p>
+<h2 data-number="1.11" id="content-with-citations"><span
+class="header-section-number">1.11</span> Content with citations</h2>
+<p>This is a citation<span class="citation"
+data-cites="chandrasekharanMicroscaleDifferentialCapacitive2011"><sup>1</sup></span>
+with <code>pandoc-citeproc</code>. Lorem markdownum quod laboribus
+fecit, gravis aures supplex Pallas proxima iam. Postquam superi
+desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum.
+Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia
+candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex
+Pallas proxima iam.</p>
+<p>Another citation,<span class="citation"
+data-cites="10/dfwrxt"><sup><strong>10/dfwrxt?</strong></sup></span>
+this time with the filter</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--filter</span> pandoc-manubot-cite</span></code></pre></div>
+<h2 data-number="1.12" id="cross-references"><span
+class="header-section-number">1.12</span> Cross-references</h2>
+<h3 data-number="1.12.1"
+id="to-headers-using-pandoc-secnos-filter"><span
+class="header-section-number">1.12.1</span> To headers using
+<code>pandoc-secnos</code> filter</h3>
+<p>See section: <a
+href="h1-main-title/math.html#chonky-formulae">1.9.1</a></p>
+<p>eyop</p>
+<h2 data-number="1.13" id="abbreviations-not-yet-working"><span
+class="header-section-number">1.13</span> Abbreviations (not yet
+working)</h2>
+<p>This is HTML! (not in glossary ?)</p>
+<p>This is +html (in glossary)!</p>
+<h2 data-number="1.14" id="smart-typography"><span
+class="header-section-number">1.14</span> Smart typography</h2>
+<p>En: –</p>
+<p>Em: —</p>
+<p>Ellipse… text again</p>
+<p>“Curly quotes” ?</p>
+<h2 data-number="1.15" id="esoteric-but-not-that-much"><span
+class="header-section-number">1.15</span> Esoteric (but not that much
+?)</h2>
+<h3 data-number="1.15.1" id="plots"><span
+class="header-section-number">1.15.1</span> Plots :</h3>
+<p><a
+href="https://github.com/LaurentRDC/pandoc-plot"><code>pandoc-plot</code></a></p>
+<figure>
+<img src="plots\pandocplot7100136747269812726.png" id="fig:plot"
+alt="Test plot figure" />
+<figcaption aria-hidden="true">Test plot figure</figcaption>
+</figure>
+<h3 data-number="1.15.2" id="mermaid"><span
+class="header-section-number">1.15.2</span> Mermaid ?</h3>
+<p>Using <a
+href="https://github.com/raghur/mermaid-filter"><code>mermaid-filter</code></a></p>
+<pre class="mermaid"><code>sequenceDiagram
+    Alice-&gt;&gt;John: Hello John, how are you?
+    John--&gt;&gt;Alice: Great!</code></pre>
+<h1 data-number="2" id="rippledoc-example"><span
+class="header-section-number">2</span> Rippledoc example</h1>
+<p>Paragraphs are separated by a blank line.</p>
+<p>2nd paragraph. <em>Italic</em>, <strong>bold</strong>, and
+<code>monospace</code>. Itemized lists look like:</p>
+<ul>
+<li>this one</li>
+<li>that one</li>
+<li>the other one</li>
+</ul>
+<p>Note that — not considering the asterisk — the actual text content
+starts at 4-columns in.</p>
+<blockquote>
+<p>Block quotes are written like so.</p>
+<p>They can span multiple paragraphs, if you like.</p>
+</blockquote>
+<p>Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., “it’s all
+in chapters 12–14”). Three dots … will be converted to an ellipsis.
+Unicode is supported. ☺</p>
+<div id="tbl:chaptab" class="tablenos">
+<table id="tbl:chaptab">
+<caption><span>Table 4:</span> table in just a chapter section
+</caption>
+<thead>
+<tr class="header">
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>c</td>
+<td>d</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 data-number="2.1" id="an-h2-header"><span
+class="header-section-number">2.1</span> An h2 header</h2>
+<p>Here’s a numbered list:</p>
+<ol type="1">
+<li>first item</li>
+<li>second item</li>
+<li>third item</li>
+</ol>
+<p>Note again how the actual text starts at 4 columns in (4 characters
+from the left side). Here’s a code sample:</p>
+<pre><code># Let me re-iterate ...
+for i in 1 .. 10 { do-something(i) }</code></pre>
+<p>As you probably guessed, indented 4 spaces. By the way, instead of
+indenting the block, you can use delimited blocks, if you like:</p>
+<pre><code>define foobar() {
+    print &quot;Welcome to flavor country!&quot;;
+}</code></pre>
+<p>(which makes copying &amp; pasting easier). You can optionally mark
+the delimited block for Pandoc to syntax highlight it:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick, count to ten!</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (but not *too* quick)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code></pre></div>
+<h3 data-number="2.1.1" id="an-h3-header"><span
+class="header-section-number">2.1.1</span> An h3 header</h3>
+<p>Now a nested list:</p>
+<ol type="1">
+<li><p>First, get these ingredients:</p>
+<ul>
+<li>carrots</li>
+<li>celery</li>
+<li>lentils</li>
+</ul></li>
+<li><p>Boil some water.</p></li>
+<li><p>Dump everything in the pot and follow this algorithm:</p>
+<pre><code>find wooden spoon
+uncover pot
+stir
+cover pot
+balance wooden spoon precariously on pot handle
+wait 10 minutes
+goto first step (or shut off burner when done)</code></pre>
+<p>Do not bump wooden spoon or it will fall.</p></li>
+</ol>
+<p>Notice again how text always lines up on 4-space indents (including
+that last line which continues item 3 above).</p>
+<p>Here’s a link to <a href="http://foo.bar">a website</a>, to a <a
+href="local-doc.html">local doc</a>, and to a <a
+href="rippledoc-example/an-h2-header.html#an-h2-header">section heading
+in the current doc</a>. Here’s a footnote <span
+class="sidenote-wrapper"><label for="sn-15" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-15" class="margin-toggle"/><span
+class="sidenote">Some footnote text.<br />
+<br />
+</span></span>.</p>
+<p>Tables can look like this:</p>
+<div id="tbl:table2" class="tablenos">
+<table id="tbl:table2">
+<caption><span>Table 5:</span> Shoes sizes, materials, and colors.
+</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: right;">Size</th>
+<th style="text-align: left;">Material</th>
+<th style="text-align: left;">Color</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All Business</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">leather</td>
+<td style="text-align: left;">brown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Roundabout</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">hemp canvas</td>
+<td style="text-align: left;">natural</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cinderella</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">glass</td>
+<td style="text-align: left;">transparent</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>(The above is the caption for the table.) Pandoc also supports
+multi-line tables:</p>
+<table style="width:47%;">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Keyword</th>
+<th style="text-align: left;">Text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">red</td>
+<td style="text-align: left;">Sunsets, apples, and other red or reddish
+things.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">green</td>
+<td style="text-align: left;">Leaves, grass, frogs and other things it’s
+not easy being.</td>
+</tr>
+</tbody>
+</table>
+<p>A horizontal rule follows.</p>
+<hr />
+<p>Here’s a definition list:</p>
+<dl>
+<dt>apples</dt>
+<dd>
+Good for making applesauce.
+</dd>
+<dt>oranges</dt>
+<dd>
+Citrus!
+</dd>
+<dt>tomatoes</dt>
+<dd>
+There’s no “e” in tomatoe.
+</dd>
+</dl>
+<p>Again, text is indented 4 spaces. (Put a blank line between each term
+and its definition to spread things out more.)</p>
+<p>Here’s a “line block” (note how whitespace is honored):</p>
+<div class="line-block">Line one<br />
+  Line too<br />
+Line tree</div>
+<p>and images can be specified like so:</p>
+<div id="fig:example-image" class="fignos">
+<figure>
+<img src="example-image.jpg" alt="Figure 5: example image" />
+<figcaption aria-hidden="true"><span>Figure 5:</span> example
+image</figcaption>
+</figure>
+</div>
+<p>Inline math equation: <span class="math inline">\omega = d\varphi /
+dt</span>. Display math should get its own line like so:</p>
+<p><span class="math display">I = \int \rho R^{2} dV</span></p>
+<p>And note that you can backslash-escape any punctuation characters
+which you wish to be displayed literally, ex.: `foo`, *bar*, etc.</p>
+<hr />
+<h2 data-number="2.2" id="test-links"><span
+class="header-section-number">2.2</span> Test links</h2>
+<p>See section: <a
+href="h1-main-title/math.html#chonky-formulae">1.9.1</a></p>
+<p>Figure: fig. <a
+href="h1-main-title/pictures.html#fig:label">4</a></p>
+<p>Figure: fig. <a
+href="h1-main-title/pictures.html#fig:label2">2</a></p>
+<p>Figure: fig. <a
+href="h1-main-title/pictures.html#fig:label3">3</a></p>
+<p>Figure: fig. <a
+href="rippledoc-example/an-h2-header.html#fig:example-image">5</a></p>
+<p>Table: table <a
+href="rippledoc-example/an-h2-header.html#tbl:table2">5</a></p>
+<p>table <a href="h1-main-title/tables.html#tbl:label4">2</a></p>
+<p>table <a href="rippledoc-example.html#tbl:chaptab">4</a></p>
+<p>eq. <a href="h1-main-title/math.html#eq:description">1</a></p>
+<p><a href="h1-main-title/pictures.html#fig:label1">link</a></p>
+<div id="refs" class="references csl-bib-body" data-line-spacing="2"
+role="doc-bibliography">
+<div id="ref-chandrasekharanMicroscaleDifferentialCapacitive2011"
+class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">1. </div><div
+class="csl-right-inline">Chandrasekharan, V., Sells, J., Meloy, J.,
+Arnold, D. P. &amp; Sheplak, M. <a
+href="https://doi.org/10.1109/JMEMS.2011.2140356">A Microscale
+Differential Capacitive Direct Wall-Shear-Stress Sensor</a>. <em>Journal
+of Microelectromechanical Systems</em> <strong>20</strong>, 622–635
+(2011).</div>
+</div>
+</div>
+</main>
+
+<script>
+;(function() {
+  // Non-essential if user has JavaScript off. Just makes checkboxes look nicer.
+  var selector = '.task-list > li > input[type="checkbox"]';
+  var checkboxes = document.querySelectorAll(selector);
+  Array.from(checkboxes).forEach((checkbox) => {
+    var wasChecked = checkbox.checked;
+    checkbox.disabled = false;
+    checkbox.addEventListener('click', (ev) => {ev.target.checked = wasChecked});
+  });
+})();
+</script>
+</body>
+</html>
