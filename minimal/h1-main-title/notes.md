@@ -6,8 +6,6 @@ number shows at the anchor point in the body text at all screen widths.
 On the other hand, margin notes are not numbered. Instead, they hang to
 the left and are only vaguely connected to the text, like this.[^2]
 
-### Side note symbols
-
 [^3] [^4] [^5] [^6] [^7] [^8] [^9] [^10] [^11] [^12] [^13] [^14]
 
 [^1]: This is the text in the side note. It is smaller and only supports

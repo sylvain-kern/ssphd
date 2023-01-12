@@ -20,8 +20,6 @@ Lichan.
 > deceptus](http://www.numferens.io/) nec inconcessaeque perosus flammas
 > exarsit.
 
-### Tectis praemonuisse plura
-
 Dixerat hoc turbida mento nostri dolet fessos. Arcu sedit dumque. Amor
 campus posco. Dilapsa est aquarum coimus cecidit et classis nos, regia
 nec erat lavit undis ratis demugitaeque laetaque.

@@ -16,6 +16,4 @@ See figures {@fig:label1} and {@fig:label2}
 
 Maxed out references : +@fig:label1.
 
-### Uncaptioned
-
 ![](pic/usa-census.png)

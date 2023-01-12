@@ -1,7 +1,7 @@
 import shutil
 import os
 import pandoc
-from pandoc.types import Pandoc, Header
+from pandoc.types import Pandoc, Header, MetaType, MetaInlines, Str
 
 def get_destination(source):
     return source.split('.')[0]+'/'
@@ -26,7 +26,7 @@ def get_split_dict(source):
         tree = pandoc.read(f.read(), format='json')
     [meta, blocks] = tree
     dict = {}
-
+    offset = [-1, -1]
     for i in range(len(blocks)):
         if isinstance(blocks[i], Header):
             level = blocks[i][0]
@@ -36,12 +36,15 @@ def get_split_dict(source):
                 fatherLabel = None
                 currentLabel = h1Label
                 content.append(blocks[i])
+                offset[0] += 1
+                offset[1] = -1
             if level == 2:
                 content = []
                 h2Label = blocks[i][1][0]
                 fatherLabel = h1Label
                 currentLabel = h2Label
                 content.append(blocks[i])
+                offset[1] += 1
 
         if not(isinstance(blocks[i], Header)):
             # print(type(blocks[i]))
@@ -49,11 +52,20 @@ def get_split_dict(source):
         elif not blocks[i][0] <= 2:
             content.append(blocks[i])
 
-        dictitem = {currentLabel : (
-                level,
-                fatherLabel,
-                Pandoc(meta, content)
-            )
+
+        currentMeta = [{}]
+        currentMeta[0].update(meta[0])
+        currentMeta[0].update({
+            'offset': MetaInlines([Str(str(offset[0]) + ',' + str(offset[1]))])
+
+        })
+
+        dictitem = {currentLabel : {
+                'level': level,
+                'fatherlabel': fatherLabel,
+                'offset': str(offset[0]) + ',' + str(offset[1]),
+                'pandoc': Pandoc(currentMeta, content)
+            }
         }
 
         dict.update(dictitem)
@@ -67,14 +79,14 @@ def split_json(source):
         os.mkdir(dirname)
     for key in splitteddict:
         item = splitteddict[key]
-        if item[1] == None:
+        if item['fatherlabel'] == None:
             path = key
         else:
-            path = item[1]+'/'+key
-            if not os.path.exists(dirname+item[1]):
-                os.mkdir(dirname+item[1])
+            path = item['fatherlabel']+'/'+key
+            if not os.path.exists(dirname+item['fatherlabel']):
+                os.mkdir(dirname+item['fatherlabel'])
         filename = dirname + path + '.json'
-        output = pandoc.write(item[2],file=filename , format='json')
+        output = pandoc.write(item['pandoc'],file=filename , format='json')
 
 def split_md(source):
     splitteddict = get_split_dict(source)
@@ -83,14 +95,14 @@ def split_md(source):
         os.mkdir(dirname)
     for key in splitteddict:
         item = splitteddict[key]
-        if item[1] == None:
+        if item['fatherlabel'] == None:
             path = key
         else:
             path = item[1]+'/'+key
-            if not os.path.exists(dirname+item[1]):
-                os.mkdir(dirname+item[1])
+            if not os.path.exists(dirname+item['fatherlabel']):
+                os.mkdir(dirname+item['fatherlabel'])
         filename = dirname + path + '.md'
-        output = pandoc.write(item[2],file=filename , format='markdown')
+        output = pandoc.write(item['pandoc'],file=filename , format='markdown')
 
 def build_html(source):
     dirname = get_destination(source)
@@ -99,7 +111,11 @@ def build_html(source):
             root = root+'/'
         for file in files:
             if file.endswith('.json') and not file=='refs.json':
-                command = 'pandoc "' + root + file + '" -s -o "'+ root + file.split('.')[0] +'.html" --title="Titre!" --template="'+dirname+'template-section.html" --css="style.css" --katex --bibliography="refs.json" --csl="nature.csl" --citeproc --metadata-file="'+dirname+'meta.yaml" --filter pandoc-sidenote -V base="file:///'+dirname+'"'
+                with open(root + file, 'r', encoding='utf8') as f:
+                    meta = pandoc.read(f.read(), format='json')[0][0]
+                offset = meta['offset'][0][0][0]
+                print(offset)
+                command = 'pandoc "' + root + file + '" -s -o "'+ root + file.split('.')[0] +'.html" --title="Titre!" --template="'+dirname+'template-section.html" --number-sections --number-offset=' + offset + ' --css="style.css" --katex --bibliography="refs.json" --csl="nature.csl" --citeproc --metadata-file="'+dirname+'meta.yaml" --filter pandoc-sidenote -V base="file:///'+dirname+'"'
                 print(command)
                 print()
                 os.system(command)

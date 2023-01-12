@@ -88,6 +88,4 @@ ac. Amet consectetur adipiscing elit pellentesque habitant. Sed tempus
 urna et pharetra pharetra. Quam pellentesque nec nam aliquam. Id velit
 ut tortor pretium viverra suspendisse potenti nullam ac.
 
-### Line length test
-
 azertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbn

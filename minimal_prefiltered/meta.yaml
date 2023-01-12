@@ -1,5 +1,5 @@
-
-lang: la
+title: "Title given in YAML metadata file"
+author: "Sylvain Kern"
 navigation: |
   <ul>
   <li><a href="h1-main-title.html#h1-main-title"
@@ -143,4 +143,3 @@ navigation: |
   links</a></li>
   </ul></li>
   </ul>
-

@@ -16,8 +16,6 @@ Fratremque derepta habet aquarum. Lacertis horrentia Mavortius
 sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod
 laboribus fecit, gravis aures supplex Pallas proxima iam.
 
-### Wide table test
-
 Check the stats +@tbl:label4.
 
 ::: wide
@@ -58,16 +56,12 @@ Check the stats +@tbl:label4.
   : La mÃ©tÃ©o. {#tbl:label4}
 :::
 
-### Merge cells ?
-
   a    b
   ---- ---
   1    2
   \^   4
 
 Nope.
-
-### Margin tables ?
 
 ::: margin
   Header 1            Header 2      Header 3
