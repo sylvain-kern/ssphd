@@ -1,10 +1,43 @@
 ---
+chapters: True
+chaptersDepth: 1
+linkReferences: True
+nameInLink: True
+figureTitle: |
+  <span class="captionprefix">Figure
+tableTitle: |
+  <span class="captionprefix">Table
+titleDelim: ".</span><br>"
+figPrefix:
+  - "figure"
+  - "figures"
+tblPrefix:
+  - "table"
+  - "tables"
+eqnPrefix:
+  - "équation"
+  - "équations"
 title: "test"
-lang: "la"
+lang: "fr"
 bibliography: "./refs.json"
+csl: "./mycsl.csl"
 ---
 
-# H1: main title
+# Abstract {-}
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facZilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+
+# Acknowledgements {-}
+
+My man
+
+The family
+
+The hood
+
+# H1: chapter title
+
+### header {-}
 
 ## All headings (this is level two)
 
@@ -12,7 +45,7 @@ bibliography: "./refs.json"
 
 #### Level four
 
-##### Level five
+##### Level five (unnumbered) {-}
 
 ###### Level six
 
@@ -200,9 +233,12 @@ A reference to the [image](#fig:label1), and another [reference](#fig:label2).
 
 ![This is (meant to be) a margin image](pic/usa-census.png){.margin #fig:label}
 
-See figures {@fig:label1} and {@fig:label2}
+See [@fig:label1;@fig:label2]
 
-Maxed out references : +@fig:label1.
+@Fig:label1.
+
+
+### Subfigures ?
 
 ### Uncaptioned
 
@@ -210,7 +246,7 @@ Maxed out references : +@fig:label1.
 
 ## Tables
 
-Text before. I can reference the following table with its label : see +@tbl:label3.
+Text before. I can reference the following table with its label : see @tbl:label3.
 
 | Header 1       |   Header 2   | Header 3 |
 | -------------- | :----------: | -------: |
@@ -226,7 +262,7 @@ candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas pro
 
 ### Wide table test
 
-Check the stats +@tbl:label4.
+Check the stats @tbl:label4.
 
 :::wide
 | Mois                             | jan.  | fév.  | mars  | avril | mai   | juin  | jui.  | août  | sep.  | oct. | nov.  | déc.  | année  |
@@ -376,7 +412,7 @@ $$
 
 ### Labelled
 
-Here's a reference to +@eq:description:
+Here's a reference to @eq:description:
 
 $$
 M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}
@@ -449,11 +485,24 @@ sumpta corpore.
 
 ## Content with citations
 
-This is a citation[@chandrasekharanMicroscaleDifferentialCapacitive2011] with `pandoc-citeproc`.
+This is a citation @chandrasekharanMicroscaleDifferentialCapacitive2011 [postnote], @ghouila-houriDeveloppementMicrocapteursFrottement2018 with `pandoc-citeproc`.
+
+This is a citation @ghouila-houriDeveloppementMicrocapteursFrottement2018 with `pandoc-citeproc`.
+
+@strakaGenerationDetectionCharacterization2019
+
+Note [^a]
+
+[^a]: yooo
+
+Note [^*]
+
+[^*]: yooo
+
 Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam.
 Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet
 aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia
-candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam.
+candidus. Lorem markdownum quod labooribus fecit, gravis aures supplex Pallas proxima iam.
 
 Another citation,[@10/dfwrxt] this time with the filter
 
@@ -677,20 +726,27 @@ which you wish to be displayed literally, ex.: \`foo\`, \*bar\*, etc.
 
 See section: @sec:chonky-formulae
 
-Figure: +@fig:label
+Figure: @fig:label
 
-Figure: +@fig:label2
+Figure: @fig:label2
 
-Figure: +@fig:label3
+Figure: @fig:label3
 
-Figure: +@fig:example-image
+Figure: @fig:example-image
 
-Table: +@tbl:table2
+Table: @tbl:table2
 
-+@tbl:label4
+@tbl:label4
 
-+@tbl:chaptab
+@tbl:chaptab
 
-+@eq:description
+@eq:description
 
 [link](#fig:label1)
+
+
+\listoffigures
+
+\listoftables
+
+\listoflistings

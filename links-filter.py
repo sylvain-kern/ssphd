@@ -73,4 +73,4 @@ def set_links(key, value, format, meta):
             return Link(t1, linktext, [newhref, t4])
 
 if __name__=='__main__':
-    toJSONFilters([generate_link_dict, set_links])
+    toJSONFilters([set_links])

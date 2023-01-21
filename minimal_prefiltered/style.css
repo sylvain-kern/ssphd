@@ -46,18 +46,32 @@ h3 {
   margin-left: 70px;
 }
 
+h1 {
+  font-size: 200%;
+  margin-bottom: 2em;
+}
+
+h2 {
+  font-size: 120%;
+  margin-bottom: 1.5em;
+}
+
+h3 {
+  font-size: 100%;
+}
+
+h1,
+h2 {
+  margin-top: 0;
+  padding-top: .5em;
+}
+
 h3,
 h4,
 h5,
 h6 {
   font-weight: normal;
   /* font-style: italic; */
-}
-
-#top-nav + h1,
-#top-nav + h2 {
-  margin-top: 0;
-  padding-top: .3em;
 }
 
 h1 .header-section-number {
@@ -149,8 +163,13 @@ h6 + p {
   color: #2b5bb3;
 }
 
+#sidebar ul {
+  margin: 0px;
+}
+
 #sidebar nav ul li a {
-  font-variant-caps: all-small-caps;
+  font-weight: bold;
+  /* font-variant-caps: all-small-caps; */
   letter-spacing: .05em;
 }
 
@@ -161,7 +180,7 @@ h6 + p {
 
 
 #sidebar nav ul li ul a {
-  font-variant-caps: normal;
+  font-weight: normal;
   letter-spacing: 0em;
 }
 
@@ -171,22 +190,19 @@ h6 + p {
 
 #sidebar nav ul li
 {
-  padding-bottom: 18px;
+  padding-bottom: 6px;
 }
 
 #sidebar nav ul li ul {
-  font-size: 85%;
-  padding-top: 12px;
+  /* font-size: 85%; */
+  padding-top: 6px;
 }
 
 #sidebar nav ul li ul li ul {
-  font-size: 85%;
+  /* font-size: 85%; */
   padding-top: 0px;
 }
 
-#sidebar nav ul li ul li {
-  padding-bottom: 6px;
-}
 
 #sidebar nav ul li ul li ul li {
   padding-bottom: 0;
@@ -198,7 +214,7 @@ h6 + p {
   font-variant-caps: all-small-caps;
   letter-spacing: 0.05em;
   border-bottom: 1px solid #DDD;
-  padding-bottom: 0.4em;
+  padding-bottom: 0.5em;
   padding-top: 2em;
 }
 
@@ -277,7 +293,6 @@ figure {
 figure img {
   width: 100%;
 }
-
 .wide {
   width: 145%;
 }
@@ -290,6 +305,10 @@ figure img {
   font-size: 80%;
   font-family: 'Source Sans Pro', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   text-align: left;
+}
+
+.captionprefix{
+  font-weight: bold;
 }
 
 /* sidenotes & caption behavior */
