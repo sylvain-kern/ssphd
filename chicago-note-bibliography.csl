@@ -315,7 +315,7 @@
         <text variable="title"/>
       </else-if>
       <else>
-        <text variable="title" form="short" quotes="true"/>
+        <text variable="title" text-case="title" form="short" quotes="true"/>
       </else>
     </choose>
   </macro>
@@ -1350,7 +1350,6 @@
               <group delimiter=", ">
                 <text macro="title-short"/>
                 <!--if title & author are the same: -->
-                <text macro="issued"/>
                 <text macro="date-disambiguate"/>
                 <text macro="case-locator-subsequent"/>
               </group>

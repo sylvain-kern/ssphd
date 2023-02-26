@@ -70,6 +70,3 @@
             header](#an-h3-header){#toc-an-h3-header}
     -   [[2.2]{.toc-section-number} Test
         links](#test-links){#toc-test-links}
--   [3]{.toc-section-number} List of Figures
--   [4]{.toc-section-number} List of Tables
--   [5]{.toc-section-number} List of Listings

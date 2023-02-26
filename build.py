@@ -10,7 +10,6 @@ def generate_nav(source):
     destination = get_destination(source)
     if not os.path.exists(destination):
         os.mkdir(destination)
-    # print('pandoc "' + source + '" -o "'+ destination +'nav.md" --number-sections --template="toc-template.md" --toc')
     os.system('pandoc "' + source + '" -o "'+ destination +'nav.md" --number-sections --template="'+destination+'toc-template.md" --toc')
     os.system('pandoc "' + destination + 'nav.md" -o "' + destination + 'nav.html" --filter links-filter-toc.py')
 
@@ -84,9 +83,6 @@ def get_split_dict(source):
 
         dict.update(dictitem)
 
-        print()
-        print()
-
     return(dict)
 
 def split_json(source):
@@ -98,12 +94,14 @@ def split_json(source):
         item = splitteddict[key]
         if item['fatherlabel'] == None:
             path = key
+            if not os.path.exists(dirname + path):
+                os.mkdir(dirname + path)
         else:
             path = item['fatherlabel']+'/'+key
-            if not os.path.exists(dirname+item['fatherlabel']):
-                os.mkdir(dirname+item['fatherlabel'])
-        filename = dirname + path + '.json'
-        output = pandoc.write(item['pandoc'],file=filename , format='json')
+            if not os.path.exists(dirname + path):
+                os.mkdir(dirname + path)
+        filename = dirname + path + '/index.json'
+        output = pandoc.write(item['pandoc'], file=filename, format='json')
 
 def split_md(source):
     splitteddict = get_split_dict(source)
@@ -131,17 +129,18 @@ def build_html(source):
                 with open(root + file, 'r', encoding='utf8') as f:
                     meta = pandoc.read(f.read(), format='json')[0][0]
                 offset = meta['offset'][0][0][0]
-                print(offset)
-                command = 'pandoc "' + root + file + '" -s -o "'+ root + file.split('.')[0] +'.html" --template="'+dirname+'template-section.html" --number-sections --section-divs --number-offset=' + offset + ' --css="style.css" --katex --citeproc  --filter links-filter.py --filter pandoc-sidenote -V base="file:///'+dirname+'"'
-                print(command)
+                # print(offset)
+                # command = 'pandoc "' + root + file + '" -s -o "'+ root + file.split('.')[0] +'.html" --template="'+dirname+'template-section.html" --number-sections --section-divs --number-offset=' + offset + ' --css="style.css" --katex --citeproc  --filter links-filter.py --filter pandoc-sidenote --filter pandoc-acronyms -V base="file:///'+dirname+'"'
+                command = 'pandoc "' + root + file + '" -s -o "'+ root + file.split('.')[0] +'.html" --template="'+dirname+'template-section.html" --number-sections --section-divs --number-offset=' + offset + ' --css="style.css" --katex --citeproc  --filter links-filter.py --filter pandoc-sidenote -V base="/"'
+                # print(command)
                 os.system(command)
 
 def pre_filters(source):
     destname = source.split('.')[0]+'_prefiltered.json'
-    print(destname)
+    # print(destname)
     command = 'pandoc "' + source + '" -o "' + destname + '" --filter savelinkdict.py --filter pandoc-secnos --filter pandoc-crossref'
     os.system(command)
-    print(command)
+    # print(command)
     return destname
 
 def main(source):

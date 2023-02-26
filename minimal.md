@@ -1,6 +1,5 @@
 ---
 chapters: True
-chaptersDepth: 1
 linkReferences: True
 nameInLink: True
 figureTitle: |
@@ -17,10 +16,11 @@ tblPrefix:
 eqnPrefix:
   - "équation"
   - "équations"
-title: "test"
+title: test
+author: Sylvain Kern
 lang: "fr"
 bibliography: "./refs.json"
-csl: "./mycsl.csl"
+csl: "chicago-fullnote-bibliography.csl"
 ---
 
 # Abstract {-}
@@ -240,6 +240,15 @@ See [@fig:label1;@fig:label2]
 
 ### Subfigures ?
 
+<div id="fig:figureRef">
+![subfigure 1 caption](image1.png){#fig:figureRefA}
+
+![subfigure 2 caption](image2.png){#fig:figureRefB}
+
+Caption of figure
+</div>
+
+
 ### Uncaptioned
 
 ![](pic/usa-census.png)
@@ -394,6 +403,14 @@ Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet
 aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia
 candidus.
 
+Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. This is inline in the flow: ex=∑n=0∞xnn!∑n=0∞0ex=∑n=0∞​0∑n=0∞​n!xn​​. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus.
+
+Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. This is inline in the flow: ex=∑n=0∞xnn!∑n=0∞0ex=∑n=0∞​0∑n=0∞​n!xn​​. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus.
+
+Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. This is inline in the flow: ex=∑n=0∞xnn!∑n=0∞0ex=∑n=0∞​0∑n=0∞​n!xn​​. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus.
+
+Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. This is inline in the flow: ex=∑n=0∞xnn!∑n=0∞0ex=∑n=0∞​0∑n=0∞​n!xn​​. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus.
+
 $$
 e^x = \sum_{n = 0}^{\infty} \frac{x^n}{n!}.
 $$
@@ -441,7 +458,13 @@ body text at all screen widths.
   supports inline elements, like **bold** or [links](#),
   or math: $e^{i\pi} +1 = 0$ !
 
+Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. This is inline in the flow: ex=∑n=0∞xnn!∑n=0∞0ex=∑n=0∞​0∑n=0∞​n!xn​​. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus.
 
+Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. This is inline in the flow: ex=∑n=0∞xnn!∑n=0∞0ex=∑n=0∞​0∑n=0∞​n!xn​​. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus.
+
+Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. This is inline in the flow: ex=∑n=0∞xnn!∑n=0∞0ex=∑n=0∞​0∑n=0∞​n!xn​​. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus.
+
+Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. This is inline in the flow: ex=∑n=0∞xnn!∑n=0∞0ex=∑n=0∞​0∑n=0∞​n!xn​​. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas proxima iam. Postquam superi desiluit, flentibus posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia Mavortius sanguineae silentia, num Caesarea mollia candidus.
 
 ## Margin
 
@@ -524,6 +547,12 @@ This is HTML! (not in glossary ?)
 
 This is +html (in glossary)!
 
+This is a test using the `[pandoc-acronyms](https://pypi.org/project/pandoc-acronyms/)` filter.
+
+- [!html>] inserts the long form ("beer brewing attitude").
+- [!html<] inserts the short form ("BBA").
+- [!html!] inserts the explained form ("beer brewing attitude (BBA)").
+
 ## Smart typography
 
 En: --
@@ -556,6 +585,7 @@ sequenceDiagram
     Alice->>John: Hello John, how are you?
     John-->>Alice: Great!
 ~~~
+
 
 # Rippledoc example
 
@@ -743,10 +773,3 @@ Table: @tbl:table2
 @eq:description
 
 [link](#fig:label1)
-
-
-\listoffigures
-
-\listoftables
-
-\listoflistings

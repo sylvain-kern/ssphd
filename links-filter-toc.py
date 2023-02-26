@@ -12,7 +12,8 @@ def set_links(key, value, format, meta):
     if key == 'Link':
         [t1, linktext, [href, t4]] = value
         if href[1:] in LinkDict:
-            newhref = LinkDict[href[1:]]+'.html'+href
+            # newhref = LinkDict[href[1:]] + '/index.html/' + href
+            newhref = LinkDict[href[1:]] + '/' + href
             return Link(t1, linktext, [newhref, t4])
 
 if __name__=='__main__':
