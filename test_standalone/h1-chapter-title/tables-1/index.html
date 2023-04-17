@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc-markdown-css-theme" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Sylvain Kern" />
+  <base href="/">
+  <title>test</title>
+  <link rel="stylesheet" href="_assets/css/style.css" />
+  <link rel="stylesheet" href="_assets/css/highlighting.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:wght@100;200;300;400;500;600;700;800;900|Source Serif Pro">
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" />
+</head>
+<body>
+
+<header>
+    <div id='sidebar'>
+        <nav id="TOC" role="doc-toc">
+          <ul>
+          <li><a href="markdown-kitchen-sink/#markdown-kitchen-sink"
+          id="toc-markdown-kitchen-sink"><span class="toc-section-number">1</span>
+          Markdown Kitchen Sink</a>
+          <ul>
+          <li><a href="markdown-kitchen-sink/headers/#headers"
+          id="toc-headers"><span class="toc-section-number">1.1</span>
+          Headers</a></li>
+          </ul></li>
+          <li><a href="h1/#h1" id="toc-h1"><span
+          class="toc-section-number">2</span> H1</a>
+          <ul>
+          <li><a href="h1/h2/#h2" id="toc-h2"><span
+          class="toc-section-number">2.1</span> H2</a>
+          <ul>
+          <li><a href="h1/h2/#h3" id="toc-h3"><span
+          class="toc-section-number">2.1.1</span> H3</a></li>
+          </ul></li>
+          </ul></li>
+          <li><a href="alt-h1/#alt-h1" id="toc-alt-h1"><span
+          class="toc-section-number">3</span> Alt-H1</a>
+          <ul>
+          <li><a href="alt-h1/alt-h2/#alt-h2" id="toc-alt-h2"><span
+          class="toc-section-number">3.1</span> Alt-H2</a></li>
+          <li><a href="alt-h1/emphasis/#emphasis" id="toc-emphasis"><span
+          class="toc-section-number">3.2</span> Emphasis</a></li>
+          <li><a href="alt-h1/lists/#lists" id="toc-lists"><span
+          class="toc-section-number">3.3</span> Lists</a></li>
+          <li><a href="alt-h1/links/#links" id="toc-links"><span
+          class="toc-section-number">3.4</span> Links</a></li>
+          <li><a href="alt-h1/images/#images" id="toc-images"><span
+          class="toc-section-number">3.5</span> Images</a></li>
+          <li><a
+          href="alt-h1/code-and-syntax-highlighting/#code-and-syntax-highlighting"
+          id="toc-code-and-syntax-highlighting"><span
+          class="toc-section-number">3.6</span> Code and Syntax
+          Highlighting</a></li>
+          <li><a href="alt-h1/tables/#tables" id="toc-tables"><span
+          class="toc-section-number">3.7</span> Tables</a></li>
+          <li><a href="alt-h1/blockquotes/#blockquotes" id="toc-blockquotes"><span
+          class="toc-section-number">3.8</span> Blockquotes</a></li>
+          <li><a href="alt-h1/inline-html/#inline-html" id="toc-inline-html"><span
+          class="toc-section-number">3.9</span> Inline HTML</a></li>
+          <li><a href="alt-h1/horizontal-rule/#horizontal-rule"
+          id="toc-horizontal-rule"><span class="toc-section-number">3.10</span>
+          Horizontal Rule</a></li>
+          <li><a href="alt-h1/line-breaks/#line-breaks" id="toc-line-breaks"><span
+          class="toc-section-number">3.11</span> Line Breaks</a></li>
+          <li><a href="alt-h1/youtube-videos/#youtube-videos"
+          id="toc-youtube-videos"><span class="toc-section-number">3.12</span>
+          YouTube Videos</a></li>
+          </ul></li>
+          <li><a href="abstract/#abstract" id="toc-abstract">Abstract</a></li>
+          <li><a href="acknowledgements/#acknowledgements"
+          id="toc-acknowledgements">Acknowledgements</a></li>
+          <li><a href="h1-chapter-title/#h1-chapter-title"
+          id="toc-h1-chapter-title"><span class="toc-section-number">4</span> H1:
+          chapter title</a>
+          <ul>
+          <li><a href="h1-chapter-title/#header" id="toc-header">header</a></li>
+          <li><a
+          href="h1-chapter-title/all-headings-this-is-level-two/#all-headings-this-is-level-two"
+          id="toc-all-headings-this-is-level-two"><span
+          class="toc-section-number">4.1</span> All headings (this is level
+          two)</a>
+          <ul>
+          <li><a
+          href="h1-chapter-title/all-headings-this-is-level-two/#level-three"
+          id="toc-level-three"><span class="toc-section-number">4.1.1</span> Level
+          three</a></li>
+          </ul></li>
+          <li><a
+          href="h1-chapter-title/harmony-counterpoint-paragraph-flow-balance/#harmony-counterpoint-paragraph-flow-balance"
+          id="toc-harmony-counterpoint-paragraph-flow-balance"><span
+          class="toc-section-number">4.2</span> Harmony &amp; counterpoint
+          (paragraph flow &amp; balance)</a>
+          <ul>
+          <li><a
+          href="h1-chapter-title/harmony-counterpoint-paragraph-flow-balance/#line-length-test"
+          id="toc-line-length-test"><span class="toc-section-number">4.2.1</span>
+          Line length test</a></li>
+          </ul></li>
+          <li><a href="h1-chapter-title/unnumbered-section/#unnumbered-section"
+          id="toc-unnumbered-section">Unnumbered section</a></li>
+          <li><a href="h1-chapter-title/markdown-features/#markdown-features"
+          id="toc-markdown-features"><span class="toc-section-number">4.3</span>
+          Markdown features</a>
+          <ul>
+          <li><a
+          href="h1-chapter-title/markdown-features/#tectis-praemonuisse-plura"
+          id="toc-tectis-praemonuisse-plura"><span
+          class="toc-section-number">4.3.1</span> Tectis praemonuisse
+          plura</a></li>
+          </ul></li>
+          <li><a href="h1-chapter-title/notes/#notes" id="toc-notes"><span
+          class="toc-section-number">4.4</span> Notes</a>
+          <ul>
+          <li><a href="h1-chapter-title/notes/#side-note-symbols"
+          id="toc-side-note-symbols"><span class="toc-section-number">4.4.1</span>
+          Side note symbols</a></li>
+          </ul></li>
+          <li><a href="h1-chapter-title/wide-content/#wide-content"
+          id="toc-wide-content"><span class="toc-section-number">4.5</span> Wide
+          content</a></li>
+          <li><a href="h1-chapter-title/pictures/#pictures"
+          id="toc-pictures"><span class="toc-section-number">4.6</span>
+          Pictures</a>
+          <ul>
+          <li><a href="h1-chapter-title/pictures/#subfigures"
+          id="toc-subfigures"><span class="toc-section-number">4.6.1</span>
+          Subfigures ?</a></li>
+          <li><a href="h1-chapter-title/pictures/#uncaptioned"
+          id="toc-uncaptioned"><span class="toc-section-number">4.6.2</span>
+          Uncaptioned</a></li>
+          </ul></li>
+          <li><a href="h1-chapter-title/tables-1/#tables-1"
+          id="toc-tables-1"><span class="toc-section-number">4.7</span> Tables</a>
+          <ul>
+          <li><a href="h1-chapter-title/tables-1/#wide-table-test"
+          id="toc-wide-table-test"><span class="toc-section-number">4.7.1</span>
+          Wide table test</a></li>
+          <li><a href="h1-chapter-title/tables-1/#merge-cells"
+          id="toc-merge-cells"><span class="toc-section-number">4.7.2</span> Merge
+          cells ?</a></li>
+          <li><a href="h1-chapter-title/tables-1/#margin-tables"
+          id="toc-margin-tables"><span class="toc-section-number">4.7.3</span>
+          Margin tables ?</a></li>
+          </ul></li>
+          <li><a href="h1-chapter-title/code/#code" id="toc-code"><span
+          class="toc-section-number">4.8</span> Code</a></li>
+          <li><a href="h1-chapter-title/math/#math" id="toc-math"><span
+          class="toc-section-number">4.9</span> Math</a>
+          <ul>
+          <li><a href="h1-chapter-title/math/#chonky-formulae"
+          id="toc-chonky-formulae"><span class="toc-section-number">4.9.1</span>
+          Chonky formulae</a></li>
+          <li><a href="h1-chapter-title/math/#labelled" id="toc-labelled"><span
+          class="toc-section-number">4.9.2</span> Labelled</a></li>
+          <li><a href="h1-chapter-title/math/#margin-math"
+          id="toc-margin-math"><span class="toc-section-number">4.9.3</span>
+          Margin math ?</a></li>
+          <li><a href="h1-chapter-title/math/#math-in-note"
+          id="toc-math-in-note"><span class="toc-section-number">4.9.4</span> Math
+          in note</a></li>
+          </ul></li>
+          <li><a href="h1-chapter-title/margin/#margin" id="toc-margin"><span
+          class="toc-section-number">4.10</span> Margin</a></li>
+          <li><a
+          href="h1-chapter-title/content-with-citations/#content-with-citations"
+          id="toc-content-with-citations"><span
+          class="toc-section-number">4.11</span> Content with citations</a></li>
+          <li><a href="h1-chapter-title/cross-references/#cross-references"
+          id="toc-cross-references"><span class="toc-section-number">4.12</span>
+          Cross-references</a>
+          <ul>
+          <li><a
+          href="h1-chapter-title/cross-references/#to-headers-using-pandoc-secnos-filter"
+          id="toc-to-headers-using-pandoc-secnos-filter"><span
+          class="toc-section-number">4.12.1</span> To headers using
+          <code>pandoc-secnos</code> filter</a></li>
+          </ul></li>
+          <li><a
+          href="h1-chapter-title/abbreviations-not-yet-working/#abbreviations-not-yet-working"
+          id="toc-abbreviations-not-yet-working"><span
+          class="toc-section-number">4.13</span> Abbreviations (not yet
+          working)</a></li>
+          <li><a href="h1-chapter-title/smart-typography/#smart-typography"
+          id="toc-smart-typography"><span class="toc-section-number">4.14</span>
+          Smart typography</a></li>
+          <li><a
+          href="h1-chapter-title/esoteric-but-not-that-much/#esoteric-but-not-that-much"
+          id="toc-esoteric-but-not-that-much"><span
+          class="toc-section-number">4.15</span> Esoteric (but not that much
+          ?)</a>
+          <ul>
+          <li><a href="h1-chapter-title/esoteric-but-not-that-much/#plots"
+          id="toc-plots"><span class="toc-section-number">4.15.1</span> Plots
+          :</a></li>
+          <li><a href="h1-chapter-title/esoteric-but-not-that-much/#mermaid"
+          id="toc-mermaid"><span class="toc-section-number">4.15.2</span> Mermaid
+          ?</a></li>
+          </ul></li>
+          </ul></li>
+          <li><a href="rippledoc-example/#rippledoc-example"
+          id="toc-rippledoc-example"><span class="toc-section-number">5</span>
+          Rippledoc example</a>
+          <ul>
+          <li><a href="rippledoc-example/an-h2-header/#an-h2-header"
+          id="toc-an-h2-header"><span class="toc-section-number">5.1</span> An h2
+          header</a>
+          <ul>
+          <li><a href="rippledoc-example/an-h2-header/#an-h3-header"
+          id="toc-an-h3-header"><span class="toc-section-number">5.1.1</span> An
+          h3 header</a></li>
+          </ul></li>
+          <li><a href="rippledoc-example/test-links/#test-links"
+          id="toc-test-links"><span class="toc-section-number">5.2</span> Test
+          links</a></li>
+          </ul></li>
+          </ul>        </nav>
+    </div>
+</header>
+
+<main>
+  <div id='top-nav'>
+    <a href='index.html'>index</a>
+    <span style="font-size:80%;color:#DDD">/</span>
+        <a href='h1-chapter-title/index.html'>4 H1: chapter title</a>
+    <span style="font-size:80%;color:#DDD">/</span>
+    </div>
+
+<section id="tables-1" class="level2" data-number="0.1">
+<h2 data-number="4.7"><span class="header-section-number">4.7</span>
+Tables</h2>
+<p>Text before. I can reference the following table with its label : see
+tbl. 1.</p>
+<div id="tbl:label3">
+<table>
+<caption>Table 1: Caption of table.</caption>
+<thead>
+<tr class="header">
+<th>Header 1</th>
+<th style="text-align: center;">Header 2</th>
+<th style="text-align: right;">Header 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>bold style</strong></td>
+<td style="text-align: center;"><code>code block</code></td>
+<td style="text-align: right;">3.73</td>
+</tr>
+<tr class="even">
+<td>|escape pipe</td>
+<td style="text-align: center;">`backtick</td>
+<td style="text-align: right;">220.34</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Text after. Lorem markdownum quod laboribus fecit, gravis aures
+supplex Pallas proxima iam. Postquam superi desiluit, flentibus
+posuerunt ferum! Fratremque derepta habet aquarum. Lacertis horrentia
+Mavortius sanguineae silentia, num Caesarea mollia candidus. Lorem
+markdownum quod laboribus fecit, gravis aures supplex Pallas proxima
+iam.</p>
+<section id="wide-table-test" class="level3" data-number="0.1.1">
+<h3 data-number="4.7.1"><span class="header-section-number">4.7.1</span>
+Wide table test</h3>
+<p>Check the stats tbl. 2.</p>
+<div class="wide">
+<div id="tbl:label4">
+<table>
+<caption>Table 2: La météo.</caption>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mois</th>
+<th>jan.</th>
+<th>fév.</th>
+<th>mars</th>
+<th>avril</th>
+<th>mai</th>
+<th>juin</th>
+<th>jui.</th>
+<th>août</th>
+<th>sep.</th>
+<th>oct.</th>
+<th>nov.</th>
+<th>déc.</th>
+<th>année</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Temp. minimale moyenne (°C)</td>
+<td>−0.8</td>
+<td>−0.6</td>
+<td>2.5</td>
+<td>5.2</td>
+<td>9.8</td>
+<td>12.8</td>
+<td>14.5</td>
+<td>14.1</td>
+<td>10.6</td>
+<td>7.1</td>
+<td>2.8</td>
+<td>0.3</td>
+<td>6.6</td>
+</tr>
+<tr class="even">
+<td>Temp. moyenne (°C)</td>
+<td>1.9</td>
+<td>2.9</td>
+<td>7</td>
+<td>10.5</td>
+<td>15</td>
+<td>18.1</td>
+<td>20.1</td>
+<td>19.8</td>
+<td>15.8</td>
+<td>11.2</td>
+<td>5.8</td>
+<td>2.8</td>
+<td>10.9</td>
+</tr>
+<tr class="odd">
+<td>Temp. maximale moyenne (°C)</td>
+<td>4.5</td>
+<td>6.4</td>
+<td>11.1</td>
+<td>15.7</td>
+<td>20.2</td>
+<td>23.4</td>
+<td>25.7</td>
+<td>25.4</td>
+<td>21</td>
+<td>15.3</td>
+<td>8.8</td>
+<td>5.2</td>
+<td>15.3</td>
+</tr>
+<tr class="even">
+<td>Record de froid (°C)</td>
+<td>−23.6</td>
+<td>−22.3</td>
+<td>−16.7</td>
+<td>−5.6</td>
+<td>−2.4</td>
+<td>1.1</td>
+<td>4.9</td>
+<td>4.8</td>
+<td>−1.3</td>
+<td>−7.6</td>
+<td>−10.8</td>
+<td>−23.4</td>
+<td>−23.6</td>
+</tr>
+<tr class="odd">
+<td>Record de chaleur (°C)</td>
+<td>17.5</td>
+<td>21.1</td>
+<td>25.7</td>
+<td>30</td>
+<td>33.8</td>
+<td>38.8</td>
+<td>38.9</td>
+<td>38.7</td>
+<td>33.4</td>
+<td>29.1</td>
+<td>22.1</td>
+<td>18.3</td>
+<td>38.9</td>
+</tr>
+<tr class="even">
+<td>Nb. de jours avec gel</td>
+<td>16.4</td>
+<td>15.1</td>
+<td>9</td>
+<td>2.2</td>
+<td>0.1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1.7</td>
+<td>7.5</td>
+<td>13.8</td>
+<td>65.8</td>
+</tr>
+<tr class="odd">
+<td>Ensoleillement (h)</td>
+<td>58.1</td>
+<td>83.8</td>
+<td>134.8</td>
+<td>180</td>
+<td>202.5</td>
+<td>223.8</td>
+<td>228.6</td>
+<td>219.6</td>
+<td>164.5</td>
+<td>98.7</td>
+<td>55.3</td>
+<td>43.1</td>
+<td>1692.7</td>
+</tr>
+<tr class="even">
+<td>Précipitations (mm)</td>
+<td>32.2</td>
+<td>34.5</td>
+<td>42.8</td>
+<td>45.9</td>
+<td>81.9</td>
+<td>71.6</td>
+<td>72.7</td>
+<td>61.4</td>
+<td>63.5</td>
+<td>61.5</td>
+<td>47</td>
+<td>50</td>
+<td>664.6</td>
+</tr>
+<tr class="odd">
+<td>Nb. de jours avec précipitations</td>
+<td>8.4</td>
+<td>8.1</td>
+<td>9.1</td>
+<td>9.2</td>
+<td>11.5</td>
+<td>10.8</td>
+<td>9.9</td>
+<td>10.2</td>
+<td>8.6</td>
+<td>9.5</td>
+<td>9.3</td>
+<td>9.8</td>
+<td>114.9</td>
+</tr>
+<tr class="even">
+<td>Humidité relative (%)</td>
+<td>86</td>
+<td>82</td>
+<td>76</td>
+<td>72</td>
+<td>73</td>
+<td>74</td>
+<td>72</td>
+<td>76</td>
+<td>80</td>
+<td>85</td>
+<td>86</td>
+<td>86</td>
+<td>79</td>
+</tr>
+<tr class="odd">
+<td>Nb. de jours avec neige</td>
+<td>7.8</td>
+<td>6.7</td>
+<td>4</td>
+<td>1.5</td>
+<td>0.1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3.4</td>
+<td>6.3</td>
+<td>29.8</td>
+</tr>
+<tr class="even">
+<td>Nb. de jours d’orage</td>
+<td>0.1</td>
+<td>0.2</td>
+<td>0.5</td>
+<td>1.5</td>
+<td>5</td>
+<td>6.1</td>
+<td>6.2</td>
+<td>5.5</td>
+<td>2.7</td>
+<td>0.5</td>
+<td>0.2</td>
+<td>0.2</td>
+<td>28.7</td>
+</tr>
+<tr class="odd">
+<td>Nb. de jours avec brouillard</td>
+<td>9.1</td>
+<td>5.7</td>
+<td>3.4</td>
+<td>1.9</td>
+<td>2</td>
+<td>1.4</td>
+<td>1</td>
+<td>2.6</td>
+<td>6.7</td>
+<td>12.4</td>
+<td>10</td>
+<td>8.8</td>
+<td>65</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="merge-cells" class="level3" data-number="0.1.2">
+<h3 data-number="4.7.2"><span class="header-section-number">4.7.2</span>
+Merge cells ?</h3>
+<table>
+<thead>
+<tr class="header">
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>^</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Nope.</p>
+</section>
+<section id="margin-tables" class="level3" data-number="0.1.3">
+<h3 data-number="4.7.3"><span class="header-section-number">4.7.3</span>
+Margin tables ?</h3>
+<div class="margin">
+<div id="tbl:margin">
+<table>
+<caption>Table 3: Margin table test.</caption>
+<thead>
+<tr class="header">
+<th>Header 1</th>
+<th style="text-align: center;">Header 2</th>
+<th style="text-align: right;">Header 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>bold style</strong></td>
+<td style="text-align: center;"><code>code block</code></td>
+<td style="text-align: right;">3.73</td>
+</tr>
+<tr class="even">
+<td>|escape pipe</td>
+<td style="text-align: center;">`backtick</td>
+<td style="text-align: right;">220.34</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Yeah baby</p>
+</section>
+</section>
+</main>
+
+<script>
+;(function() {
+  // Non-essential if user has JavaScript off. Just makes checkboxes look nicer.
+  var selector = '.task-list > li > input[type="checkbox"]';
+  var checkboxes = document.querySelectorAll(selector);
+  Array.from(checkboxes).forEach((checkbox) => {
+    var wasChecked = checkbox.checked;
+    checkbox.disabled = false;
+    checkbox.addEventListener('click', (ev) => {ev.target.checked = wasChecked});
+  });
+})();
+</script>
+</body>
+</html>

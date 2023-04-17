@@ -1,0 +1,21 @@
+chapters: True
+linkReferences: True
+nameInLink: True
+figureTitle: |
+  <span class="captionprefix">Figure
+tableTitle: |
+  <span class="captionprefix">Table
+titleDelim: ".</span><br>"
+figPrefix:
+  - "figure"
+  - "figures"
+tblPrefix:
+  - "table"
+  - "tables"
+eqnPrefix:
+  - "équation"
+  - "équations"
+title: test
+author: Sylvain Kern
+lang: "fr"
+bibliography: "_assets/refs/refs.json"

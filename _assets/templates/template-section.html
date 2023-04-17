@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc-markdown-css-theme" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+  <base href="$base$">
+$if(description-meta)$
+  <meta name="description" content="$description-meta$" />
+$endif$
+  <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+  <link rel="stylesheet" href="_assets/css/style.css" />
+  <link rel="stylesheet" href="_assets/css/highlighting.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:wght@100;200;300;400;500;600;700;800;900|Source Serif Pro">
+$if(math)$
+  $math$
+$endif$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body>
+$for(include-before)$
+$include-before$
+$endfor$
+
+<header>
+    <div id='sidebar'>
+        <nav id="$idprefix$TOC" role="doc-toc">
+          ${ nav.html() }
+        </nav>
+    </div>
+</header>
+
+<main>
+  <div id='top-nav'>
+    <a href='index.html'>index</a>
+    <span style="font-size:80%;color:#DDD">/</span>
+    $if(ischapter)$
+    $else$
+    <a href='$fatherlabel$/index.html'>$fathertitle$</a>
+    <span style="font-size:80%;color:#DDD">/</span>
+    $endif$
+</div>
+
+$body$
+</main>
+
+$if(return-url)$
+<footer>
+<p class="signoff">
+  <a href="$return-url$">$if(return-text)$$return-text$$else$← Return$endif$</a>
+</p>
+</footer>
+$endif$
+<script>
+;(function() {
+  // Non-essential if user has JavaScript off. Just makes checkboxes look nicer.
+  var selector = '.task-list > li > input[type="checkbox"]';
+  var checkboxes = document.querySelectorAll(selector);
+  Array.from(checkboxes).forEach((checkbox) => {
+    var wasChecked = checkbox.checked;
+    checkbox.disabled = false;
+    checkbox.addEventListener('click', (ev) => {ev.target.checked = wasChecked});
+  });
+})();
+</script>
+$for(include-after)$
+$include-after$
+$endfor$
+</body>
+</html>

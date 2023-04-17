@@ -1,3 +1,27 @@
+---
+chapters: True
+linkReferences: True
+nameInLink: True
+figureTitle: |
+  <span class="captionprefix">Figure
+tableTitle: |
+  <span class="captionprefix">Table
+titleDelim: ".</span><br>"
+figPrefix:
+  - "figure"
+  - "figures"
+tblPrefix:
+  - "table"
+  - "tables"
+eqnPrefix:
+  - "équation"
+  - "équations"
+title: test
+author: Sylvain Kern
+lang: "fr"
+bibliography: "_assets/refs/refs.json"
+---
+
 # Abstract {-}
 
 At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facZilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.

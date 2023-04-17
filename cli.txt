@@ -1,1 +1,0 @@
-pandoc .\minimal.md -s -o minimal.html --filter savelinkdict.py --filter pandoc-xnos --filter links-filter.py --number-sections --filter pandoc-secnos --filter pandoc-sidenote --filter pandoc-plot  --css="./style.css" --css="./highlighting.css" --template=template.html --katex --bibliography="refs.json" --csl="nature.csl" --citeproc
