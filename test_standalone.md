@@ -610,7 +610,7 @@ candidus. Lorem markdownum quod laboribus fecit, gravis aures supplex Pallas pro
 
 A reference to the [image](#fig:label1), and another [reference](#fig:label2).
 
-![Caption](_assets/pics/usa-census.png){#fig:label1}
+![Caption](_assets/pics/usa-census.png "This is a map of the USA census!"){#fig:label1}
 
 ![This is a second image](_assets/pics/usa-census.png){.wide #fig:label2}
 

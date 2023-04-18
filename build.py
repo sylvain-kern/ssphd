@@ -148,14 +148,14 @@ def build_html():
                 offset = meta['offset'][0][0][0]
                 # print(offset)
                 # command = 'pandoc "' + root + file + '" -s -o "'+ root + file.split('.')[0] +'.html" --template="'+dirname+'template-section.html" --number-sections --section-divs --number-offset=' + offset + ' --css="style.css" --katex --citeproc  --filter links-filter.py --filter pandoc-sidenote --filter pandoc-acronyms -V base="file:///'+dirname+'"'
-                command = 'pandoc "' + root + file + '" -s -o "'+ root + file.split('.')[0] +'.html" --template="'+DEST_PATH+'/_assets/templates/template-section.html" --number-sections --section-divs --number-offset=' + offset + ' --katex --citeproc  --filter _assets/filters/links-filter.py --filter pandoc-sidenote -V base="/" --csl="_assets/refs/chicago-fullnote-bibliography.csl" --metadata-file="'+DEST_PATH+'/_assets/meta/meta.yaml"'
+                command = 'pandoc "' + root + file + '" -s -o "'+ root + file.split('.')[0] +'.html" --template="'+DEST_PATH+'/_assets/templates/template-section.html" --number-sections --section-divs --number-offset=' + offset + ' --katex --citeproc  --filter _assets/filters/links-filter.py --filter pandoc-sidenote -V base="/" --csl="_assets/refs/chicago-fullnote-bibliography.csl"'
                 # print(command)
                 os.system(command)
 
 def pre_filters(source):
     destname = source.split('.')[0]+'.json'
     # print(destname)
-    command = 'pandoc "' + source + '" -o "' + destname + '" --filter _assets/filters/savelinkdict.py --filter pandoc-secnos --filter pandoc-crossref'
+    command = 'pandoc "' + source + '" -o "' + destname + '" --filter _assets/filters/savelinkdict.py --filter pandoc-secnos --filter pandoc-crossref --metadata-file="'+DEST_PATH+'/_assets/meta/meta.yaml"'
     os.system(command)
     # print(command)
     return destname
