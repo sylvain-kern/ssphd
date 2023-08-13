@@ -1,7 +1,0 @@
-{
-    "chapter": "chapter",
-    "custom-csl-test": "chapter/custom-csl-test",
-    "unnumbered-chapter": "unnumbered-chapter",
-    "section": "unnumbered-chapter/section",
-    "references": "references"
-}
