@@ -1,25 +1,91 @@
-/* font style definitions  */
-@font-face {
-  font-family: Inter;
-  src: url(https://indestructibletype.com/fonts/Inter.css);
+/* FONTS */
+
+/* source serif */
+@import url(../fonts/source-serif-release/source-serif-variable.css);
+@import url(../fonts/source-serif-release/source-serif-caption.css);
+@import url(../fonts/source-serif-release/source-serif-display.css);
+@import url(../fonts/source-serif-release/source-serif-smtext.css);
+@import url(../fonts/source-serif-release/source-serif-subhead.css);
+@import url(../fonts/source-serif-release/source-serif-text.css);
+
+/* source sans */
+@import url(../fonts/source-sans-release/source-sans-3.css);
+
+/* inconsolata */
+@import url(../fonts/inconsolata/inconsolata.css);
+
+
+/* STYLE */
+
+/* index.html-specific */
+
+.home-title-block{
+  margin-top: 150px;
 }
 
-/* style */
+.home-title {
+  line-height: 1.1;
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 200%;
+  font-weight: 800;
+  margin-bottom: .4em;
+  line-height: 1.1;
+}
+
+.home-author {
+  font-size: 150%;
+  font-style: italic;
+  font-variation-settings: 'opsz' 55;
+  margin-bottom: 1em;
+}
+
+.home-type {
+  font-size: 120%;
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color:#444;
+  line-height: 1.1;
+}
+
+.home-nav nav {
+  font-size: 100%;
+}
+
+.home-nav nav > ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+/* other */
+
+html {
+  scroll-behavior: smooth;
+}
+
+.highlight {
+  background-color: yellow;
+  transition: background-color 0.5s ease-in-out;
+}
 
 body {
+  margin: 0;
   color: #222;
   font-size: 18px;
-  font-family: 'Source Serif Pro', Georgia, 'Times New Roman', Times, serif;
+  font-family: 'Source Serif VF', Georgia, 'Times New Roman', Times, serif;
   line-height: 1.6;
-  -webkit-hyphens: auto;
-  font-feature-settings: "onum";
-  hyphens: auto;
+  font-feature-settings: 'onum' 1, 'pnum' 1;
+  font-optical-sizing: auto;
+  /* -webkit-hyphens: auto; */
+  /* hyphens: auto; */
   text-rendering: optimizeLegibility;
 }
 
 header {
   width: 100%;
-  margin-left: 0;
+  height: 100%;
+  margin: 0px;
 }
 
 main, footer {
@@ -30,6 +96,48 @@ main, footer {
   counter-reset: sidenote-counter;
 }
 
+footer {
+  margin-top: 100px;
+  border-top: 1px solid #DDD;
+  padding-bottom: 100px;
+}
+
+footer .horizontal {
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
+.title-block {
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  width: 80%;
+  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+.title-block a {
+  display: inline-block;
+  color: #888;
+}
+
+.title-block a:hover {
+  display: inline-block;
+  color: #222;
+}
+
+
+.title-block a:hover {
+  text-decoration: none;
+}
+
+.abstract {
+  line-height: 1.6;
+}
+
+.abstract h3 {
+  margin-top: 0;
+}
+
 article {
   width: 87.5%;
   max-width: 750px;
@@ -38,60 +146,90 @@ article {
   counter-reset: sidenote-counter;
 }
 
-h1,
-h2,
-h3 {
-  font-weight: 600;
-  /* font-style: italic; */
-	line-height: 1.2;
-  hyphens: none;
-  margin-top: 1.8em;
-  margin-bottom: .4em;
-  margin-left: 70px;
-}
-
 h1 {
-  font-size: 200%;
-  margin-bottom: 2em;
+  font-family: 'Source Serif VF', Georgia, 'Times New Roman', Times, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 300%;
+  font-variation-settings: 'opsz' 55;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  /* color: #cc0000; */
 }
 
 h2 {
-  font-size: 120%;
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  font-size: 200%;
+  margin-top: .2em;
   margin-bottom: 1.5em;
 }
 
+
 h3 {
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 700;
   font-size: 100%;
+  margin-top: 2.5em;
+  margin-bottom: .4em;
 }
 
-h1,
-h2 {
-  margin-top: 0;
-  padding-top: .5em;
+h4 {
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  float: left;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 100%;
+  margin: 0;
+  display: inline-block;
 }
 
-h3,
-h4,
-h5,
-h6 {
+h4::after {
+  margin-top: 1.5em;
+  font-style: normal;
+  content: "\00A0\00A0\00B7\00A0\00A0" ;
+}
+
+h5, h6 {
+  display: inline-block;
   font-weight: normal;
-  /* font-style: italic; */
+  font-size: 100%;
+  margin: 0px;
+  float: left;
+}
+
+h5 {
+  font-style: italic;
+}
+
+h5::after, h6::after {
+  font-style: normal;
+  content: ".\00A0";
+  margin-top: 1.5em;
 }
 
 h1 .header-section-number {
-  font-weight: bold;
-  color: #cc0000;
-  /* font-size: 150%; */
+  font-weight: 700;
+  /* color: #cc0000; */
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 90%;
+  margin-right: .5em;
+}
+
+h1, h2, h3 {
+  line-height: 1.1;
 }
 
 h1 .header-section-number,
 h2 .header-section-number,
 h3 .header-section-number {
   font-style: normal;
-  position: relative;
-  display: inline-block;
-  width: 0;
-  left: -70px;
+  /* position: relative; */
+  /* display: inline-block; */
+  /* font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+  /* width: 0; */
+  /* font-weight: 400; */
+  /* left: -35px; */
 }
 
 h1.unnumbered,
@@ -103,137 +241,176 @@ h3.unnumbered {
 
 h1 + p,
 h2 + p,
-h3 + p,
-h4 + p,
-h5 + p,
-h6 + p {
+h3 + p {
   margin-top: 0px;
 }
 
-#sidebar,
-#top-nav {
-  font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  line-height: 1;
+nav,
+.top-nav,
+footer .horizontal {
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-feature-settings: 'onum' 1, 'pnum' 1;
+  line-height: 1.1;
 }
 
-#sidebar {
+.top-nav {
+  padding-bottom: 0.3em;
+  padding-top: 1em;
+}
+
+.horizontal {
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.top-nav-separator {
+  color: #DDD;
+}
+
+.horizontal > a:first-child, .horizontal .prev, .vertical > a:first-child {
+  margin-left: -6px;
+}
+
+.horizontal > a:last-child {
+  margin-right: -6px;
+}
+
+.top-nav .horizontal {
+  border-bottom: 1px solid #DDD;
+}
+
+.prev, .next, .top {
+  display: inline-block;
+}
+
+.top {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.horizontal .next {
+  margin-left: auto;
+  text-align: right;
+}
+
+.sidebar {
   position: fixed;
-  height: 98%;
+  height: 100%;
   width: 20%;
   max-width: 400px;
-  padding-right: 8px;
-  margin-left: 35px;
+  padding: 0;
+  padding-left: 30px;
+  padding-top: 30px;
+  paddding-bottom: 30px;
+  margin: 0;
+  position: fixed;
+  transform: none;
+  z-index: 99;
 }
 
-#sidebar nav {
-  font-size: 70%;
-  height: 100%;
+nav {
+  font-size: 80%;
+  height: 70%;
   overflow-y: auto;
+  margin-right: 0;
 }
 
-#sidebar nav ul {
+nav ul {
   list-style: none;
   padding-left: 0;
   display: block;
 }
 
-#sidebar nav a {
-  display: block;
-}
-
-#top-nav a {
+nav a {
+  width: 90%;
   display: inline-block;
 }
 
-#top-nav > a:first-child {
-  margin-left: -6px;
-}
 
-#sidebar nav a,
-#top-nav a {
+nav a,
+.top-nav a,
+footer .horizontal a {
   color: #444;
   padding-left: 6px;
   padding-right: 6px;
   padding-top: 6px;
   padding-bottom: 6px;
-  margin: 0;
-  border-radius: 4px;
-
+  border-radius: 5px;
 }
 
-#sidebar nav a:hover,
-#top-nav a:hover {
-  background-color: #f2f8fa;
+nav a:hover,
+.top-nav a:hover,
+.hamburger:hover,
+footer .horizontal a:hover {
+  background-color: #f5f5f5;
   color: #2b5bb3;
 }
 
-#sidebar ul {
+.sidebar ul {
   margin: 0px;
 }
 
-#sidebar nav ul li a {
-  /* font-weight: bold; */
+nav ul li a {
+  font-weight: 700;
 }
 
-#sidebar nav > ul > li > a .toc-section-number{
-  font-weight: bold;
-  color: #cc0000;
+nav > ul > li > a .toc-section-number{
+  /* font-weight: bold;
+  color: #cc0000; */
 }
 
 
-#sidebar nav ul li ul a {
+nav ul li ul a {
   font-weight: normal;
   letter-spacing: 0em;
 }
 
-#sidebar nav ul li ul li ul a {
+nav ul li ul li ul a {
   padding-left: 1.5em;
 }
 
-#sidebar nav ul li
+nav ul li
 {
   margin-bottom: 12px;
 }
 
-#sidebar nav ul li ul li
+nav ul li ul li
 {
   margin-bottom: 0px;
 }
 
 
-#sidebar nav ul li ul {
-  /* font-size: 85%; */
+nav ul li ul {
+  /* font-size: 80%; */
   /* margin: 0; */
 }
 
-#sidebar nav ul li ul li ul {
-  /* font-size: 85%; */
+nav ul li ul li ul {
+  /* font-size: 80%; */
   padding-top: 0px;
 }
 
 
-#sidebar nav ul li ul li ul li {
+nav ul li ul li ul li {
   padding-bottom: 0;
 }
 
-#top-nav {
-  font-size: 80%;
-  color: #444;
-  font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.top-nav, footer .horizontal {
+  font-size: 85%;
   font-variant-caps: all-small-caps;
+  color: #444;
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
   letter-spacing: 0.08em;
-  border-bottom: 1px solid #DDD;
-  padding-bottom: 0.3em;
-  padding-top: 2em;
 }
 
 p {
-  margin-top: 18px;
+  margin-top: 1em;
   margin-bottom: 0px;
 }
 
 p, .sidenote, .marginnote {
-  hyphens: auto;
+  /* hyphens: auto; */
 }
 
 a {
@@ -243,9 +420,17 @@ a {
 
 a:hover {
   text-underline-position: above;
-  text-underline-offset: 2px;
+  text-underline-offset: .15em;
   text-decoration: underline;
 
+}
+
+abbr {
+  text-underline-position: above;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: gray;
+  text-underline-offset: .15em;
 }
 
 ul {
@@ -256,14 +441,13 @@ ul {
 /* inline code */
 
 code {
-  font-size: 90%;
-  font-family: Consolas, 'Courier New', Courier, monospace;
+  font-family: 'Inconsolata', Consolas, 'Courier New', Courier, monospace;
   /* border: 1px solid #DDD; */
   background-color: #f5f5f5;
   padding-inline: .3ex;
   padding-top: 2px;
   padding-bottom: 2px;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 /* code blocks */
@@ -301,31 +485,94 @@ figure {
 
 figure img {
   width: 100%;
+  border: 1px solid #DDD;
+  border-radius: 2px;
 }
+
+
 .wide {
   width: 145%;
 }
 
+.margin {
+  float: right;
+  clear: right;
+  margin-right: -45%;
+  width: 40%;
+  margin-top: 0.3rem;
+  margin-bottom: 0;
+  vertical-align: baseline;
+  position: relative;
+}
 
-/* caption styling */
+.subfigures {
+  margin-bottom: 1.5em;
+}
+
+.subfigures figure {
+  margin-bottom: 0px;
+}
+
+.subfigures figure figcaption {
+  float: none;
+  width: 100%;
+}
 
 .sidenote, .marginnote, figcaption, table caption {
   color: #444;
-  font-size: 70%;
-  font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 80%;
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   text-align: left;
 }
 
+table caption {
+  margin-bottom: 1em;
+}
+
 .captionprefix{
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .subfigures p {
   color: #444;
   font-size: 80%;
-  font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   text-align: left;
   line-height: 1.3;
+}
+
+.subfigures table {
+  margin: 1em 0;
+  margin-bottom: 0px;
+  border: none;
+  font-feature-settings: 'pnum' 1, 'onum' 1;
+}
+
+.subfigures tr:hover {
+  background-color: white;
+}
+
+.subfigures table td, .subfigures table th {
+  font-size: 100%;
+  border: none;
+}
+
+.subfigures table td:first-child {
+  padding-left: 0px;
+}
+
+.subfigures table td:last-child {
+  padding-right: 0px;
+}
+
+.subfigures figcaption {
+  float: none;
+}
+
+.subfigures p:last-child {
+  /* float: right;
+  clear: right;
+  position: relative; */
 }
 
 /* sidenotes & caption behavior */
@@ -341,7 +588,7 @@ figure img {
   position: relative;
 }
 
-.sidenote, .marginnote, figcaption, .margin  {
+.sidenote, .marginnote, figcaption {
   float: right;
   clear: right;
   margin-right: -45%;
@@ -377,9 +624,8 @@ label.margin-toggle:not(.sidenote-number) {
     margin-left: 23%;
   }
 
-  #sidebar {
+  .sidebar {
     width: 19%;
-    margin-left: 5px;
   }
 
   .sidenote,
@@ -396,35 +642,47 @@ label.margin-toggle:not(.sidenote-number) {
 
 }
 
+.hamburger {
+  display: none;
+  background-color: transparent;
+  color: #444;
+  z-index: 100;
+  margin-left: -6px;
+  margin-right: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
 /* intermédiaire : le main text est collé à gauche (burger ?) mais quand même les sidenotes */
 @media (max-width: 1000px) {
-
-  /* #top-nav {
-    width: 100%;
-    z-index: 1;
-    margin-top: 0;
-    background-color: white;
-    position: fixed;
-    display: block;
-  }
-
-  #top-nav + h1,
-  #top-nav + h2 {
-    margin-top: 0;
-    padding-top: 1em;
-  } */
-
-
-  #sidebar {
-    /* en attendant de préparer le burger */
-    display: none;
-  }
-
   main,
   footer {
     margin-left: 30px;
     width: 65%;
     margin-right: auto;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .sidebar {
+    padding-top: 70px;
+    transform: translateX(-110%);
+    transition: .4s cubic-bezier(0.05, 0.7, 0.1, 1.0);
+    width: 100%;
+    min-width: 300px;
+    background-color: white;
+    box-shadow: 1px 0px 20px lightgrey;
+  }
+
+  .closeIcon {
+    display: none;
+  }
+
+  .showMenu {
+    transform: translateY(0);
   }
 
 }
@@ -479,7 +737,7 @@ label.margin-toggle:not(.sidenote-number) {
   .sidenote-number:hover, .margin-toggle:hover {
     cursor: pointer;
     text-underline-position: above;
-    text-underline-offset: 2px;
+    text-underline-offset: .15em;
     text-decoration: underline;
   }
 
@@ -568,7 +826,7 @@ label.sidenote-number {
 .sidenote-number::after, .sidenote::before, .margin-toggle {
   position: relative;
   font-weight: bold;
-  font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Inconsolata', Consolas, 'Courier New', Courier, monospace;
   -webkit-font-feature-settings: "tnum" 1;
   font-feature-settings: "tnum" 1;
   vertical-align: baseline;
@@ -585,9 +843,15 @@ div.tablenos {
 
 table {
   margin: auto;
+  margin-top: 2em;
+  margin-bottom: 3em;
   border-collapse: collapse;
   border-spacing: 0;
-  line-height: 1.2;
+  line-height: 1.3;
+  font-feature-settings: 'tnum' 1, 'onum' 1;
+  -webkit-font-feature-settings:  'tnum' 1, 'onum' 1;
+  -moz-font-feature-settings:  'tnum' 1 'onum' 1;
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   /* display: inline-table; */
   border-top: 2px solid grey;
   border-bottom: 2px solid grey;
@@ -595,22 +859,19 @@ table {
 
 th {
   border-bottom: 1px solid grey;
+  vertical-align: bottom;
 }
 
 td, th {
-  font-size: 85%;
+  font-size: 80%;
   padding: 8px;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 td {
-  padding-top: .4em;
-  padding-bottom: .4em;
-  font-feature-settings: 'tnum';
-  -webkit-font-feature-settings: 'tnum';
-  -moz-font-feature-settings: 'tnum';
   border-bottom: 1px solid #DDD;
+  vertical-align: text-top;
 }
 
 tr:hover {
@@ -619,15 +880,17 @@ tr:hover {
 
 thead {
   font-weight: normal;
-  font-family: 'Poppins', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-variant-caps: all-small-caps;
-  font-feature-settings: "smcp";
-  letter-spacing: .05em;
+  font-family: 'Source Sans 3', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 700;
 }
 
 tr.header th {
   font-weight: inherit;
 }
+
+/* math */
+
+
 
 /* katex */
 
@@ -640,18 +903,18 @@ tr.header th {
   font-size: 90%;
 }
 
-/* test collapsing sections */
 
+/* references */
 
-details[open] summary span.icon {
-  transform: rotate(180deg);
+.references .csl-entry {
+  margin-bottom: .2em;
+  border-radius: 8px;
+  padding: .8em;
+  padding-bottom: 1em;
+  margin-left: -.8em;
+  margin-right: -.8em;
 }
 
-summary {
-  display: flex;
-  cursor: pointer;
-}
-
-summary::-webkit-details-marker {
-  display: none;
+.references .csl-entry:hover {
+  background-color: #f5f5f5;
 }

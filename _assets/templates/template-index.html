@@ -13,13 +13,14 @@ $endif$
 $if(keywords)$
   <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
 $endif$
+  <base href="$base$">
 $if(description-meta)$
   <meta name="description" content="$description-meta$" />
 $endif$
   <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
-$for(css)$
-  <link rel="stylesheet" href="$css$" />
-$endfor$
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="_assets/css/style.css" />
+  <link rel="stylesheet" href="_assets/css/highlighting.css" />
 $if(math)$
   $math$
 $endif$
@@ -32,44 +33,51 @@ $for(include-before)$
 $include-before$
 $endfor$
 
-<div id='sidebar'>
-    <nav id="$idprefix$TOC" role="doc-toc">
-    $navigation$
-    </nav>
-</div>
-
 <header>
-<h1 class="title">$title$</h1>
-<blockquote class="metadata">
-$if(subtitle)$
-<p class="subtitle">$subtitle$</p>
-$endif$
-$if(author)$
-<p class="author">
-  $if(author-url)$
-    <a href="$author-url$">$author$</a>
-  $else$
-    $author$
-  $endif$
-</p>
-$endif$
-$if(date)$
-<p class="date $if(toc)$before-toc$endif$"><time datetime="$date$">$date$</time></p>
-$endif$
-</blockquote>
+
+  <div class="sidebar home-title-block">
+
+    <div class="home-author">
+      $author$
+    </div>
+
+
+    <div class="home-title">
+      $title$
+    </div>
+
+    <div class="home-type">
+      $type$
+    </div>
+
+  </div>
+
 </header>
 
 <main>
-$body$
+
+  <section class="home-nav">
+
+    $if(abstract)$
+    <div class="abstract margin">
+      <h3 class="abstract-title">$if(abstract-title)$$abstract-title$$else$Abstract$endif$</h3>
+      $abstract$
+    </div>
+    $endif$
+
+    <nav id="$idprefix$TOC" role="doc-toc">
+      ${ nav.html() }
+    </nav>
+
+  </section>
+
 </main>
 
-$if(return-url)$
 <footer>
-<p class="signoff">
-  <a href="$return-url$">$if(return-text)$$return-text$$else$← Return$endif$</a>
-</p>
+
+
 </footer>
-$endif$
+
 <script>
 ;(function() {
   // Non-essential if user has JavaScript off. Just makes checkboxes look nicer.
@@ -82,6 +90,9 @@ $endif$
   });
 })();
 </script>
+<script src="_assets/js/sidebar.js"></script>
+<script src="_assets/js/highlight-anchors.js"></script>
+<script src="_assets/js/scroll-to-top.js"></script>
 $for(include-after)$
 $include-after$
 $endfor$

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="en-US">
+  <info>
+    <title>Chicago Manual of Style (note)</title>
+    <id>http://www.zotero.org/styles/chicago-note</id>
+    <link href="http://www.chicagomanualofstyle.org/tools_citationguide.html" rel="documentation"/>
+    <author>
+      <name>Richard Karnesky</name>
+      <email>rkarnesk@purdue.edu</email>
+    </author>
+    <category citation-format="note"/>
+  </info>
+
+  <locale xml:lang="en">
+    <terms>
+      <term name="editor" form="verb-short">ed.</term>
+      <term name="translator" form="verb-short">trans.</term>
+      <term name="translator" form="short">trans.</term>
+      <term name="editortranslator" form="verb-short">ed. and trans.</term>
+      <term name="editortranslator" form="verb">Edited and translated by</term>
+      <term name="translator" form="short">trans.</term>
+    </terms>
+  </locale>
+
+  <macro name="author">
+    <names variable="author">
+      <name and="text" delimiter=", ">
+        <last/>
+        <first delimiter=", "/>
+      </name>
+    </names>
+  </macro>
+
+  <macro name="title">
+    <choose>
+      <if type="book chapter paper conference paper" match="any">
+        <text variable="title" font-style="italic"/>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+
+  <citation>
+    <layout delimiter=", ">
+      <macro name="author"/>
+      <text variable="year"/>
+    </layout>
+    <prefix>(</prefix>
+    <suffix>)</suffix>
+    <term name="locator" form="short" prefix=", "/>
+  </citation>
+
+  <bibliography>
+    <layout>
+      <macro name="author"/>
+      <text variable="year"/>
+      <text variable="title" prefix=". "/>
+      <text variable="publisher"/>
+    </layout>
+  </bibliography>
+</style>

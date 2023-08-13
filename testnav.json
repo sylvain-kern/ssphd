@@ -1,0 +1,485 @@
+{
+    "pandoc-api-version": [
+        1,
+        22,
+        2,
+        1
+    ],
+    "meta": {},
+    "blocks": [
+        {
+            "t": "BulletList",
+            "c": [
+                [
+                    {
+                        "t": "Plain",
+                        "c": [
+                            {
+                                "t": "Link",
+                                "c": [
+                                    [
+                                        "toc-cross-links",
+                                        [],
+                                        []
+                                    ],
+                                    [
+                                        {
+                                            "t": "Span",
+                                            "c": [
+                                                [
+                                                    "",
+                                                    [
+                                                        "toc-section-number"
+                                                    ],
+                                                    []
+                                                ],
+                                                [
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "1"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "Cross-links:"
+                                        }
+                                    ],
+                                    [
+                                        "#cross-links",
+                                        ""
+                                    ]
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                [
+                    {
+                        "t": "Plain",
+                        "c": [
+                            {
+                                "t": "Link",
+                                "c": [
+                                    [
+                                        "toc-citations",
+                                        [],
+                                        []
+                                    ],
+                                    [
+                                        {
+                                            "t": "Span",
+                                            "c": [
+                                                [
+                                                    "",
+                                                    [
+                                                        "toc-section-number"
+                                                    ],
+                                                    []
+                                                ],
+                                                [
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "2"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "Citations"
+                                        }
+                                    ],
+                                    [
+                                        "#citations",
+                                        ""
+                                    ]
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                [
+                    {
+                        "t": "Plain",
+                        "c": [
+                            {
+                                "t": "Link",
+                                "c": [
+                                    [
+                                        "toc-unnumbered-chapter",
+                                        [],
+                                        []
+                                    ],
+                                    [
+                                        {
+                                            "t": "Str",
+                                            "c": "Unnumbered"
+                                        },
+                                        {
+                                            "t": "SoftBreak"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "chapter"
+                                        }
+                                    ],
+                                    [
+                                        "#unnumbered-chapter",
+                                        ""
+                                    ]
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "t": "BulletList",
+                        "c": [
+                            [
+                                {
+                                    "t": "Plain",
+                                    "c": [
+                                        {
+                                            "t": "Link",
+                                            "c": [
+                                                [
+                                                    "toc-section",
+                                                    [],
+                                                    []
+                                                ],
+                                                [
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "Section"
+                                                    }
+                                                ],
+                                                [
+                                                    "#section",
+                                                    ""
+                                                ]
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            [
+                                {
+                                    "t": "Plain",
+                                    "c": [
+                                        {
+                                            "t": "Link",
+                                            "c": [
+                                                [
+                                                    "toc-math",
+                                                    [],
+                                                    []
+                                                ],
+                                                [
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "Math"
+                                                    }
+                                                ],
+                                                [
+                                                    "#math",
+                                                    ""
+                                                ]
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            [
+                                {
+                                    "t": "Plain",
+                                    "c": [
+                                        {
+                                            "t": "Link",
+                                            "c": [
+                                                [
+                                                    "toc-tables",
+                                                    [],
+                                                    []
+                                                ],
+                                                [
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "Tables"
+                                                    }
+                                                ],
+                                                [
+                                                    "#tables",
+                                                    ""
+                                                ]
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                [
+                    {
+                        "t": "Plain",
+                        "c": [
+                            {
+                                "t": "Link",
+                                "c": [
+                                    [
+                                        "toc-references",
+                                        [],
+                                        []
+                                    ],
+                                    [
+                                        {
+                                            "t": "Str",
+                                            "c": "References"
+                                        }
+                                    ],
+                                    [
+                                        "#references",
+                                        ""
+                                    ]
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                [
+                    {
+                        "t": "Plain",
+                        "c": [
+                            {
+                                "t": "Link",
+                                "c": [
+                                    [
+                                        "toc-section-after-references",
+                                        [],
+                                        []
+                                    ],
+                                    [
+                                        {
+                                            "t": "Span",
+                                            "c": [
+                                                [
+                                                    "",
+                                                    [
+                                                        "toc-section-number"
+                                                    ],
+                                                    []
+                                                ],
+                                                [
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "3"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "Section"
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "after"
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "references"
+                                        }
+                                    ],
+                                    [
+                                        "#section-after-references",
+                                        ""
+                                    ]
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                [
+                    {
+                        "t": "Plain",
+                        "c": [
+                            {
+                                "t": "Link",
+                                "c": [
+                                    [
+                                        "toc-abbreviations",
+                                        [],
+                                        []
+                                    ],
+                                    [
+                                        {
+                                            "t": "Span",
+                                            "c": [
+                                                [
+                                                    "",
+                                                    [
+                                                        "toc-section-number"
+                                                    ],
+                                                    []
+                                                ],
+                                                [
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "4"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "Abbreviations"
+                                        }
+                                    ],
+                                    [
+                                        "#abbreviations",
+                                        ""
+                                    ]
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "t": "BulletList",
+                        "c": [
+                            [
+                                {
+                                    "t": "Plain",
+                                    "c": [
+                                        {
+                                            "t": "Link",
+                                            "c": [
+                                                [
+                                                    "toc-test-in-titles-yes-and-even-in-toc",
+                                                    [],
+                                                    []
+                                                ],
+                                                [
+                                                    {
+                                                        "t": "Span",
+                                                        "c": [
+                                                            [
+                                                                "",
+                                                                [
+                                                                    "toc-section-number"
+                                                                ],
+                                                                []
+                                                            ],
+                                                            [
+                                                                {
+                                                                    "t": "Str",
+                                                                    "c": "4.1"
+                                                                }
+                                                            ]
+                                                        ]
+                                                    },
+                                                    {
+                                                        "t": "Space"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "Test"
+                                                    },
+                                                    {
+                                                        "t": "Space"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "(in"
+                                                    },
+                                                    {
+                                                        "t": "Space"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "titles"
+                                                    },
+                                                    {
+                                                        "t": "Space"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "?"
+                                                    },
+                                                    {
+                                                        "t": "Space"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "Yes,"
+                                                    },
+                                                    {
+                                                        "t": "Space"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "and"
+                                                    },
+                                                    {
+                                                        "t": "Space"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "even"
+                                                    },
+                                                    {
+                                                        "t": "Space"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "in"
+                                                    },
+                                                    {
+                                                        "t": "SoftBreak"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "TOC"
+                                                    },
+                                                    {
+                                                        "t": "Space"
+                                                    },
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "!)"
+                                                    }
+                                                ],
+                                                [
+                                                    "#test-in-titles-yes-and-even-in-toc",
+                                                    ""
+                                                ]
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                ]
+            ]
+        }
+    ]
+}
