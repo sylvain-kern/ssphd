@@ -74,6 +74,8 @@ environnements sévères</title>
         class="toc-section-number">5.3</span> Math</a></li>
         <li><a href="numbered-chapter/tables" id="toc-tables"><span
         class="toc-section-number">5.4</span> Tables</a></li>
+        <li><a href="numbered-chapter/code" id="toc-code"><span
+        class="toc-section-number">5.5</span> Code</a></li>
         </ul></li>
         <li><a href="references" id="toc-references">References</a></li>
         <li><a href="section-after-references"
@@ -127,7 +129,7 @@ environnements sévères</title>
         <i class="closeIcon material-symbols-rounded">navigate_before</i>
       </button>
             <a class='prev' href='/numbered-chapter/math/'>← 5.3 Math</a>
-                  <a class='next' href='/references/'>References →</a>
+                  <a class='next' href='/numbered-chapter/code/'>5.5 Code →</a>
           </div>
 
     <div class="vertical">
@@ -139,7 +141,7 @@ environnements sévères</title>
 
   </div>
 
-<section id="tables" class="level2" data-number="5.4">
+<section id="tables" class="level2" data-number="0.1">
 <h2 data-number="5.4"><span class="header-section-number">5.4</span>
 Tables</h2>
 <div id="tbl:example">
@@ -240,134 +242,66 @@ between rows.</td>
 </tbody>
 </table>
 </div>
-<table style="width:76%;">
+<table style="width:81%;">
 <caption>Sample grid table (this table is unnumbered (the <em>grid
 tables</em> extension does not work for now)).</caption>
 <colgroup>
 <col style="width: 31%" />
-<col style="width: 12%" />
-<col style="width: 16%" />
-<col style="width: 15%" />
+<col style="width: 48%" />
 </colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Location</th>
-<th style="text-align: right;">Tempe rature 1961 -1990<br />
-(°C)</th>
-<th style="text-align: right;"></th>
-<th style="text-align: right;"></th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: right;">min</td>
-<td style="text-align: right;">mean</td>
-<td style="text-align: right;">max</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Antarctica</td>
-<td style="text-align: right;">-89.2</td>
-<td style="text-align: right;">N/A</td>
-<td style="text-align: right;">19.8<span
-class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"/><span
-class="sidenote">Table footnote.<br />
-<br />
-</span></span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Earth</td>
-<td style="text-align: right;">-89.2</td>
-<td style="text-align: right;"><blockquote>
-<p>list 1 list 2</p>
-</blockquote></td>
-<td style="text-align: right;">56.7</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: right;">-89.2</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">56.7</td>
+<td style="text-align: left;">Location +</td>
+<td style="text-align: left;">Temperature 1961-1990<br />
+(°C) ——–+———–+———-+ min | mean | max</td>
 </tr>
 </tbody>
 </table>
-<table style="width:81%;">
+<p>+:=====================+=======:+==========:+=========:+ | Antarctica
+| -89.2 | N/A | 19.8[^1] | +———————-+——–+———–+———-+ | Earth | -89.2 |
+&gt; list 1 | 56.7 | +———————-+——–+ &gt; list 2 +———-+ | | -89.2 | |
+56.7 | +———————-+——–+———–+———-+ [^1]: Table footnote.</p>
+<table style="width:56%;">
 <colgroup>
-<col style="width: 22%" />
-<col style="width: 11%" />
-<col style="width: 8%" />
-<col style="width: 16%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Grid Tables</th>
-<th></th>
-<th></th>
 <th style="text-align: left;">Are Beautiful</th>
-<th></th>
-<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Easy to read</td>
-<td></td>
-<td></td>
 <td style="text-align: left;">In code and docs</td>
-<td></td>
-<td></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Exceptionally flexible and powerful</td>
-<td></td>
-<td></td>
-<td style="text-align: left;"></td>
-<td></td>
-<td></td>
+<td style="text-align: left;">Exceptionally flexi</td>
+<td style="text-align: left;">ble and powerful</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Col 1</td>
-<td>Col 2</td>
-<td>Col 3</td>
-<td style="text-align: left;"></td>
-<td>Col 4</td>
-<td>Col 5</td>
+<td style="text-align: left;">Col 1 | Col 2 | Col</td>
+<td style="text-align: left;">3 | Col 4 | Col 5</td>
 </tr>
 </tbody>
 </table>
 <table style="width:46%;">
 <colgroup>
-<col style="width: 19%" />
-<col style="width: 11%" />
+<col style="width: 30%" />
 <col style="width: 15%" />
 </colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Property</th>
-<th></th>
-<th style="text-align: right;">Earth</th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Temperature 1961-1990</td>
-<td>min</td>
-<td style="text-align: right;">-89.2 °C</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"></td>
-<td>mean</td>
-<td style="text-align: right;">14 °C</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"></td>
-<td>max</td>
-<td style="text-align: right;">56.7 °C</td>
+<td style="text-align: left;">Property</td>
+<td style="text-align: left;">Earth</td>
 </tr>
 </tbody>
 </table>
+<p>+:============+======:+=========:+ | | min | -89.2 °C | | Temperature
++——-+———-+ | 1961-1990 | mean | 14 °C | | +——-+———-+ | | max | 56.7 °C |
++————-+——-+———-+</p>
 <table style="width:38%;">
 <colgroup>
 <col style="width: 37%" />
@@ -388,8 +322,9 @@ class="sidenote">Table footnote.<br />
 </tbody>
 </table>
 <p>I test a grid table in plain
-<abbr title="Hypertext Markup Language">HTML</abbr> in order to see how
-it works with my <abbr title="Cascading Style Sheets">CSS</abbr>!</p>
+<abbr title="Hypertext Markup Language" class="acronym">HTML</abbr> in
+order to see how it works with my
+<abbr title="Cascading Style Sheets" class="acronym">CSS</abbr>!</p>
 <table>
 <thead>
 <tr>
@@ -451,7 +386,7 @@ it works with my <abbr title="Cascading Style Sheets">CSS</abbr>!</p>
   <div class="horizontal">
         <a class='prev' href='/numbered-chapter/math/'>← 5.3 Math</a>
         <a class="top relative-link" href="#">↑ Top</a>
-        <a class='next' href='/references/'>References →</a>
+        <a class='next' href='/numbered-chapter/code/'>5.5 Code →</a>
       </div>
 
 
@@ -472,5 +407,6 @@ it works with my <abbr title="Cascading Style Sheets">CSS</abbr>!</p>
 <script src="_assets/js/sidebar.js"></script>
 <script src="_assets/js/highlight-anchors.js"></script>
 <script src="_assets/js/scroll-to-top.js"></script>
+<script src="_assets/js/codetoclipboard.js"></script>
 </body>
 </html>

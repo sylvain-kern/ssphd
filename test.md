@@ -21,6 +21,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ![Test graph](_assets/graphs/test.pkl){#fig:test-graph}
 
+> Does not work...
+
+### Pasting raw +[HTML] from a file
+
+Works but well... Is a bit unconvenient.
+
+### Putting an image with the +[HTML] file inside it.
+
+![Test graph.](./_assets/graphs/fig2.html){#fig:test-graph2}
+
 
 ### Using `pandoc-plot` and `plotly`
 
@@ -311,6 +321,98 @@ I test a grid table in plain +[HTML] in order to see how it works with my +[CSS]
 </tbody>
 </table>
 
+## Code
+
+```{.python .numberLines startFrom="100" .wide}
+class Document:
+
+    def __init__(self, source):
+
+        self.source_file    = source
+        self.root_path      = os.path.dirname(os.path.abspath(self.source_file))
+        self.dest_path      = self.source_file.split('.')[0]+'/'
+        self.config_file    = os.path.join(self.root_path, 'config.yaml')
+        self.meta_file      = os.path.join(self.root_path, '_assets/meta/meta.yaml')
+        self.assets_path    = os.path.join(self.root_path, '_assets')
+        self.templates_path = os.path.join(self.dest_path, '_assets/templates')
+        self.css_path       = os.path.join(self.root_path, '_assets/css')
+        self.pictures_path  = os.path.join(self.root_path, '_assets/pics')
+        self.refs_path      = os.path.join(self.root_path, '_assets/refs')
+
+        with open(self.source_file, 'r', encoding='utf8') as f:
+            content = f.read()
+        self.ast = pandoc.read(
+            content,
+            options=[
+            ])
+
+        self.abbreviation_definitions = {}
+        self.link_dict = {}
+        self.path = ['', '']
+        self.structure_list = []
+
+    ## FILTERS
+
+    def add_title_to_references(self, key, value, format_, meta):
+        if key == "Div" and "refs" in value[0][0]:
+            attrs, children = value
+            t1 = ["unnumbered"]
+            t2 = []
+            title = pf.Header(1, ["references", t1, t2], [pf.Str("References")])
+            return [title, pf.Div(attrs, children)]
+```
+
+```javascript
+const menu = document.querySelector(".sidebar");
+const menuItems = document.querySelectorAll(".menuItem");
+const hamburger= document.querySelector(".hamburger");
+const closeIcon= document.querySelector(".closeIcon");
+const menuIcon = document.querySelector(".menuIcon");
+
+function collapseMenu() {
+  menu.classList.remove("showMenu");
+  closeIcon.style.display = "none";
+  menuIcon.style.display = "block";
+}
+
+function toggleMenu() {
+  if (menu.classList.contains("showMenu")) {
+    menu.classList.remove("showMenu");
+    closeIcon.style.display = "none";
+    menuIcon.style.display = "block";
+  } else {
+    menu.classList.add("showMenu");
+    closeIcon.style.display = "block";
+    menuIcon.style.display = "none";
+  }
+}
+
+hamburger.addEventListener("click", toggleMenu);
+
+document.addEventListener("click", function (event) {
+  if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+    collapseMenu();
+  }
+});
+
+menuItems.forEach(
+  function(menuItem) {
+    menuItem.addEventListener("click", toggleMenu);
+  }
+)
+```
+
+### To Do {-}
+
+Find a way to implement offset in line numbers. Syntax :
+
+`````markdown
+```{.python .numberLines startFrom="100"}
+class Document:
+
+    def __init__(self, source):
+    ...
+`````
 
 ::: {#refs}
 :::
@@ -388,6 +490,16 @@ Extreme cases: abbr with only one letter +[C]. Minuscule ? +[Laser].
 ```
 
 
+Test with `class="acronym"` :
+
+This is a regular acronym (without `abbr`): [acronym]{.acronym}
+
+```markdown
+This is a regular acronym (without `abbr`): [acronym]{.acronym}
+```
+
+It is displayed in small caps!
+
 
 **PROBLEMS:**
 
@@ -427,8 +539,8 @@ See @sec:this-is-a-title-1
 :::
 ```
 
-::: {#lof}
-:::
+<!-- ::: {#lof}
+::: -->
 
 
 <!-- hack to split raw blocks -->

@@ -80,8 +80,12 @@ class Document:
                     abbr_definition_start = abbr_end + 1
                     abbr_definition = text[abbr_definition_start:]
                     if abbr_text in self.abbreviation_definitions:
+                        if abbr_text.isupper():
+                            clss = "acronym"
+                        else:
+                            clss = ""
                         abbr_description = self.abbreviation_definitions[abbr_text]
-                        abbr_html = f'<abbr title="{abbr_description}">{abbr_text}</abbr>{following_char}'
+                        abbr_html = f'<abbr title="{abbr_description}" class="{clss}">{abbr_text}</abbr>{following_char}'
                         return pf.RawInline('html', abbr_html)
 
     def generate_link_dict(self, key, value, format_, meta):
