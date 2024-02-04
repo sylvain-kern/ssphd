@@ -1,6 +1,7 @@
 import shutil
 import os
 import pandoc
+import pypandoc
 import argparse
 import re
 import json
@@ -32,14 +33,16 @@ class Document:
         self.pictures_path  = os.path.join(self.root_path, '_assets/pics')
         self.refs_path      = os.path.join(self.root_path, '_assets/refs')
 
-        with open(self.source_file, 'r', encoding='utf8') as f:
-            content = f.read()
-        self.ast = pandoc.read(
-            content,
-            options=[
+        self.ast = pypandoc.convert_file(
+                self.source_file,
+                'json',
+                extra_args = [
             ])
 
-        self.abbreviation_definitions = {}
+        self.pandoc_version = json.loads(self.ast)['pandoc-api-version']
+        self.meta = json.loads(self.ast)['meta']
+
+        self.abbreviation_dict = {}
         self.link_dict = {}
         self.path = ['', '']
         self.structure_list = []
@@ -54,14 +57,14 @@ class Document:
             title = pf.Header(1, ["references", t1, t2], [pf.Str("References")])
             return [title, pf.Div(attrs, children)]
 
-    def get_abbreviation_definitions(self, key, value, format_, meta):
+    def get_abbreviation_dict(self, key, value, format_, meta):
         abbr_def_pattern = r'\+\[(.*?)\]:\s(.*?)$'
         if key == 'Para':
             text = pf.stringify(value)
             match = re.match(abbr_def_pattern, text)
             if match:
                 abbreviation, description = match.groups()
-                self.abbreviation_definitions[abbreviation] = description
+                self.abbreviation_dict[abbreviation] = description
                 return []
 
     def replace_abbreviations(self, key, value, format_, meta):
@@ -79,12 +82,12 @@ class Document:
 
                     abbr_definition_start = abbr_end + 1
                     abbr_definition = text[abbr_definition_start:]
-                    if abbr_text in self.abbreviation_definitions:
+                    if abbr_text in self.abbreviation_dict:
                         if abbr_text.isupper():
                             clss = "acronym"
                         else:
                             clss = ""
-                        abbr_description = self.abbreviation_definitions[abbr_text]
+                        abbr_description = self.abbreviation_dict[abbr_text]
                         abbr_html = f'<abbr title="{abbr_description}" class="{clss}">{abbr_text}</abbr>{following_char}'
                         return pf.RawInline('html', abbr_html)
 
@@ -110,15 +113,15 @@ class Document:
         #     label = value[0]['c'][0][0]
         #     LinkDict[label] = currentFileLabel
 
-        if key in ('Div', 'Image', 'Equation'):
+        if key in ('Div', 'Figure', 'Equation'):
             # print(value)
             label = value[0][0]
             # print(label)
             # print(filelabel)
             self.link_dict[label] = self.filelabel + '/#' + label
 
-        # with open('links.json', 'w') as f:
-        #     json.dump(self.link_dict, f)
+        with open('links.json', 'w') as f:
+            json.dump(self.link_dict, f)
 
 
     def links_filter(self, key, value, format_, meta):
@@ -132,95 +135,77 @@ class Document:
     ## OPERATIONS
 
     def copy(self, ast, opts):
-        return pandoc.read(pandoc.write(ast), options=opts)
+        return pypandoc.convert_text(
+            ast,
+            to='json',
+            format='json',
+            extra_args=opts)
 
     def pipe(self, opts):
-        self.ast = pandoc.read(pandoc.write(self.ast), options=opts)
+        self.ast = self.copy(
+            self.ast,
+            opts)
 
     def filter(self, handles, ast=None):
         if ast==None:
-            doc = pf.json.loads(pandoc.write(self.ast, format='json'))
+            doc = pf.json.loads(self.ast)
             for handle in handles:
                 doc = pf.walk(doc, handle, "", None)
-            self.ast = pandoc.read(pf.json.dumps(doc), format='json')
+            self.ast = pf.json.dumps(doc)
         else:
-            doc = pf.json.loads(pandoc.write(ast, format='json'))
+            doc = pf.json.loads(ast)
             for handle in handles:
                 doc = pf.walk(doc, handle, "", None)
-            return pandoc.read(pf.json.dumps(doc), format='json')
+            return pf.json.dumps(doc)
 
     def build_folder_structure(self):
         if not os.path.exists(self.dest_path + '_assets/'):
             shutil.copytree(self.assets_path, self.dest_path + '_assets/')
 
-    # FLOATS
-
-    def get_d3(self, pkl_fig_path):
-        with open(pkl_fig_path, 'rb') as f:
-            fig = pkl.load(f)
-        ax = fig.gca()
-        css = """
-        table
-        {
-        border-collapse: collapse;
-        }
-        th
-        {
-        color: #ffffff;
-        background-color: #000000;
-        }
-        td
-        {
-        background-color: #cccccc;
-        }
-        table, th, td
-        {
-        font-family:Arial, Helvetica, sans-serif;
-        border: 1px solid black;
-        text-align: right;
-        }
-        """
-        for line in ax.get_lines():
-                # get the x and y coords
-                xy_data = line.get_xydata()
-                labels = []
-                for x, y in xy_data:
-                        # Create a label for each point with the x and y coords
-                        html_label = f'<table border="1" class="dataframe"> <thead> <tr style="text-align: right;"> </thead> <tbody> <tr> <th>x</th> <td>{x}</td> </tr> <tr> <th>y</th> <td>{y}</td> </tr> </tbody> </table>'
-                        labels.append(html_label)
-        tooltip = plugins.PointHTMLTooltip(line, labels, css=css)
-        plugins.connect(fig, tooltip)
-        html = mpld3.fig_to_html(fig)
-        with open("_assets/graphs/test.html", "w") as f:
-            f.write(html)
-        return html
 
     # STRUCTURE
 
     def generate_nav(self):
-        self.nav = pandoc.write(
+        self.nav = pypandoc.convert_text(
             self.ast,
-            format="html",
+            format = "json",
+            to="html",
             # file= self.templates_path+"/nav.html",
-            options=[
+            extra_args=[
                 "--number-sections",
                 "--template="+self.templates_path+"/template-toc.html",
                 "--toc",
                 "--toc-depth=2",
             ])
-        self.nav = pandoc.read(self.nav, format="html")
         self.extract_structure()
-        self.nav = self.filter([self.links_filter], ast=self.nav)
-        pandoc.write(
+        self.nav = pypandoc.convert_text(
             self.nav,
-            file = self.templates_path+"/nav.html",
-            format = "html"
+            format = 'html',
+            to = 'json'
+        )
+        self.nav = self.filter([self.links_filter], ast=self.nav)
+
+        pypandoc.convert_text(
+            self.nav,
+            format = "json",
+            to = "html",
+            outputfile = self.templates_path+"/nav.html",
+            # extra_args=[
+            #     "--number-sections",
+            #     "--template="+self.templates_path+"/template-toc.html",
+            # ]
         )
 
     def extract_structure(self):
-        markdown_list = pandoc.write(self.nav, format="markdown", options=["--wrap=none", "--toc-depth=6"])
+        markdown_list = pypandoc.convert_text(
+            self.nav,
+            format="html",
+            to="md",
+            extra_args=["--wrap=none", "--toc-depth=6"]
+        )
 
         structure_dict = {}
+
         lines = markdown_list.split("\n")
 
         # regexes to match the bullet list lines
@@ -334,16 +319,26 @@ class Document:
     # S P L I T
 
     def split(self):
-        [meta, blocks] = self.ast
+        print('splitting'),
+        # [meta, blocks] = self.ast
+        dico = json.loads(self.ast)
+        meta = dico["meta"]
+        blocks = dico["blocks"]
         # os.mkdir('./trash/')
         content = []
         reset = 0
         for block in blocks:
-            if isinstance(block, pandoc.types.Header):
-                level = block[0]
+            # print(block)
+            if block['t'] == 'Header':
+                level = block['c'][0]
                 if level <= 2:
                     if content != []:
-                        slice = pandoc.types.Pandoc(meta, content)
+                        # slice = pandoc.types.Pandoc(meta, content)
+                        slice = {
+                            'pandoc-api-version': self.pandoc_version,
+                            'meta': self.meta,
+                            'blocks': content,
+                        }
                         offset = self.structure_dict[key]["number"] or "0"
                         if offset != "0": # V   1 -> 0, 1.1 -> 1.0, 1.1.1 -> 1.1.0
                             offset = ".".join(item for item in [".".join(offset.split(".")[:-1]) , str(int(offset.split(".")[-1])-1)] if item and item != "")
@@ -369,13 +364,15 @@ class Document:
                             ischapter = ""
                             parent = self.structure_dict[key]["parent"]
                             parenttitle = self.structure_dict[parent]["number"] + " " + self.structure_dict[parent]["title"]
-                        pandoc.write(slice,
-                            file = file,
-                            format = "html",
-                            options = [
+                        pypandoc.convert_text(
+                            json.dumps(slice),
+                            outputfile = file,
+                            format = "json",
+                            to='html',
+                            extra_args = [
                                 "--standalone",
                                 "--katex",
-                                "--filter=pandoc-plot",
+                                # "--filter=pandoc-plot",
                                 "--template="+self.dest_path+"_assets/templates/template-section.html",
                                 "--variable=base=/",
                                 "--variable=pagetitle="+pagetitle,
@@ -392,9 +389,9 @@ class Document:
                                 "--number-offset="+offset.replace(".", ","),
                                 "--toc-depth=3",
                                 "--section-divs",
-                                "--filter=pandoc-sidenote"
+                                # "--filter=pandoc-sidenote" # the filter is not yet compatible with the latest version of pandoc
                             ])
-                    key = block[1][0]
+                    key = block['c'][1][0]
                     mylevel = level
             content.append(block)
 
@@ -404,10 +401,12 @@ class Document:
         shutil.copytree(self.dest_path, 'C://Apache24/htdocs/')
 
     def generate_index(self):
-        pandoc.write(
+        pypandoc.convert_text(
             self.ast,
-            file = self.dest_path + '/index.html',
-            options = [
+            format='json',
+            to='html',
+            outputfile = self.dest_path + '/index.html',
+            extra_args = [
                 "--template="+self.dest_path+"_assets/templates/template-index.html"
             ]
         )
@@ -430,7 +429,10 @@ def main():
     doc = Document(args.markdown_source)
     doc.build_folder_structure()
 
-    meta = doc.ast[0] # saving metadata bc it seems overriden by --metadata-file
+    dico = json.loads(doc.ast)
+    meta_before = dico["meta"]
+
+    # meta = doc.ast[0] # saving metadata bc it seems overriden by --metadata-file
 
     doc.pipe(
         [
@@ -447,11 +449,21 @@ def main():
         ]
     )
 
-    doc.ast[0] = pandoc.types.Meta(doc.ast[0][0] | meta[0]) # merge yaml block with metadata from metadata file
+    # print(doc.ast)
+
+    # doc.ast[0] = pandoc.types.Meta(doc.ast[0][0] | meta[0]) # merge yaml block with metadata from metadata file
+
+    dico = json.loads(doc.ast)
+
+    doc.meta = dico["meta"] | meta_before
+
+    dico["meta"] = doc.meta
+
+    doc.ast = json.dumps(dico)
 
     doc.filter([
         doc.add_title_to_references,
-        doc.get_abbreviation_definitions,
+        doc.get_abbreviation_dict,
         doc.replace_abbreviations,
         doc.generate_link_dict,
         doc.links_filter

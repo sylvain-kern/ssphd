@@ -242,9 +242,9 @@ Table: Table with no header {#tbl:noheader}
 ----------- ------- --------------- -------------------------
 
 
-: Sample grid table (this table is unnumbered (the *grid tables* extension does not work for now)).
+: Sample grid table (this table is unnumbered ~~(the *grid tables* extension does not work for now))~~.
 
-+----------------------+-------------------------------+
++----------------------+:------------------------------+
 |                      | Temperature 1961-1990\        |
 | Location             | (°C)                          |
 |                      +--------+-----------+----------+
@@ -256,7 +256,8 @@ Table: Table with no header {#tbl:noheader}
 +----------------------+--------+ >  list 2 +----------+
 |                      | -89.2  |           | 56.7     |
 +----------------------+--------+-----------+----------+
-[^1]: Table footnote.
+
+
 
 +-------------------+-------------------+
 | Grid Tables       | Are Beautiful     |
