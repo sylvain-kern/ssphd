@@ -1,18 +1,17 @@
 import shutil
 import os
-import pandoc
 import pypandoc
 import argparse
 import re
 import json
 
-import matplotlib.pyplot as plt, mpld3
-import pickle as pkl
 import pandocfilters as pf
+
+from rich.progress import track
 
 # from inspect import getsourcefile
 # from pandoc.types import Pandoc, Header, MetaType, MetaInlines, MetaBool, Str
-from mpld3 import plugins
+# from mpld3 import plugins
 
 
 ABOUT = "The ultimate document processor."
@@ -24,7 +23,8 @@ class Document:
 
         self.source_file    = source
         self.root_path      = os.path.dirname(os.path.abspath(self.source_file))
-        self.dest_path      = self.source_file.split('.')[0]+'/'
+        self.dest_path      = self.source_file.split('.')[0]+'-html/'
+        self.latex_path      = self.source_file.split('.')[0]+'-latex/'
         self.config_file    = os.path.join(self.root_path, 'config.yaml')
         self.meta_file      = os.path.join(self.root_path, '_assets/meta/meta.yaml')
         self.assets_path    = os.path.join(self.root_path, '_assets')
@@ -39,13 +39,7 @@ class Document:
                 extra_args = [
             ])
 
-        self.pandoc_version = json.loads(self.ast)['pandoc-api-version']
-        self.meta = json.loads(self.ast)['meta']
-
-        self.abbreviation_dict = {}
-        self.link_dict = {}
-        self.path = ['', '']
-        self.structure_list = []
+        self.graph_count = 0
 
     ## FILTERS
 
@@ -120,9 +114,8 @@ class Document:
             # print(filelabel)
             self.link_dict[label] = self.filelabel + '/#' + label
 
-        with open('links.json', 'w') as f:
-            json.dump(self.link_dict, f)
-
+        # with open('links.json', 'w') as f:
+        #     json.dump(self.link_dict, f)
 
     def links_filter(self, key, value, format_, meta):
         if key == 'Link':
@@ -131,6 +124,22 @@ class Document:
             if ref in self.link_dict:
                 newhref = self.link_dict[ref]
                 return pf.Link(t1, linktext, [newhref, t4])
+
+    def nav_filter(self, key, value, format_, meta):
+        if key == 'BulletList':
+            items = []
+            for element in value:
+                id = element[0]['c'][0]['c'][0][0][4:]
+                level = self.structure_dict[id]["level"]
+                if level == 2:
+                    # print(f"{id} -> {level}")
+                    # print(yaml.dump(element))
+                    items.append([
+                        pf.Div(("", ["toc-dropdown-btn"], []), []),
+                    ] + element)
+                else:
+                    items.append(element)
+            return pf.BulletList(items)
 
     ## OPERATIONS
 
@@ -166,6 +175,7 @@ class Document:
     # STRUCTURE
 
     def generate_nav(self):
+        print("generating nav")
         self.nav = pypandoc.convert_text(
             self.ast,
             format = "json",
@@ -175,7 +185,7 @@ class Document:
                 "--number-sections",
                 "--template="+self.templates_path+"/template-toc.html",
                 "--toc",
-                "--toc-depth=2",
+                "--toc-depth=3",
             ])
         self.extract_structure()
         self.nav = pypandoc.convert_text(
@@ -183,7 +193,12 @@ class Document:
             format = 'html',
             to = 'json'
         )
-        self.nav = self.filter([self.links_filter], ast=self.nav)
+        self.nav = self.filter([
+                self.links_filter,
+                self.nav_filter
+            ],
+            ast=self.nav
+        )
 
         pypandoc.convert_text(
             self.nav,
@@ -269,7 +284,8 @@ class Document:
         self.structure_dict = structure_dict
 
     def split_structure(self):
-        for key, val in self.structure_dict.items():
+        print("generating split structure")
+        for key, val in track(self.structure_dict.items()):
             id = key
             level = val["level"]
             if level == 1:
@@ -280,15 +296,32 @@ class Document:
                         os.mkdir(self.dest_path + key + '/' + child)
 
     # GRAPHS
-
     def graphs_filter(self, key, value, format, meta):
-        # if key == 'Image':
-        #     [_, _, attrs] = value
-        #     alt_text = pf.stringify(value[1])
-        #     src = attrs[0][1]
-        #     custom_html = f'<div class="custom-img"><img src="{src}" alt="{alt_text}"></div>'
-        #     return [{"custom_html": custom_html}, []]  # Include as metadata
-        pass
+        import csv
+        if key == 'Image':
+            [ident, stuff, keyvals], caption, [filename, typef] = value
+            if filename.split('.')[-1] == 'csv':
+                # parsing the data
+                with open(filename, newline='', encoding='utf-8') as f:
+                    reader = csv.reader(f)
+                    columns = next(reader)
+                xcolumn = columns[0]
+                ycolumns = ', '.join(columns[1:])
+                kwargs = {}
+                kwargs['xlabel'] = xcolumn
+                kwargs['ylabel'] = columns[2]
+                for keyval in keyvals:
+                    kwargs[keyval[0]] = keyval[1]
+                # formatting the graph
+                graph_id = f"dygraph-{self.graph_count}"
+                self.graph_count += 1
+                graph_script = f"""
+                <script>
+                    {graph_id} = generateGraph(id="{graph_id}", data="{filename}", xdata="{xcolumn}", ydata="{ycolumns}", xlabel="{kwargs['xlabel']}", ylabel="{kwargs['ylabel']}", legendPosition="graph");
+                </script>
+                """
+                return [pf.RawInline("html", f"<div class='graph-container' id={graph_id}></div>"),
+                        pf.RawInline("html", graph_script)]
 
     def get_next(self, key):
         index = self.structure_list.index(key)
@@ -319,7 +352,7 @@ class Document:
     # S P L I T
 
     def split(self):
-        print('splitting'),
+        print('splitting to html files'),
         # [meta, blocks] = self.ast
         dico = json.loads(self.ast)
         meta = dico["meta"]
@@ -327,7 +360,7 @@ class Document:
         # os.mkdir('./trash/')
         content = []
         reset = 0
-        for block in blocks:
+        for block in track(blocks):
             # print(block)
             if block['t'] == 'Header':
                 level = block['c'][0]
@@ -389,11 +422,14 @@ class Document:
                                 "--number-offset="+offset.replace(".", ","),
                                 "--toc-depth=3",
                                 "--section-divs",
-                                # "--filter=pandoc-sidenote" # the filter is not yet compatible with the latest version of pandoc
+                                "--filter=pandoc-sidenote" # the filter is not yet compatible with the latest version of pandoc
                             ])
                     key = block['c'][1][0]
                     mylevel = level
             content.append(block)
+
+        with open('./structure_dict.json', 'w') as f:
+            f.write(json.dumps(self.structure_dict))
 
     def put_to_htdocs(self):
         if os.path.exists('C://Apache24/htdocs/'):
@@ -414,6 +450,105 @@ class Document:
     def generate_404():
         pass
 
+    def to_latex(self):
+        if not os.path.exists(self.latex_path):
+            os.mkdir(self.latex_path)
+        pypandoc.convert_text(
+            self.ast,
+            format = 'json',
+            to = 'latex',
+            outputfile = self.latex_path + 'main.tex',
+            extra_args = [
+                "--metadata-file=_assets/meta/meta.yaml",
+                "--standalone",
+                "--filter=pandoc-crossref",
+                "--bibliography=_assets/refs/refs.json",
+                "--citeproc",
+                "--number-sections",
+            ]
+        )
+
+
+    def to_html(self):
+
+        self.ast_html = self.ast
+
+        self.pandoc_version = json.loads(self.ast_html)['pandoc-api-version']
+        self.meta = json.loads(self.ast_html)['meta']
+
+        self.abbreviation_dict = {}
+        self.link_dict = {}
+        self.path = ['', '']
+        self.structure_list = []
+
+        self.build_folder_structure()
+
+        dico = json.loads(self.ast_html)
+        meta_before = dico["meta"]
+
+        # meta = self.ast_html[0] # saving metadata bc it seems overriden by --metadata-file
+
+        self.pipe(
+            [
+                "--metadata-file=_assets/meta/meta.yaml",
+                "--csl=_assets/refs/for-the-web.csl",
+                # "--filter=_assets/filters/title_above_references.py",
+                # "--number-sections",
+                # "--katex",
+                # "--filter=pandoc-xnos",
+                # "--filter=pandoc-secnos",
+                "--filter=pandoc-crossref",
+                "--bibliography=_assets/refs/refs.json",
+                "--citeproc",
+            ]
+        )
+
+        # print(doc.ast_html)
+
+        # self.ast_html[0] = pandoc.types.Meta(doc.ast_html[0][0] | meta[0]) # merge yaml block with metadata from metadata file
+
+        dico = json.loads(self.ast_html)
+
+        self.meta = dico["meta"] | meta_before
+
+        dico["meta"] = self.meta
+
+        self.ast_html = json.dumps(dico)
+
+        self.filter([
+            self.add_title_to_references,
+            self.get_abbreviation_dict,
+            self.replace_abbreviations,
+            self.generate_link_dict,
+            self.links_filter
+        ])
+
+        self.generate_nav()
+        self.filter([self.graphs_filter])
+        self.split_structure()
+
+        self.split()
+
+        self.generate_index()
+
+        # pandoc.write(
+        #     self.ast_html,
+        #     file="simpletext.html",
+        #     format="html",
+        #     options=[
+        #         "--standalone",
+        #         "--number-sections",
+        #         # "--filter=pandoc-eqnos",
+        #         "--katex",
+        #         "--filter=pandoc-plot",
+        #         "--template=_assets/templates/template-section.html",
+        #         "--css=_assets/css/style.css",
+        #         "--section-divs",
+        #         "--variable=base=C:/Users/sylva/Documents/latex shit/htmlcss"
+        #     ])
+
+        self.put_to_htdocs()
+
 
 def main():
 
@@ -427,75 +562,12 @@ def main():
     # print(args.markdown_source)
 
     doc = Document(args.markdown_source)
-    doc.build_folder_structure()
 
-    dico = json.loads(doc.ast)
-    meta_before = dico["meta"]
+    doc.to_latex()
 
-    # meta = doc.ast[0] # saving metadata bc it seems overriden by --metadata-file
-
-    doc.pipe(
-        [
-            "--metadata-file=_assets/meta/meta.yaml",
-            # "--csl=_assets/refs/nature.csl",
-            # "--filter=_assets/filters/title_above_references.py",
-            # "--number-sections",
-            # "--katex",
-            # "--filter=pandoc-xnos",
-            # "--filter=pandoc-secnos",
-            "--filter=pandoc-crossref",
-            "--bibliography=_assets/refs/refs.json",
-            "--citeproc",
-        ]
-    )
-
-    # print(doc.ast)
-
-    # doc.ast[0] = pandoc.types.Meta(doc.ast[0][0] | meta[0]) # merge yaml block with metadata from metadata file
-
-    dico = json.loads(doc.ast)
-
-    doc.meta = dico["meta"] | meta_before
-
-    dico["meta"] = doc.meta
-
-    doc.ast = json.dumps(dico)
-
-    doc.filter([
-        doc.add_title_to_references,
-        doc.get_abbreviation_dict,
-        doc.replace_abbreviations,
-        doc.generate_link_dict,
-        doc.links_filter
-    ])
-
-    doc.generate_nav()
-    doc.filter([doc.graphs_filter])
-    doc.split_structure()
-
-    doc.split()
-
-    doc.generate_index()
+    doc.to_html()
 
 
-    # pandoc.write(
-    #     doc.ast,
-    #     file="simpletext.html",
-    #     format="html",
-    #     options=[
-    #         "--standalone",
-    #         "--number-sections",
-    #         # "--filter=pandoc-eqnos",
-    #         "--katex",
-    #         "--filter=pandoc-plot",
-    #         "--template=_assets/templates/template-section.html",
-    #         "--css=_assets/css/style.css",
-    #         "--section-divs",
-    #         "--variable=base=C:/Users/sylva/Documents/latex shit/htmlcss"
-    #     ])
-
-
-    doc.put_to_htdocs()
 
 
 if __name__=='__main__':

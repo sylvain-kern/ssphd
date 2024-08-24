@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"  color-mode="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="my-thing" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Sylvain Kern" />
+  <base href="/">
+  <title>Math &#183 Capteurs MEMS pour la mesure d’écoulements en
+environnements sévères</title>
+  <link rel="stylesheet" href="./_assets/css/style.css" />
+  <link rel="stylesheet" href="./_assets/css/graphs.css" />
+  <link rel="stylesheet" href="./_assets/css/highlighting.css" />
+  <link rel="stylesheet" href="./_assets/css/dygraph.css" />
+  <link rel="stylesheet" href="./_assets/css/katex.css" />
+  <script src="./_assets/js/dygraphs/dygraph.min.js"></script>
+  <script src="./_assets/js/dygraphs/synchronizer.js"></script>
+  <script src="./_assets/js/graph_generator.js"></script>
+</head>
+
+<body>
+
+    <div class='sidebar'>
+
+        <div class="header-container">
+            <header class='title-block'>
+                <a href="/" title="Capteurs MEMS pour la mesure
+d’écoulements en environnements sévères">
+                    Capteurs MEMS pour la mesure d’écoulements en
+                    environnements sévères
+                </a>
+            </header>
+        </div>
+
+        <div class="search-container">
+            <div class="searchbar-container">
+                <div class="searchbar">
+                    <input type="text" placeholder="Search">
+                    <span class="ctrl-k">
+                        <kbd class="ctrl">Ctrl</kbd>
+                        +
+                        <kbd class="k">K</kbd>
+                    </span>
+                </div>
+                <div class="results-container">
+                    <ul id="list" class="search-results-list"></ul>
+                    <div class="search-helper">
+                        <span>
+                            <kbd class="up">↑</kbd>
+                            <kbd class="down"up>↓</kbd>
+                            <span>navigate</span>
+                        </span>
+                        <span>
+                            <kbd class="enter">↩</kbd>
+                            <span>select</span>
+                        </span>
+                        <span>
+                            <kbd class="esc">Esc</kbd>
+                            <span>close</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav id="toc" role="doc-toc">
+          <ul>
+          <li><a href="introduction" id="toc-introduction">Introduction</a></li>
+          <li><a href="markdown-kitchen-sink" id="toc-markdown-kitchen-sink"><span
+          class="toc-section-number">1</span> Markdown Kitchen Sink</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="markdown-kitchen-sink/headers" id="toc-headers"><span
+          class="toc-section-number">1.1</span> Headers</a></li>
+          </ul></li>
+          <li><a href="h1" id="toc-h1"><span class="toc-section-number">2</span>
+          H1</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="h1/h2" id="toc-h2"><span class="toc-section-number">2.1</span>
+          H2</a>
+          <ul>
+          <li><a href="h1/h2/#h3" id="toc-h3"><span
+          class="toc-section-number">2.1.1</span> H3</a></li>
+          </ul></li>
+          </ul></li>
+          <li><a href="alt-h1" id="toc-alt-h1"><span
+          class="toc-section-number">3</span> Alt-H1</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/alt-h2" id="toc-alt-h2"><span
+          class="toc-section-number">3.1</span> Alt-H2</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/emphasis" id="toc-emphasis"><span
+          class="toc-section-number">3.2</span> Emphasis</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/lists" id="toc-lists"><span
+          class="toc-section-number">3.3</span> Lists</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/links" id="toc-links"><span
+          class="toc-section-number">3.4</span> Links</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/images" id="toc-images"><span
+          class="toc-section-number">3.5</span> Images</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/code-and-syntax-highlighting"
+          id="toc-code-and-syntax-highlighting"><span
+          class="toc-section-number">3.6</span> Code and Syntax
+          Highlighting</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/tables" id="toc-tables"><span
+          class="toc-section-number">3.7</span> Tables</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/blockquotes" id="toc-blockquotes"><span
+          class="toc-section-number">3.8</span> Blockquotes</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/inline-html" id="toc-inline-html"><span
+          class="toc-section-number">3.9</span> Inline HTML</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/horizontal-rule" id="toc-horizontal-rule"><span
+          class="toc-section-number">3.10</span> Horizontal Rule</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/line-breaks" id="toc-line-breaks"><span
+          class="toc-section-number">3.11</span> Line Breaks</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/youtube-videos" id="toc-youtube-videos"><span
+          class="toc-section-number">3.12</span> YouTube Videos</a></li>
+          </ul></li>
+          <li><a href="definition-lists" id="toc-definition-lists"><span
+          class="toc-section-number">4</span> Definition lists</a></li>
+          <li><a href="graphics" id="toc-graphics"><span
+          class="toc-section-number">5</span> Graphics</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="graphics/graphs" id="toc-graphs"><span
+          class="toc-section-number">5.1</span> Graphs</a>
+          <ul>
+          <li><a href="graphics/graphs/#dygraphs" id="toc-dygraphs"><span
+          class="toc-section-number">5.1.1</span> Dygraphs</a></li>
+          </ul></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="graphics/svg-images" id="toc-svg-images"><span
+          class="toc-section-number">5.2</span> SVG images</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="graphics/margin-figures" id="toc-margin-figures"><span
+          class="toc-section-number">5.3</span> Margin figures</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="graphics/subfigures" id="toc-subfigures"><span
+          class="toc-section-number">5.4</span> Subfigures</a></li>
+          </ul></li>
+          <li><a href="cross-links-with-pandoc-crossref"
+          id="toc-cross-links-with-pandoc-crossref"><span
+          class="toc-section-number">6</span> Cross-links with
+          <code>pandoc-crossref</code></a></li>
+          <li><a href="citations" id="toc-citations"><span
+          class="toc-section-number">7</span> Citations</a></li>
+          <li><a href="numbered-chapter" id="toc-numbered-chapter"><span
+          class="toc-section-number">8</span> Numbered chapter</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/section" id="toc-section"><span
+          class="toc-section-number">8.1</span> Section</a>
+          <ul>
+          <li><a href="numbered-chapter/section/#subsection"
+          id="toc-subsection"><span class="toc-section-number">8.1.1</span>
+          Subsection</a></li>
+          <li><a href="numbered-chapter/section/#subsection-2"
+          id="toc-subsection-2"><span class="toc-section-number">8.1.2</span>
+          Subsection 2</a></li>
+          <li><a href="numbered-chapter/section/#subsection-3"
+          id="toc-subsection-3"><span class="toc-section-number">8.1.3</span>
+          Subsection 3</a></li>
+          <li><a href="numbered-chapter/section/#subsection-4"
+          id="toc-subsection-4"><span class="toc-section-number">8.1.4</span>
+          Subsection 4</a></li>
+          <li><a
+          href="numbered-chapter/section/#subsection-5-which-is-unfortunately-unnumbered"
+          id="toc-subsection-5-which-is-unfortunately-unnumbered">Subsection 5
+          (which is unfortunately unnumbered)</a></li>
+          <li><a href="numbered-chapter/section/#subsection-6"
+          id="toc-subsection-6"><span class="toc-section-number">8.1.5</span>
+          Subsection 6</a></li>
+          </ul></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/other-section" id="toc-other-section"><span
+          class="toc-section-number">8.2</span> Other section</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/math" id="toc-math"><span
+          class="toc-section-number">8.3</span> Math</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/tables-1" id="toc-tables-1"><span
+          class="toc-section-number">8.4</span> Tables</a>
+          <ul>
+          <li><a
+          href="numbered-chapter/tables-1/#footnotes-in-tables-in-table-footer"
+          id="toc-footnotes-in-tables-in-table-footer"><span
+          class="toc-section-number">8.4.1</span> Footnotes in tables in table
+          footer?</a></li>
+          </ul></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/code" id="toc-code"><span
+          class="toc-section-number">8.5</span> Code</a>
+          <ul>
+          <li><a href="numbered-chapter/code/#to-do" id="toc-to-do">To Do</a></li>
+          </ul></li>
+          </ul></li>
+          <li><a href="references" id="toc-references">References</a></li>
+          <li><a href="section-after-references"
+          id="toc-section-after-references"><span
+          class="toc-section-number">9</span> Section after references</a></li>
+          <li><a href="abbreviations" id="toc-abbreviations"><span
+          class="toc-section-number">10</span> Abbreviations</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="abbreviations/test-in-titles-yes-and-even-in-toc"
+          id="toc-test-in-titles-yes-and-even-in-toc"><span
+          class="toc-section-number">10.1</span> Test (in titles ? Yes, and even
+          in TOC !)</a>
+          <ul>
+          <li><a
+          href="abbreviations/test-in-titles-yes-and-even-in-toc/#this-is-a-sub-section"
+          id="toc-this-is-a-sub-section"><span
+          class="toc-section-number">10.1.1</span> This is a sub-section</a></li>
+          </ul></li>
+          </ul></li>
+          <li><a href="and-a-chapter" id="toc-and-a-chapter"><span
+          class="toc-section-number">11</span> And a chapter</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a
+          href="and-a-chapter/test-in-titles-yes-and-even-in-toc/#and-a-level-3-section"
+          id="toc-and-a-level-3-section">And a level 3 section</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="and-a-chapter/and-a-level-2-section"
+          id="toc-and-a-level-2-section"><span
+          class="toc-section-number">11.1</span> And a level 2 section</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="and-a-chapter/markdown-formatting-in-section-headings"
+          id="toc-markdown-formatting-in-section-headings"><span
+          class="toc-section-number">11.2</span> Markdown
+          <strong>formatting</strong> in <em>section-headings</em></a></li>
+          </ul></li>
+          <li><a href="what-if-two-headings-have-the-same-title"
+          id="toc-what-if-two-headings-have-the-same-title"><span
+          class="toc-section-number">12</span> What if two headings have the same
+          title ?</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="what-if-two-headings-have-the-same-title/this-is-a-title"
+          id="toc-this-is-a-title"><span class="toc-section-number">12.1</span>
+          This is a title</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="what-if-two-headings-have-the-same-title/this-is-a-title-1"
+          id="toc-this-is-a-title-1"><span class="toc-section-number">12.2</span>
+          This is a title</a></li>
+          </ul></li>
+          <li><a href="lists-1" id="toc-lists-1"><span
+          class="toc-section-number">13</span> Lists</a></li>
+          </ul>        </nav>
+        <footer>
+            footer
+        </footer>
+    </div>
+
+    <main>
+
+        <div class="top-nav">
+            <div class="burger">
+                <button class="show" type="button" title="Table of contents">
+                <img class="icon" src="./toc-icon.svg" alt="">
+                </button>
+                <button class="hide" type="button" title="Table of contents">
+                    <img class="icon" src="./switch_light.svg" alt="">
+                </button>
+            </div>
+            <a href='/'>~</a>
+            <span class="top-nav-separator">›</span>
+                        <a href='/numbered-chapter/'>8 Numbered chapter</a>
+            <span class="top-nav-separator">›</span>
+                        <button class="light-dark-switch" type="button" title="Switch to dark mode">
+                <img class="icon" src="./switch_light.svg" alt="">
+             </button>
+          </div>
+
+        <section id="math" class="level2" data-number="8.3">
+        <h2 data-number="8.3"><span
+        class="header-section-number">8.3</span> Math</h2>
+        <p>Inline: <span class="math inline">y = ax+b</span>.</p>
+        <div id="eq:example">
+        <table>
+        <colgroup>
+        <col style="width: 90%" />
+        <col style="width: 10%" />
+        </colgroup>
+        <tbody>
+        <tr class="odd">
+        <td style="text-align: center;"><span class="math display">
+        M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}
+        </span></td>
+        <td style="text-align: right;"><span
+        class="math display">(8.1)</span></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        <div id="eq:conservation">
+        <table>
+        <colgroup>
+        <col style="width: 90%" />
+        <col style="width: 10%" />
+        </colgroup>
+        <tbody>
+        <tr class="odd">
+        <td style="text-align: center;"><span class="math display">
+        \frac{\mathrm{d}}{\mathrm{d} t} \int_V \phi \mathrm{d}
+        V+\int_{\partial V} \phi \vec{v} \cdot \vec{n} \mathrm{~d}
+        A=\int_V S \mathrm{~d} V
+        </span></td>
+        <td style="text-align: right;"><span
+        class="math display">(8.2)</span></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </section>
+
+        <div class="bottom">
+            <div class="prevnext">
+                                <a href="/numbered-chapter/other-section/" class="pager prev">
+                    <span class="prefix">← prev</span>
+                    8.2 Other section
+                </a>
+                                                <a href="/numbered-chapter/tables-1/" class="pager next">
+                    <span class="prefix">next →</span>
+                    8.4 Tables
+                </a>
+                            </div>
+        </div>
+    </main>
+</body>
+
+<script src="./_assets/js/get-scrollbar-width.js"></script>
+<script src="./_assets/js/sidebar.js"></script>
+<script src="./_assets/js/tables.js"></script>
+<script src="./_assets/js/katex/katex.js"></script>
+<script src="./_assets/js/nav-highlight-current.js"></script>
+<script src="./_assets/js/anchors.js"></script>
+<script src="./_assets/js/external-links.js"></script>
+<script src="./_assets/js/code-blocks.js"></script>
+<script src="./_assets/js/lunr.js"></script>
+<script src="./_assets/js/search.js"></script>
+</html>

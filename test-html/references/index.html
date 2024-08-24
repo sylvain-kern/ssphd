@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"  color-mode="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="my-thing" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Sylvain Kern" />
+  <base href="/">
+  <title>References &#183 Capteurs MEMS pour la mesure d’écoulements en
+environnements sévères</title>
+  <link rel="stylesheet" href="./_assets/css/style.css" />
+  <link rel="stylesheet" href="./_assets/css/graphs.css" />
+  <link rel="stylesheet" href="./_assets/css/highlighting.css" />
+  <link rel="stylesheet" href="./_assets/css/dygraph.css" />
+  <link rel="stylesheet" href="./_assets/css/katex.css" />
+  <script src="./_assets/js/dygraphs/dygraph.min.js"></script>
+  <script src="./_assets/js/dygraphs/synchronizer.js"></script>
+  <script src="./_assets/js/graph_generator.js"></script>
+</head>
+
+<body>
+
+    <div class='sidebar'>
+
+        <div class="header-container">
+            <header class='title-block'>
+                <a href="/" title="Capteurs MEMS pour la mesure
+d’écoulements en environnements sévères">
+                    Capteurs MEMS pour la mesure d’écoulements en
+                    environnements sévères
+                </a>
+            </header>
+        </div>
+
+        <div class="search-container">
+            <div class="searchbar-container">
+                <div class="searchbar">
+                    <input type="text" placeholder="Search">
+                    <span class="ctrl-k">
+                        <kbd class="ctrl">Ctrl</kbd>
+                        +
+                        <kbd class="k">K</kbd>
+                    </span>
+                </div>
+                <div class="results-container">
+                    <ul id="list" class="search-results-list"></ul>
+                    <div class="search-helper">
+                        <span>
+                            <kbd class="up">↑</kbd>
+                            <kbd class="down"up>↓</kbd>
+                            <span>navigate</span>
+                        </span>
+                        <span>
+                            <kbd class="enter">↩</kbd>
+                            <span>select</span>
+                        </span>
+                        <span>
+                            <kbd class="esc">Esc</kbd>
+                            <span>close</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav id="toc" role="doc-toc">
+          <ul>
+          <li><a href="introduction" id="toc-introduction">Introduction</a></li>
+          <li><a href="markdown-kitchen-sink" id="toc-markdown-kitchen-sink"><span
+          class="toc-section-number">1</span> Markdown Kitchen Sink</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="markdown-kitchen-sink/headers" id="toc-headers"><span
+          class="toc-section-number">1.1</span> Headers</a></li>
+          </ul></li>
+          <li><a href="h1" id="toc-h1"><span class="toc-section-number">2</span>
+          H1</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="h1/h2" id="toc-h2"><span class="toc-section-number">2.1</span>
+          H2</a>
+          <ul>
+          <li><a href="h1/h2/#h3" id="toc-h3"><span
+          class="toc-section-number">2.1.1</span> H3</a></li>
+          </ul></li>
+          </ul></li>
+          <li><a href="alt-h1" id="toc-alt-h1"><span
+          class="toc-section-number">3</span> Alt-H1</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/alt-h2" id="toc-alt-h2"><span
+          class="toc-section-number">3.1</span> Alt-H2</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/emphasis" id="toc-emphasis"><span
+          class="toc-section-number">3.2</span> Emphasis</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/lists" id="toc-lists"><span
+          class="toc-section-number">3.3</span> Lists</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/links" id="toc-links"><span
+          class="toc-section-number">3.4</span> Links</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/images" id="toc-images"><span
+          class="toc-section-number">3.5</span> Images</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/code-and-syntax-highlighting"
+          id="toc-code-and-syntax-highlighting"><span
+          class="toc-section-number">3.6</span> Code and Syntax
+          Highlighting</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/tables" id="toc-tables"><span
+          class="toc-section-number">3.7</span> Tables</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/blockquotes" id="toc-blockquotes"><span
+          class="toc-section-number">3.8</span> Blockquotes</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/inline-html" id="toc-inline-html"><span
+          class="toc-section-number">3.9</span> Inline HTML</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/horizontal-rule" id="toc-horizontal-rule"><span
+          class="toc-section-number">3.10</span> Horizontal Rule</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/line-breaks" id="toc-line-breaks"><span
+          class="toc-section-number">3.11</span> Line Breaks</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="alt-h1/youtube-videos" id="toc-youtube-videos"><span
+          class="toc-section-number">3.12</span> YouTube Videos</a></li>
+          </ul></li>
+          <li><a href="definition-lists" id="toc-definition-lists"><span
+          class="toc-section-number">4</span> Definition lists</a></li>
+          <li><a href="graphics" id="toc-graphics"><span
+          class="toc-section-number">5</span> Graphics</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="graphics/graphs" id="toc-graphs"><span
+          class="toc-section-number">5.1</span> Graphs</a>
+          <ul>
+          <li><a href="graphics/graphs/#dygraphs" id="toc-dygraphs"><span
+          class="toc-section-number">5.1.1</span> Dygraphs</a></li>
+          </ul></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="graphics/svg-images" id="toc-svg-images"><span
+          class="toc-section-number">5.2</span> SVG images</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="graphics/margin-figures" id="toc-margin-figures"><span
+          class="toc-section-number">5.3</span> Margin figures</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="graphics/subfigures" id="toc-subfigures"><span
+          class="toc-section-number">5.4</span> Subfigures</a></li>
+          </ul></li>
+          <li><a href="cross-links-with-pandoc-crossref"
+          id="toc-cross-links-with-pandoc-crossref"><span
+          class="toc-section-number">6</span> Cross-links with
+          <code>pandoc-crossref</code></a></li>
+          <li><a href="citations" id="toc-citations"><span
+          class="toc-section-number">7</span> Citations</a></li>
+          <li><a href="numbered-chapter" id="toc-numbered-chapter"><span
+          class="toc-section-number">8</span> Numbered chapter</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/section" id="toc-section"><span
+          class="toc-section-number">8.1</span> Section</a>
+          <ul>
+          <li><a href="numbered-chapter/section/#subsection"
+          id="toc-subsection"><span class="toc-section-number">8.1.1</span>
+          Subsection</a></li>
+          <li><a href="numbered-chapter/section/#subsection-2"
+          id="toc-subsection-2"><span class="toc-section-number">8.1.2</span>
+          Subsection 2</a></li>
+          <li><a href="numbered-chapter/section/#subsection-3"
+          id="toc-subsection-3"><span class="toc-section-number">8.1.3</span>
+          Subsection 3</a></li>
+          <li><a href="numbered-chapter/section/#subsection-4"
+          id="toc-subsection-4"><span class="toc-section-number">8.1.4</span>
+          Subsection 4</a></li>
+          <li><a
+          href="numbered-chapter/section/#subsection-5-which-is-unfortunately-unnumbered"
+          id="toc-subsection-5-which-is-unfortunately-unnumbered">Subsection 5
+          (which is unfortunately unnumbered)</a></li>
+          <li><a href="numbered-chapter/section/#subsection-6"
+          id="toc-subsection-6"><span class="toc-section-number">8.1.5</span>
+          Subsection 6</a></li>
+          </ul></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/other-section" id="toc-other-section"><span
+          class="toc-section-number">8.2</span> Other section</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/math" id="toc-math"><span
+          class="toc-section-number">8.3</span> Math</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/tables-1" id="toc-tables-1"><span
+          class="toc-section-number">8.4</span> Tables</a>
+          <ul>
+          <li><a
+          href="numbered-chapter/tables-1/#footnotes-in-tables-in-table-footer"
+          id="toc-footnotes-in-tables-in-table-footer"><span
+          class="toc-section-number">8.4.1</span> Footnotes in tables in table
+          footer?</a></li>
+          </ul></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="numbered-chapter/code" id="toc-code"><span
+          class="toc-section-number">8.5</span> Code</a>
+          <ul>
+          <li><a href="numbered-chapter/code/#to-do" id="toc-to-do">To Do</a></li>
+          </ul></li>
+          </ul></li>
+          <li><a href="references" id="toc-references">References</a></li>
+          <li><a href="section-after-references"
+          id="toc-section-after-references"><span
+          class="toc-section-number">9</span> Section after references</a></li>
+          <li><a href="abbreviations" id="toc-abbreviations"><span
+          class="toc-section-number">10</span> Abbreviations</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="abbreviations/test-in-titles-yes-and-even-in-toc"
+          id="toc-test-in-titles-yes-and-even-in-toc"><span
+          class="toc-section-number">10.1</span> Test (in titles ? Yes, and even
+          in TOC !)</a>
+          <ul>
+          <li><a
+          href="abbreviations/test-in-titles-yes-and-even-in-toc/#this-is-a-sub-section"
+          id="toc-this-is-a-sub-section"><span
+          class="toc-section-number">10.1.1</span> This is a sub-section</a></li>
+          </ul></li>
+          </ul></li>
+          <li><a href="and-a-chapter" id="toc-and-a-chapter"><span
+          class="toc-section-number">11</span> And a chapter</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a
+          href="and-a-chapter/test-in-titles-yes-and-even-in-toc/#and-a-level-3-section"
+          id="toc-and-a-level-3-section">And a level 3 section</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="and-a-chapter/and-a-level-2-section"
+          id="toc-and-a-level-2-section"><span
+          class="toc-section-number">11.1</span> And a level 2 section</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="and-a-chapter/markdown-formatting-in-section-headings"
+          id="toc-markdown-formatting-in-section-headings"><span
+          class="toc-section-number">11.2</span> Markdown
+          <strong>formatting</strong> in <em>section-headings</em></a></li>
+          </ul></li>
+          <li><a href="what-if-two-headings-have-the-same-title"
+          id="toc-what-if-two-headings-have-the-same-title"><span
+          class="toc-section-number">12</span> What if two headings have the same
+          title ?</a>
+          <ul>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="what-if-two-headings-have-the-same-title/this-is-a-title"
+          id="toc-this-is-a-title"><span class="toc-section-number">12.1</span>
+          This is a title</a></li>
+          <li><div class="toc-dropdown-btn">
+
+          </div>
+          <a href="what-if-two-headings-have-the-same-title/this-is-a-title-1"
+          id="toc-this-is-a-title-1"><span class="toc-section-number">12.2</span>
+          This is a title</a></li>
+          </ul></li>
+          <li><a href="lists-1" id="toc-lists-1"><span
+          class="toc-section-number">13</span> Lists</a></li>
+          </ul>        </nav>
+        <footer>
+            footer
+        </footer>
+    </div>
+
+    <main>
+
+        <div class="top-nav">
+            <div class="burger">
+                <button class="show" type="button" title="Table of contents">
+                <img class="icon" src="./toc-icon.svg" alt="">
+                </button>
+                <button class="hide" type="button" title="Table of contents">
+                    <img class="icon" src="./switch_light.svg" alt="">
+                </button>
+            </div>
+            <a href='/'>~</a>
+            <span class="top-nav-separator">›</span>
+                                    <button class="light-dark-switch" type="button" title="Switch to dark mode">
+                <img class="icon" src="./switch_light.svg" alt="">
+             </button>
+          </div>
+
+        <section id="references" class="level1 unnumbered">
+        <h1 class="unnumbered">References</h1>
+        <div id="refs" class="references csl-bib-body" role="list">
+        <div id="ref-almogThermalStabilityThin2021" class="csl-entry"
+        role="listitem">
+        <div class="csl-left-margin">1. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>Thermal
+        stability of thin Au films deposited on salt
+        whiskers</strong></div> <div class="csl-block">Ehud Almog, Vadim
+        Derkach, Amit Sharma, Amy Novick-Cohen, Julia R Greer, Eugen
+        Rabkin</div> <div class="csl-block"><div
+        class="csl-right-inline">Février <strong>2021</strong></div> ·
+        <em>Acta Materialia</em></div> <div class="csl-block"><div
+        class="csl-block">DOI<span class="smallcaps"><a
+        href="https://doi.org/gsdf45">gsdf45</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">1359-6454</span></div></div></div>
+        </div>
+        <div id="ref-mauriceDesignMicrofabricationCharacterization2016"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">2. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong><a
+        href="https://theses.hal.science/tel-02154818">Design,
+        microfabrication and characterization of alkali vapor cells for
+        miniature atomic frequency references</a></strong></div> <div
+        class="csl-block">Vincent Maurice</div> <div
+        class="csl-block"><div class="csl-right-inline">Juillet
+        <strong>2016</strong></div> · <em>Université de
+        Franche-Comté</em></div></div>
+        </div>
+        <div id="ref-talbiMicroscaleHotWire2015" class="csl-entry"
+        role="listitem">
+        <div class="csl-left-margin">3. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>A
+        micro-scale hot wire anemometer based on low stress (Ni/W)
+        multi-layers deposited on nano-crystalline diamond for air flow
+        sensing</strong></div> <div class="csl-block">A Talbi, L Gimeno,
+        J-C Gerbedoen, R Viard, A Soltani, V Mortet, V Preobrazhensky, A
+        Merlen, P Pernod</div> <div class="csl-block"><div
+        class="csl-right-inline">Novembre <strong>2015</strong></div> ·
+        <em>Journal of Micromechanics and Microengineering</em></div>
+        <div class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/gsdf4p">gsdf4p</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0960-1317</span></div></div></div>
+        </div>
+        <div id="ref-arwatzDynamicCalibrationModeling2013"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">4. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>Dynamic
+        calibration and modeling of a cold wire for temperature
+        measurement</strong></div> <div class="csl-block">Gilad Arwatz,
+        Carla Bahri, Alexander J Smits, Marcus Hultmark</div> <div
+        class="csl-block"><div class="csl-right-inline">Octobre
+        <strong>2013</strong></div> · <em>Measurement Science and
+        Technology</em></div> <div class="csl-block"><div
+        class="csl-block">DOI<span class="smallcaps"><a
+        href="https://doi.org/ggkxdh">ggkxdh</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0957-0233</span></div></div></div>
+        </div>
+        <div id="ref-comte-bellotHotWireAnemometry1976"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">5. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>Hot-Wire
+        Anemometry</strong></div> <div class="csl-block">G
+        Comte-Bellot</div> <div class="csl-block"><div
+        class="csl-right-inline"><strong>1976</strong></div> ·
+        <em>Annual Review of Fluid Mechanics</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/cng527">cng527</a></span></div></div></div>
+        </div>
+        <div id="ref-cahillThermalConductivityMeasurement1990"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">6. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>Thermal
+        conductivity measurement from 30 to 750 K: the 3ω
+        method</strong></div> <div class="csl-block">David G
+        Cahill</div> <div class="csl-block"><div
+        class="csl-right-inline">Février <strong>1990</strong></div> ·
+        <em>Review of Scientific Instruments</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/fsqs2m">fsqs2m</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0034-6748</span></div></div></div>
+        </div>
+        <div id="ref-fanLowdimensionalSiCNanostructures2006"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">7. </div><div
+        class="csl-right-inline"><div
+        class="csl-block"><strong>Low-dimensional SiC nanostructures:
+        Fabrication, luminescence, and electrical
+        properties</strong></div> <div class="csl-block">JY Fan, XL Wu,
+        Paul K Chu</div> <div class="csl-block"><div
+        class="csl-right-inline">Novembre <strong>2006</strong></div> ·
+        <em>Progress in Materials Science</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/b3j2tf">b3j2tf</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0079-6425</span></div></div></div>
+        </div>
+        <div id="ref-pisanoBridgeConceptualFrameworks2015"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">8. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>A Bridge
+        between Conceptual Frameworks: Sciences, Society and Technology
+        Studies</strong></div> <div class="csl-block">Raffaele
+        Pisano</div> <div class="csl-block"><div
+        class="csl-right-inline">Juin <strong>2015</strong></div> ·
+        <em>Springer</em></div> <div class="csl-block"><div
+        class="csl-block">ISBN<span
+        class="smallcaps">978-94-017-9645-3</span></div></div></div>
+        </div>
+        <div id="ref-ummelsStochasticMultiplayerGames2010"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">9. </div><div
+        class="csl-right-inline"><div
+        class="csl-block"><strong>Stochastic multiplayer games: theory
+        and algorithms</strong></div> <div class="csl-block">Michael
+        Ummels</div> <div class="csl-block"><div
+        class="csl-right-inline"><strong>2010</strong></div> ·
+        <em>Pallas Publications</em></div> <div class="csl-block"><div
+        class="csl-block">ISBN<span
+        class="smallcaps">978-90-485-1387-1</span></div></div></div>
+        </div>
+        <div id="ref-baarMicromachinedStructuresThermal2001"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">10. </div><div
+        class="csl-right-inline"><div
+        class="csl-block"><strong>Micromachined structures for thermal
+        measurements of fluid and flow parameters</strong></div> <div
+        class="csl-block">JJ van Baar, RJ Wiegerink, TSJ Lammerink, GJM
+        Krijnen, M Elwenspoek</div> <div class="csl-block"><div
+        class="csl-right-inline">Juillet <strong>2001</strong></div> ·
+        <em>Journal of Micromechanics and Microengineering</em></div>
+        <div class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/fpr3nq">fpr3nq</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0960-1317</span></div></div></div>
+        </div>
+        <div id="ref-balakrishnanHighlySensitive3CSiC2018"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">11. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>Highly
+        sensitive 3C-SiC on glass based thermal flow sensor realized
+        using MEMS technology</strong></div> <div
+        class="csl-block">Vivekananthan Balakrishnan, Toan Dinh,
+        Hoang-Phuong Phan, Dzung Viet Dao, Nam-Trung Nguyen</div> <div
+        class="csl-block"><div class="csl-right-inline">Août
+        <strong>2018</strong></div> · <em>Sensors and Actuators A:
+        Physical</em></div> <div class="csl-block"><div
+        class="csl-block">DOI<span class="smallcaps"><a
+        href="https://doi.org/gfbgrf">gfbgrf</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0924-4247</span></div></div></div>
+        </div>
+        <div id="ref-balakrishnanHotfilmAirFlow2019" class="csl-entry"
+        role="listitem">
+        <div class="csl-left-margin">12. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>A
+        hot-film air flow sensor for elevated
+        temperatures</strong></div> <div class="csl-block">Vivekananthan
+        Balakrishnan, Toan Dinh, Thanh Nguyen, Hoang-Phuong Phan,
+        Tuan-Khoa Nguyen, Dzung Viet Dao, Nam-Trung Nguyen</div> <div
+        class="csl-block"><div class="csl-right-inline">Janvier
+        <strong>2019</strong></div> · <em>Review of Scientific
+        Instruments</em></div> <div class="csl-block"><div
+        class="csl-block">DOI<span class="smallcaps"><a
+        href="https://doi.org/gmjgcf">gmjgcf</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0034-6748</span></div></div></div>
+        </div>
+        <div id="ref-buderAeroMEMSPolyimideBased2008" class="csl-entry"
+        role="listitem">
+        <div class="csl-left-margin">13. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>AeroMEMS
+        polyimide based wall double hot-wire sensors for flow separation
+        detection</strong></div> <div class="csl-block">Ulrich Buder,
+        Ralf Petz, Moritz Kittel, Wolfgang Nitsche, Ernst
+        Obermeier</div> <div class="csl-block"><div
+        class="csl-right-inline">Mars <strong>2008</strong></div> ·
+        <em>Sensors and Actuators A: Physical</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/dfprnf">dfprnf</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0924-4247</span></div></div></div>
+        </div>
+        <div
+        id="ref-chandrasekharanMicroscaleDifferentialCapacitive2011"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">14. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>A
+        Microscale Differential Capacitive Direct Wall-Shear-Stress
+        Sensor</strong></div> <div class="csl-block">Vijay
+        Chandrasekharan, Jeremy Sells, Jessica Meloy, David P Arnold,
+        Mark Sheplak</div> <div class="csl-block"><div
+        class="csl-right-inline">Juin <strong>2011</strong></div> ·
+        <em>Journal of Microelectromechanical Systems</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/fb3rm5">fb3rm5</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">1941-0158</span></div></div></div>
+        </div>
+        <div id="ref-dinhApplicationsThermoelectricalEffect2018"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">15. </div><div
+        class="csl-right-inline"><div
+        class="csl-block"><strong>Applications of Thermoelectrical
+        Effect in SiC</strong></div> <div class="csl-block">Toan Dinh,
+        Nam-Trung Nguyen, Dzung Viet Dao</div> <div
+        class="csl-block"><div
+        class="csl-right-inline"><strong>2018</strong></div> ·
+        <em>Thermoelectrical Effect in SiC for High-Temperature MEMS
+        Sensors</em></div> <div class="csl-block"><div
+        class="csl-block">DOI<span class="smallcaps"><a
+        href="https://doi.org/10.1007/978-981-13-2571-7_6">10.1007/978-981-13-2571-7_6</a></span></div>
+        <div class="csl-block">ISBN<span
+        class="smallcaps">9789811325717</span></div></div></div>
+        </div>
+        <div id="ref-chenInstrumentationGradeShearStress2016"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">16. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong><a
+        href="https://itea.org/images/pdf/conferences/2016%20TIW/Proceedings/CHEN.pdf">Instrumentation-Grade
+        Shear Stress Sensors for Direct Measurement of Mean and
+        Fluctuating Skin Friction</a></strong></div> <div
+        class="csl-block">Tai-An Chen, Casey Barnard, David Mills,
+        Stephen Horowitz, Mark Sheplak</div> <div class="csl-block"><div
+        class="csl-right-inline">Décembre
+        <strong>2016</strong></div></div></div>
+        </div>
+        <div id="ref-dinhOnChipSiCMEMS2018" class="csl-entry"
+        role="listitem">
+        <div class="csl-left-margin">17. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>An
+        On-Chip SiC MEMS Device with Integrated Heating, Sensing, and
+        Microfluidic Cooling Systems</strong></div> <div
+        class="csl-block">Toan Dinh, Hoang-Phuong Phan, Navid
+        Kashaninejad, Tuan-Khoa Nguyen, Dzung Viet Dao, Nam-Trung
+        Nguyen</div> <div class="csl-block"><div
+        class="csl-right-inline"><strong>2018</strong></div> ·
+        <em>Advanced Materials Interfaces</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/gfm946">gfm946</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">2196-7350</span></div></div></div>
+        </div>
+        <div id="ref-flemishDryEtchingSiC1996" class="csl-entry"
+        role="listitem">
+        <div class="csl-left-margin">18. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>Dry
+        Etching of SiC for Advanced Device Applications</strong></div>
+        <div class="csl-block">JR Flemish, K Xie, GF McLane</div> <div
+        class="csl-block"><div class="csl-right-inline">Décembre
+        <strong>1996</strong></div> · <em>MRS Online Proceedings
+        Library</em></div> <div class="csl-block"><div
+        class="csl-block">DOI<span class="smallcaps"><a
+        href="https://doi.org/b84sfc">b84sfc</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">1946-4274</span></div></div></div>
+        </div>
+        <div id="ref-ghouila-houriHighTemperatureGradient2021"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">19. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>High
+        temperature gradient micro-sensors for skin-friction measurement
+        in flow control applications</strong></div> <div
+        class="csl-block">C Ghouila-Houri, M Benedito, E Garnier, A
+        Talbi, A Mazzamurro, R Viard, A Merlen, P Pernod, T Arnoult, Q
+        Gallas</div> <div class="csl-block"><div
+        class="csl-right-inline">Août <strong>2021</strong></div> ·
+        <em>2021 Symposium on Design, Test, Integration &amp; Packaging
+        of MEMS and MOEMS (DTIP)</em></div> <div class="csl-block"><div
+        class="csl-block">DOI<span class="smallcaps"><a
+        href="https://doi.org/gsdf2p">gsdf2p</a></span></div></div></div>
+        </div>
+        <div id="ref-gimenoSyntheticJetsBased2010" class="csl-entry"
+        role="listitem">
+        <div class="csl-left-margin">20. </div><div
+        class="csl-right-inline"><div
+        class="csl-block"><strong>Synthetic jets based on micro magneto
+        mechanical systems for aerodynamic flow control</strong></div>
+        <div class="csl-block">L Gimeno, A Talbi, R Viard, A Merlen, P
+        Pernod, V Preobrazhensky</div> <div class="csl-block"><div
+        class="csl-right-inline">Mai <strong>2010</strong></div> ·
+        <em>Journal of Micromechanics and Microengineering</em></div>
+        <div class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/bxxgcs">bxxgcs</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0960-1317</span></div></div></div>
+        </div>
+        <div id="ref-hoMicroElectroMechanicalSystemsMemsFluid1998"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">21. </div><div
+        class="csl-right-inline"><div
+        class="csl-block"><strong>Micro-Electro-Mechanical-Systems
+        (mems) and Fluid Flows</strong></div> <div
+        class="csl-block">Chih-Ming Ho, Yu-Chong Tai</div> <div
+        class="csl-block"><div
+        class="csl-right-inline"><strong>1998</strong></div> ·
+        <em>Annual Review of Fluid Mechanics</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/d8r5wp">d8r5wp</a></span></div></div></div>
+        </div>
+        <div id="ref-gerlachGoldSiliconPhase1967" class="csl-entry"
+        role="listitem">
+        <div class="csl-left-margin">22. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>Gold
+        silicon phase diagram</strong></div> <div class="csl-block">W
+        Gerlach, B Goel</div> <div class="csl-block"><div
+        class="csl-right-inline">Juin <strong>1967</strong></div> ·
+        <em>Solid-State Electronics</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/b35nw7">b35nw7</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0038-1101</span></div></div></div>
+        </div>
+        <div id="ref-hourlierThermalDecompositionCalcium2019"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">23. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>Thermal
+        decomposition of calcium oxalate: beyond
+        appearances</strong></div> <div class="csl-block">Djamila
+        Hourlier</div> <div class="csl-block"><div
+        class="csl-right-inline">Juin <strong>2019</strong></div> ·
+        <em>Journal of Thermal Analysis and Calorimetry</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/gjgfs5">gjgfs5</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">1588-2926</span></div></div></div>
+        </div>
+        <div id="ref-jiangMicromachinedPolysiliconHotWire1994"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">24. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>A
+        Micromachined Polysilicon Hot-Wire Anemometer</strong></div>
+        <div class="csl-block">Fukang Jiang, Yu-Chong Tai, Chih-Ming Ho,
+        Wen J Li</div> <div class="csl-block"><div
+        class="csl-right-inline"><strong>1994</strong></div></div></div>
+        </div>
+        <div id="ref-weiHighlySensitiveDiodeBased2019" class="csl-entry"
+        role="listitem">
+        <div class="csl-left-margin">25. </div><div
+        class="csl-right-inline"><div class="csl-block"><strong>Highly
+        Sensitive Diode-Based Micro-Pirani Vacuum Sensor with Low Power
+        Consumption</strong></div> <div class="csl-block">Debo Wei,
+        Jianyu Fu, Ruiwen Liu, Ying Hou, Chao Liu, Weibing Wang, Dapeng
+        Chen</div> <div class="csl-block"><div
+        class="csl-right-inline">Janvier <strong>2019</strong></div> ·
+        <em>Sensors (Basel, Switzerland)</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/gsdf43">gsdf43</a></span></div> <div
+        class="csl-block">PMID<span class="smallcaps"><a
+        href="https://www.ncbi.nlm.nih.gov/pubmed/30621043">30621043</a></span></div>
+        <div class="csl-block">PMCID<span class="smallcaps"><a
+        href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6338961">PMC6338961</a></span></div>
+        <div class="csl-block">ISSN<span
+        class="smallcaps">1424-8220</span></div></div></div>
+        </div>
+        <div id="ref-arwatzDevelopmentCharacterizationNanoscale2015"
+        class="csl-entry" role="listitem">
+        <div class="csl-left-margin">26. </div><div
+        class="csl-right-inline"><div
+        class="csl-block"><strong>Development and characterization of a
+        nano-scale temperature sensor (T-NSTAP) for turbulent
+        temperature measurements</strong></div> <div
+        class="csl-block">Gilad Arwatz, Yuyang Fan, Carla Bahri, Marcus
+        Hultmark</div> <div class="csl-block"><div
+        class="csl-right-inline">Février <strong>2015</strong></div> ·
+        <em>Measurement Science and Technology</em></div> <div
+        class="csl-block"><div class="csl-block">DOI<span
+        class="smallcaps"><a
+        href="https://doi.org/ggkxdt">ggkxdt</a></span></div> <div
+        class="csl-block">ISSN<span
+        class="smallcaps">0957-0233</span></div></div></div>
+        </div>
+        </div>
+        <div id="abbr">
+
+        </div>
+        </section>
+
+        <div class="bottom">
+            <div class="prevnext">
+                                <a href="/numbered-chapter/code/" class="pager prev">
+                    <span class="prefix">← prev</span>
+                    8.5 Code
+                </a>
+                                                <a href="/section-after-references/" class="pager next">
+                    <span class="prefix">next →</span>
+                    9 Section after references
+                </a>
+                            </div>
+        </div>
+    </main>
+</body>
+
+<script src="./_assets/js/get-scrollbar-width.js"></script>
+<script src="./_assets/js/sidebar.js"></script>
+<script src="./_assets/js/tables.js"></script>
+<script src="./_assets/js/katex/katex.js"></script>
+<script src="./_assets/js/nav-highlight-current.js"></script>
+<script src="./_assets/js/anchors.js"></script>
+<script src="./_assets/js/external-links.js"></script>
+<script src="./_assets/js/code-blocks.js"></script>
+<script src="./_assets/js/lunr.js"></script>
+<script src="./_assets/js/search.js"></script>
+</html>

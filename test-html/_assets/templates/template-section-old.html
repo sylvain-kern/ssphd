@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc-markdown-css-theme" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+  <base href="$base$">
+$if(description-meta)$
+  <meta name="description" content="$description-meta$" />
+$endif$
+  <title>$pagetitle$ &#183 $title$</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="_assets/css/style.css" />
+  <link rel="stylesheet" href="_assets/css/graphs.css" />
+  <link rel="stylesheet" href="_assets/css/highlighting.css" />
+  <link rel="stylesheet" href="_assets/css/dygraph.css" />
+  <script src="_assets/js/dygraphs/dygraph.min.js"></script>
+  <script src="_assets/js/dygraphs/synchronizer.js"></script>
+  <script src="_assets/js/graph_generator.js"></script>
+$if(math)$
+  $math$
+$endif$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body>
+$for(include-before)$
+$include-before$
+$endfor$
+
+<header>
+  <div class='sidebar'>
+
+      <div class='title-block'>
+        <a href="">
+          $title$
+        </a>
+      </div>
+
+      <nav id="$idprefix$TOC" role="doc-toc">
+        ${ nav.html() }
+      </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class='top-nav'>
+
+    <div class="horizontal">
+      <button class="hamburger">
+        <!-- material icons https://material.io/resources/icons/ -->
+        <i class="menuIcon material-symbols-rounded">list</i>
+        <i class="closeIcon material-symbols-rounded">navigate_before</i>
+      </button>
+      $if(hasprev)$
+      <a class='prev' href='/$prev$/'>← $prevtitle$</a>
+      $endif$
+      $if(hasnext)$
+      <a class='next' href='/$next$/'>$nexttitle$ →</a>
+      $else$
+      <a class='next'></a>
+      $endif$
+    </div>
+
+    <div class="vertical">
+      <a href='/'>～</a>
+      <span class="top-nav-separator">/</span>
+      $if(ischapter)$
+      $else$
+      <a href='/$parent$/'>$parenttitle$</a>
+      <span class="top-nav-separator">/</span>
+      $endif$
+    </div>
+
+  </div>
+
+$body$
+
+</main>
+
+<footer>
+  <div class="horizontal">
+    $if(hasprev)$
+    <a class='prev' href='/$prev$/'>← $prevtitle$</a>
+    $else$
+    $endif$
+    <a class="top relative-link" href="#">↑ Top</a>
+    $if(hasnext)$
+    <a class='next' href='/$next$/'>$nexttitle$ →</a>
+    $else$
+    <a class='next'></a>
+    $endif$
+  </div>
+
+
+</footer>
+
+<script>
+;(function() {
+  // Non-essential if user has JavaScript off. Just makes checkboxes look nicer.
+  var selector = '.task-list > li > input[type="checkbox"]';
+  var checkboxes = document.querySelectorAll(selector);
+  Array.from(checkboxes).forEach((checkbox) => {
+    var wasChecked = checkbox.checked;
+    checkbox.disabled = false;
+    checkbox.addEventListener('click', (ev) => {ev.target.checked = wasChecked});
+  });
+})();
+</script>
+<script src="_assets/js/sidebar.js"></script>
+<script src="_assets/js/nav-highlight-current.js"></script>
+<script src="_assets/js/scroll-to-top.js"></script>
+<script src="_assets/js/codetoclipboard.js"></script>
+$for(include-after)$
+$include-after$
+$endfor$
+</body>
+</html>

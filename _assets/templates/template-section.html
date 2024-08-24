@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$  color-mode="light">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc-markdown-css-theme" />
+  <meta name="generator" content="my-thing" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 $for(author-meta)$
   <meta name="author" content="$author-meta$" />
@@ -11,114 +11,132 @@ $if(date-meta)$
   <meta name="dcterms.date" content="$date-meta$" />
 $endif$
 $if(keywords)$
-  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+  <meta name="keywords" content="$for(keywords)$    $keywords$$sep$, $endfor$" />
 $endif$
   <base href="$base$">
 $if(description-meta)$
   <meta name="description" content="$description-meta$" />
 $endif$
   <title>$pagetitle$ &#183 $title$</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
-  <link rel="stylesheet" href="_assets/css/style.css" />
-  <link rel="stylesheet" href="_assets/css/highlighting.css" />
-$if(math)$
-  $math$
-$endif$
-$for(header-includes)$
-  $header-includes$
-$endfor$
+  <link rel="stylesheet" href="./_assets/css/style.css" />
+  <link rel="stylesheet" href="./_assets/css/graphs.css" />
+  <link rel="stylesheet" href="./_assets/css/highlighting.css" />
+  <link rel="stylesheet" href="./_assets/css/dygraph.css" />
+  <link rel="stylesheet" href="./_assets/css/katex.css" />
+  <script src="./_assets/js/dygraphs/dygraph.min.js"></script>
+  <script src="./_assets/js/dygraphs/synchronizer.js"></script>
+  <script src="./_assets/js/graph_generator.js"></script>
 </head>
+
 <body>
-$for(include-before)$
-$include-before$
-$endfor$
 
-<header>
-  <div class='sidebar'>
+    <div class='sidebar'>
 
-      <div class='title-block'>
-        <a href="">
-          $title$
-        </a>
-      </div>
+        <div class="header-container">
+            <header class='title-block'>
+                <a href="/" title="$title$">
+                    $title$
+                </a>
+            </header>
+        </div>
 
-      <nav id="$idprefix$TOC" role="doc-toc">
-        ${ nav.html() }
-      </nav>
-  </div>
-</header>
+        <div class="search-container">
+            <div class="searchbar-container">
+                <div class="searchbar">
+                    <input type="text" placeholder="Search">
+                    <span class="ctrl-k">
+                        <kbd class="ctrl">Ctrl</kbd>
+                        +
+                        <kbd class="k">K</kbd>
+                    </span>
+                </div>
+                <div class="results-container">
+                    <ul id="list" class="search-results-list"></ul>
+                    <div class="search-helper">
+                        <span>
+                            <kbd class="up">↑</kbd>
+                            <kbd class="down"up>↓</kbd>
+                            <span>navigate</span>
+                        </span>
+                        <span>
+                            <kbd class="enter">↩</kbd>
+                            <span>select</span>
+                        </span>
+                        <span>
+                            <kbd class="esc">Esc</kbd>
+                            <span>close</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<main>
-
-  <div class='top-nav'>
-
-    <div class="horizontal">
-      <button class="hamburger">
-        <!-- material icons https://material.io/resources/icons/ -->
-        <i class="menuIcon material-symbols-rounded">list</i>
-        <i class="closeIcon material-symbols-rounded">navigate_before</i>
-      </button>
-      $if(hasprev)$
-      <a class='prev' href='/$prev$/'>← $prevtitle$</a>
-      $endif$
-      $if(hasnext)$
-      <a class='next' href='/$next$/'>$nexttitle$ →</a>
-      $else$
-      <a class='next'></a>
-      $endif$
+        <nav id="toc" role="doc-toc">
+          ${ nav.html() }
+        </nav>
+        <footer>
+            footer
+        </footer>
     </div>
 
-    <div class="vertical">
-      <a href='/'>～</a>
-      <span class="top-nav-separator">/</span>
-      $if(ischapter)$
-      $else$
-      <a href='/$parent$/'>$parenttitle$</a>
-      <span class="top-nav-separator">/</span>
-      $endif$
-    </div>
+    <main>
 
-  </div>
+        <div class="top-nav">
+            <div class="burger">
+                <button class="show" type="button" title="Table of contents">
+                <img class="icon" src="./toc-icon.svg" alt="">
+                </button>
+                <button class="hide" type="button" title="Table of contents">
+                    <img class="icon" src="./switch_light.svg" alt="">
+                </button>
+            </div>
+            <a href='/'>~</a>
+            <span class="top-nav-separator">›</span>
+            $if(ischapter)$
+            $else$
+            <a href='/$parent$/'>$parenttitle$</a>
+            <span class="top-nav-separator">›</span>
+            $endif$
+            <button class="light-dark-switch" type="button" title="Switch to dark mode">
+                <img class="icon" src="./switch_light.svg" alt="">
+             </button>
+          </div>
 
-$body$
+        $body$
 
-</main>
-
-<footer>
-  <div class="horizontal">
-    $if(hasprev)$
-    <a class='prev' href='/$prev$/'>← $prevtitle$</a>
-    $else$
-    $endif$
-    <a class="top relative-link" href="#">↑ Top</a>
-    $if(hasnext)$
-    <a class='next' href='/$next$/'>$nexttitle$ →</a>
-    $else$
-    <a class='next'></a>
-    $endif$
-  </div>
-
-
-</footer>
-
-<script>
-;(function() {
-  // Non-essential if user has JavaScript off. Just makes checkboxes look nicer.
-  var selector = '.task-list > li > input[type="checkbox"]';
-  var checkboxes = document.querySelectorAll(selector);
-  Array.from(checkboxes).forEach((checkbox) => {
-    var wasChecked = checkbox.checked;
-    checkbox.disabled = false;
-    checkbox.addEventListener('click', (ev) => {ev.target.checked = wasChecked});
-  });
-})();
-</script>
-<script src="_assets/js/sidebar.js"></script>
-<script src="_assets/js/highlight-anchors.js"></script>
-<script src="_assets/js/scroll-to-top.js"></script>
-<script src="_assets/js/codetoclipboard.js"></script>
-$for(include-after)$
-$include-after$
-$endfor$
+        <div class="bottom">
+            <div class="prevnext">
+                $if(hasprev)$
+                <a href="/$prev$/" class="pager prev">
+                    <span class="prefix">← prev</span>
+                    $prevtitle$
+                </a>
+                $else$
+                <div class="empty-pager">
+                </div>
+                $endif$
+                $if(hasnext)$
+                <a href="/$next$/" class="pager next">
+                    <span class="prefix">next →</span>
+                    $nexttitle$
+                </a>
+                $else$
+                <div class="empty-pager">
+                </div>
+                $endif$
+            </div>
+        </div>
+    </main>
 </body>
+
+<script src="./_assets/js/get-scrollbar-width.js"></script>
+<script src="./_assets/js/sidebar.js"></script>
+<script src="./_assets/js/tables.js"></script>
+<script src="./_assets/js/katex/katex.js"></script>
+<script src="./_assets/js/nav-highlight-current.js"></script>
+<script src="./_assets/js/anchors.js"></script>
+<script src="./_assets/js/external-links.js"></script>
+<script src="./_assets/js/code-blocks.js"></script>
+<script src="./_assets/js/lunr.js"></script>
+<script src="./_assets/js/search.js"></script>
 </html>
