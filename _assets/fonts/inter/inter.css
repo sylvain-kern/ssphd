@@ -92,7 +92,6 @@
   font-display: swap;
   src: url("Inter-Italic.woff2") format("woff2");
   font-feature-settings: 'calt', 'dilg', 'ss01', 'ss03', 'ss04', 'cv10', 'cpsp';
-  font-feature-settings: 'calt', 'dilg', 'ss01', 'ss03', 'ss04', 'cv10', 'cpsp';
 }
 
 @font-face {

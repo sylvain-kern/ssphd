@@ -408,7 +408,6 @@ nav {
 nav a {
     color: var(--color-darkergray);
     text-decoration: none;
-    border-radius: var(--border-radius-s);
     padding-top: var(--space-nav-top-bot);
     padding-bottom: var(--space-nav-top-bot);
     display: inline-block;
@@ -509,7 +508,7 @@ footer {
     margin-bottom: var(--space-l);
     font-family: var(--sans);
     font-size-adjust: var(--scale-inter-to-source-serif);
-    font-size: var(--font-size-ms);
+    font-size: var(--font-size-s);
     font-variant-numeric: tabular-nums;
 }
 
@@ -1019,7 +1018,6 @@ label.sidenote-number {
 .sidenote::before {
     font-family: var(--sans);
     font-size-adjust: var(--scale-inter-to-source-serif);
-    font-size: var(--base-font-size);
     /* border: 1px solid blue; */
     content: counter(sidenote-counter, note-symbols);
     text-align: right;
@@ -1047,7 +1045,6 @@ label.sidenote-number {
 /* figures */
 
 figure,
-div:has(table)
 .table-wrapper {
     margin-top: var(--space-m);
     margin-bottom: var(--space-ml);
@@ -1124,6 +1121,7 @@ img.margin {
 
 .table-wrapper table {
     font-family: var(--sans);
+    font-size: var(--font-size-ms);
     font-size-adjust: var(--scale-inter-to-source-serif);
     border-top: 2px solid var(--color-darkergray);
     border-bottom: 2px solid var(--color-darkergray);

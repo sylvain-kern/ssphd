@@ -32,6 +32,14 @@ function generateGraph(id, data, xdata='', ydata='', xlabel, ylabel, legendPosit
     // getting the colors
     var style = getComputedStyle(document.documentElement)
 
+    if (legendPosition == 'caption') {
+      var legendId = 'legend_'+id;
+    } else if (legendPosition == '') {
+
+    }
+    else {
+      legendId = '';
+    };
     let default_options = {
         colors: [
           style.getPropertyValue('--color-qualitiative-blue'),
@@ -57,13 +65,21 @@ function generateGraph(id, data, xdata='', ydata='', xlabel, ylabel, legendPosit
         labelsKMB: true,
         legend: 'always',
         axes: {
-          x2: {
+          x: {
             drawAxis: true,
+            axisLineColor: style.getPropertyValue('--color-text'),
+            axisLineWidth: 0.5,
           },
-          y2: {
+          y: {
             drawAxis: true,
+            axisLineColor: style.getPropertyValue('--color-text'),
+            axisLineWidth: 0.5
           }
         },
+        gridLineColor: style.getPropertyValue('--color-darkgray'),
+        gridLinePattern: [5, 5],
+        gridLineWidth: 0.5,
+        labelsDiv: legendId,
       };
     let graph = new Dygraph(
         document.getElementById(id),

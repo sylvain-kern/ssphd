@@ -19,6 +19,9 @@ var search_index = `
 
 search_index = JSON.parse(search_index);
 
+console.log("\n============\nSEARCH INDEX:")
+console.log(search_index)
+
 let idx = lunr(function() {
     this.ref('link');
     this.field('title', {boost: 5});
@@ -81,9 +84,8 @@ searchField.addEventListener('input', (e) => {
 
     // searching in lunr index if query is not empty
 
-
     const initialQuery = query;
-    console.log('\nQuery:');
+    console.log('\n=====\nQUERY:');
     console.log(query);
 
     if (query != '' && query != ' ') {
@@ -120,7 +122,7 @@ function displayResults(results, results_full, initialQuery) {
 
     for (const [result, result_full] of zip([results, results_full])) {
 
-        console.log('result:')
+        console.log('\nRESULT:')
 
         var matched_terms = [];
         var matched_fields = [];
@@ -135,12 +137,16 @@ function displayResults(results, results_full, initialQuery) {
             });
         });
 
+        console.log('matched terms')
         console.log(matched_terms);
+        console.log('matched positions')
         console.log(matched_positions);
 
         const matched_term = matched_terms[0];
         const matched_term_length = matched_term.length;
         const first_position = matched_positions[0][0][0];
+
+        console.log('first position')
         console.log(first_position);
 
         const matchingSpan = document.createElement('span');
@@ -202,6 +208,7 @@ function displayResults(results, results_full, initialQuery) {
 
         list.appendChild(resultItem);
     };
+    console.log('results length')
     console.log(results.length);
     if (results.length == 0) {
         const emptyResult = document.createElement('div');

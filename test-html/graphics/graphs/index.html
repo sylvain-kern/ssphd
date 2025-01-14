@@ -47,7 +47,7 @@ d’écoulements en environnements sévères">
                     <div class="search-helper">
                         <span>
                             <kbd class="up">↑</kbd>
-                            <kbd class="down"up>↓</kbd>
+                            <kbd class="down">↓</kbd>
                             <span>navigate</span>
                         </span>
                         <span>
@@ -356,11 +356,7 @@ d’écoulements en environnements sévères">
         </div>
         <script src="_assets/graphs/graph1.js" ></script>
         <figure id="fig:custom1">
-        <div class='graph-container' id=dygraph_0></div>
-                        <script>
-                            dygraph_0 = generateGraph(id="dygraph_0", data="./_assets/graphs/xo_2024.csv", xdata="A", ydata="B, C", xlabel="A", ylabel="C", legendPosition="graph");
-                        </script>
-                        
+        <div class='graph-container' id=dygraph_0 legendPosition=graph></div>
         <figcaption><span class="captionprefix">Figure 5.1.</span><br>
         Dygraph using my custom macro.</figcaption>
         </figure>
@@ -414,21 +410,13 @@ d’écoulements en environnements sévères">
         figure with the corresponding caption.</p>
         <p><strong>TEST:</strong></p>
         <figure id="fig:graph1">
-        <div class='graph-container' id=dygraph_1></div>
-                        <script>
-                            dygraph_1 = generateGraph(id="dygraph_1", data="_assets/graphs/data1.csv", xdata="T (°C)", ydata="Data1 (unit1), Data2 (unit2), Data3 (unit3), Data4 (unit4), Data5 (unit5)", xlabel="Légende X", ylabel="Légende Y", legendPosition="graph");
-                        </script>
-                        
+        <div class='graph-container' id=dygraph_1 legendPosition=graph></div>
         <figcaption><span class="captionprefix">Figure 5.2.</span><br>
         Graph caption</figcaption>
         </figure>
         <p>In the margin :</p>
         <figure id="fig:graphmargin">
-        <div class='graph-container' id=dygraph_2></div>
-                        <script>
-                            dygraph_2 = generateGraph(id="dygraph_2", data="_assets/graphs/data1.csv", xdata="T (°C)", ydata="Data1 (unit1), Data2 (unit2), Data3 (unit3), Data4 (unit4), Data5 (unit5)", xlabel="Légende X", ylabel="Légende Y", legendPosition="graph");
-                        </script>
-                        
+        <div class='graph-container' id=dygraph_2 legendPosition=caption></div>
         <figcaption><span class="captionprefix">Figure 5.3.</span><br>
         Graph in the margin?</figcaption>
         </figure></li>
@@ -457,6 +445,7 @@ d’écoulements en environnements sévères">
 <script src="./_assets/js/get-scrollbar-width.js"></script>
 <script src="./_assets/js/sidebar.js"></script>
 <script src="./_assets/js/tables.js"></script>
+<script src="./_assets/js/graphs.js"></script>
 <script src="./_assets/js/katex/katex.js"></script>
 <script src="./_assets/js/nav-highlight-current.js"></script>
 <script src="./_assets/js/anchors.js"></script>

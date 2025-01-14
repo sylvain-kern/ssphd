@@ -11,7 +11,7 @@ $if(date-meta)$
   <meta name="dcterms.date" content="$date-meta$" />
 $endif$
 $if(keywords)$
-  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+  <meta name="keywords" content="$for(keywords)$    $keywords$$sep$, $endfor$" />
 $endif$
   <base href="$base$">
 $if(description-meta)$
@@ -55,7 +55,7 @@ $endif$
                     <div class="search-helper">
                         <span>
                             <kbd class="up">↑</kbd>
-                            <kbd class="down"up>↓</kbd>
+                            <kbd class="down">↓</kbd>
                             <span>navigate</span>
                         </span>
                         <span>
@@ -132,6 +132,7 @@ $endif$
 <script src="./_assets/js/get-scrollbar-width.js"></script>
 <script src="./_assets/js/sidebar.js"></script>
 <script src="./_assets/js/tables.js"></script>
+<script src="./_assets/js/graphs.js"></script>
 <script src="./_assets/js/katex/katex.js"></script>
 <script src="./_assets/js/nav-highlight-current.js"></script>
 <script src="./_assets/js/anchors.js"></script>

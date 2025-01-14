@@ -27,11 +27,12 @@
   right: 2px;
   */
   background: var(--color-legend-background);
-  line-height: var(--note-line-height);
+  line-height: var(--base-line-height);
   text-align: left;
   overflow: hidden;
   color: var(--color-text);
   font-weight: 500;
+  font-size: var(--font-size-xs);
 }
 
 .x-data-line,

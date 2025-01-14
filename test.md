@@ -482,7 +482,7 @@ Two cases:
 
     In the margin :
 
-    ![Graph in the margin?](_assets/graphs/data1.csv){#fig:graphmargin .margin xlabel="Légende X" ylabel="Légende Y"}
+    ![Graph in the margin?](_assets/graphs/data1.csv){#fig:graphmargin xlabel="Légende X" ylabel="Légende Y" legendPosition="caption"}
 
 
 2. Long-form : let the user to write the `graph.js` script all by themselves.

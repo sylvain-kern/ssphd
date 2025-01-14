@@ -171,6 +171,17 @@ class Document:
         if not os.path.exists(self.dest_path + '_assets/'):
             shutil.copytree(self.assets_path, self.dest_path + '_assets/')
 
+    # SEARCH
+
+    def generate_search_index(self, key, value, format_, meta):
+
+        self.search_dict = {}
+
+        if key == 'Header':
+             [level, [label, t1, t2], header] = value
+
+        elif key == 'Paragraph':
+            pass
 
     # STRUCTURE
 
@@ -310,18 +321,23 @@ class Document:
                 kwargs = {}
                 kwargs['xlabel'] = xcolumn
                 kwargs['ylabel'] = columns[2]
+                kwargs['legendPosition'] = 'graph'
                 for keyval in keyvals:
                     kwargs[keyval[0]] = keyval[1]
+                    print(keyval)
                 # formatting the graph
-                graph_id = f"dygraph-{self.graph_count}"
+                graph_id = f"dygraph_{self.graph_count}"
                 self.graph_count += 1
                 graph_script = f"""
-                <script>
-                    {graph_id} = generateGraph(id="{graph_id}", data="{filename}", xdata="{xcolumn}", ydata="{ycolumns}", xlabel="{kwargs['xlabel']}", ylabel="{kwargs['ylabel']}", legendPosition="graph");
-                </script>
+                    var {graph_id} = generateGraph(id="{graph_id}", data="{filename}", xdata="{xcolumn}", ydata="{ycolumns}", xlabel="{kwargs['xlabel']}", ylabel="{kwargs['ylabel']}", legendPosition="{kwargs['legendPosition']}");
                 """
-                return [pf.RawInline("html", f"<div class='graph-container' id={graph_id}></div>"),
-                        pf.RawInline("html", graph_script)]
+                graphsjs_file = self.dest_path+'_assets/js/graphs.js'
+                with open(graphsjs_file, 'a', encoding='utf-8') as f:
+                    f.write('\n')
+                    f.write(graph_script)
+                return [
+                    pf.RawInline("html", f"<div class='graph-container' id={graph_id} legendPosition={kwargs['legendPosition']}></div>")
+                ]
 
     def get_next(self, key):
         index = self.structure_list.index(key)
