@@ -447,11 +447,6 @@ class Document:
         with open('./structure_dict.json', 'w') as f:
             f.write(json.dumps(self.structure_dict))
 
-    def put_to_htdocs(self):
-        if os.path.exists('C://Apache24/htdocs/'):
-            shutil.rmtree('C://Apache24/htdocs/')
-        shutil.copytree(self.dest_path, 'C://Apache24/htdocs/')
-
     def generate_index(self):
         pypandoc.convert_text(
             self.ast,
@@ -510,7 +505,7 @@ class Document:
                 "--csl=_assets/refs/for-the-web.csl",
                 # "--filter=_assets/filters/title_above_references.py",
                 # "--number-sections",
-                # "--katex",
+                "--katex",
                 # "--filter=pandoc-xnos",
                 # "--filter=pandoc-secnos",
                 "--filter=pandoc-crossref",
@@ -562,8 +557,6 @@ class Document:
         #         "--section-divs",
         #         "--variable=base=C:/Users/sylva/Documents/latex shit/htmlcss"
         #     ])
-
-        self.put_to_htdocs()
 
 
 def main():
