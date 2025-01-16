@@ -51,7 +51,7 @@ Learn more about Single-Source Publishing (SSP) [here](https://coko.foundation/a
 
 ### Usage
 
-Create your `main.md`, using our [extended synax of Pandoc markdown](./syntax.md).
+Create your `main.md`, using our [extended syntax of Pandoc markdown](./syntax.md).
 
 To produce the output(s), run
 
@@ -71,7 +71,7 @@ This will produce a bunch of folders, like `main-html`, `main-latex` which conta
 
 ### Functionality
 
-- 3D objects vizualization
+- 3D objects visualization
 - Units conversion (like in ciechanow.ski exquisite articles)
 - More granular search (search over figures, graphs, data, bibliographic references)
 
