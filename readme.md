@@ -63,16 +63,27 @@ This will produce a bunch of folders, like `main-html`, `main-latex` which conta
 
 ## Roadmap
 
+### Core features
+
+- add modularity (let the user enable/disable features)
+- package this and resolve dependencies
+
 ### New output formats support
 
 - `docx`
 - `latex`
 - `JATS`
 
-### Functionality
+### Functionalities
 
 - 3D objects visualization
 - Units conversion (like in ciechanow.ski exquisite articles)
 - More granular search (search over figures, graphs, data, bibliographic references)
+
+### Aesthetics
+
+- make this themable
+- implement native dark/light modes
+- do real work on 
 
 ## Contributing
