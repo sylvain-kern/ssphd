@@ -66,13 +66,12 @@ function displayResultFull (field, item, rest, fieldsPositions) {
 
 function displayResult (field, item, rest, fieldsPositions) {
 
-    headChars = 80;
-    tailChars = 140;
+    headChars = 80,
 
     position = fieldsPositions[item][0]
 
     start = Math.max(position[0] - headChars, 0);
-    end = Math.min(position[0] + tailChars, rest.length)
+    end = Math.min(start+260)
 
     textBefore = rest.slice(start, position[0]);
     textMarked = rest.slice(position[0], position[0] + position[1]);
@@ -90,6 +89,17 @@ function displayResult (field, item, rest, fieldsPositions) {
     if (end < rest.length) {
         field.appendChild(document.createTextNode('…'))
     }
+}
+
+function displayResultDefault (field, rest) {
+    start = 0;
+    end = Math.min(start+260);
+
+    if(end > rest.length) {
+        field.appendChild(document.createTextNode(rest));
+    } else {
+        field.appendChild(document.createTextNode(rest.slice(start, end)+'…'));
+    };
 }
 
 getJson().then(docs => {
@@ -172,14 +182,19 @@ getJson().then(docs => {
             resultItemLayout.forEach(item => {
 
                 var field = get_field(item);
+                var rest = get_result_full(item);
 
                 if (matchedFields.includes(item)) {
-                    var rest = get_result_full(item);
-                    displayResult(field, item, rest , fieldsPositions)
-                } else {+
-                    field.appendChild(document.createTextNode(get_result_full(item).slice(0, 80+140)+'…'));
+                    displayResult(field, item, rest , fieldsPositions);
+                } else {
+                    displayResultDefault(field, rest);
                 };
                 resultItem.appendChild(field);
+
+                //css property (remove when integrating to full layout)
+                if (item=='title') {
+                    field.style['font-weight'] = 'bold';
+                };
             });
             list.appendChild(resultItem);
         };
