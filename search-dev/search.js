@@ -13,23 +13,19 @@ var focused = false
 function* zip(arrays) {
     let iterators = arrays.map(a => a[Symbol.iterator]());
     while (true) {
-      let results = iterators.map(it => it.next());
-      if (results.some(r => r.done)) return;
-      yield results.map(r => r.value);
+        let results = iterators.map(it => it.next());
+        if (results.some(r => r.done)) return;
+        yield results.map(r => r.value);
     }
-}
-
-function displayResults(results) {
-
 }
 
 function clearResults() {
     list.innerHTML = ''
 };
 
-function ctrl_k(e)  {
+function ctrl_k(e) {
     if (e.ctrlKey && e.which == 75) {
-        if(focused) {
+        if (focused) {
             searchField.blur();
             focused = false;
         } else {
@@ -44,25 +40,25 @@ function ctrl_k(e)  {
 };
 
 document.addEventListener('keydown', ctrl_k, false);
-searchField.addEventListener('focus', function(e) {
+searchField.addEventListener('focus', function (e) {
     resultsContainer.classList.remove('inactive');
 })
 
-searchField.addEventListener('blur', function(e) {
+searchField.addEventListener('blur', function (e) {
     resultsContainer.classList.add('inactive');
 });
 
 getJson().then(docs => {
-    const idx = lunr(function() {
+    const idx = lunr(function () {
         this.ref('link');
-        this.field('title', {boost: 10});
-        this.field('content', {boost: 1});
-        // this.pipeline.remove(lunr.stemmer);
+        this.field('title', { boost: 10 });
+        this.field('content', { boost: 1 });
+        
         this.pipeline.remove(lunr.stopWordFilter);
 
         this.metadataWhitelist = ['position'];
 
-        docs.forEach( function (doc) {
+        docs.forEach(function (doc) {
             this.add(doc)
         }, this);
     });
@@ -93,7 +89,9 @@ getJson().then(docs => {
             resultItem.classList.add('result-item');
 
             resultTitle = document.createElement('div');
+            resultTitle.classList.add('search-result-title');
             resultContent = document.createElement('div');
+            resultContent.classList.add('search-result-content');
 
             var matchedTerms = []
             var matchedFields = []
@@ -106,52 +104,52 @@ getJson().then(docs => {
                 });
             });
 
+            function get_field(field) {
+                switch (field) {
+                    case 'title': return resultTitle;
+                    case 'content': return resultContent;
+                }
+            }
+            function get_result_full(field) {
+                switch (field) {
+                    case 'title': return result_full.title;
+                    case 'content': return result_full.content;
+                }
+            }
 
-            console.log('matched terms')
-            console.log(matchedTerms);
-            console.log('matched fields')
-            console.log(matchedFields);
-            console.log('matched positions')
-            console.log(matchedPositions);
+            resultItemLayout = ['title', 'content'];
 
-            var title = result_full.title;
-            var text = result_full.content;
-            var rest = text;
-            var offset = 0
-            console.log(matchedPositions.length);
+            var fieldsPositions = new Object;
 
-            matchedPositions[0].forEach(function (matchedPosition) {
-                textBefore = rest.slice(0, matchedPosition[0] - offset)
-                textMarked = rest.slice(matchedPosition[0] - offset, matchedPosition[0] + matchedPosition[1]- offset);
-                rest = rest.slice(matchedPosition[0] + matchedPosition[1] - offset, rest.length);
-                resultContent.appendChild(document.createTextNode(textBefore));
-                mark = document.createElement('mark');
-                mark.appendChild(document.createTextNode(textMarked));
-                resultContent.appendChild(mark);
-                offset = matchedPosition[0] + matchedPosition[1];
+            matchedFields.map(function (e, i) {
+                fieldsPositions[e] = matchedPositions[i];
             });
 
-            resultContent.appendChild(document.createTextNode(rest));
+            resultItemLayout.forEach(item => {
 
-            // var rest = title;
+                var field = get_field(item);
 
-            // matchedPositions[1].forEach(function (matchedPosition) {
-            //     titleBefore = rest.slice(0, matchedPosition[0] - offset)
-            //     titleMarked = rest.slice(matchedPosition[0] - offset, matchedPosition[0] + matchedPosition[1]- offset);
-            //     rest = rest.slice(matchedPosition[0] + matchedPosition[1] - offset, rest.length);
-            //     resultTitle.appendChild(document.createTextNode(textBefore));
-            //     mark = document.createElement('mark');
-            //     mark.appendChild(document.createTextNode(titleMarked));
-            //     resultTitle.appendChild(mark);
-            //     offset = matchedPosition[0] + matchedPosition[1];
-            // });
-
-            resultTitle.appendChild(document.createTextNode(title))
-            resultItem.appendChild(resultTitle);
-            resultItem.appendChild(resultContent);
-
+                if (matchedFields.includes(item)) {
+                    var offset = 0;
+                    var rest = get_result_full(item);
+            
+                    fieldsPositions[item].forEach(matchedPosition => {
+                        textBefore = rest.slice(0, matchedPosition[0] - offset);
+                        textMarked = rest.slice(matchedPosition[0] - offset, matchedPosition[0] + matchedPosition[1] - offset);
+                        rest = rest.slice(matchedPosition[0] + matchedPosition[1] - offset, rest.length);
+                        field.appendChild(document.createTextNode(textBefore));
+                        mark = document.createElement('mark');
+                        mark.appendChild(document.createTextNode(textMarked));
+                        field.appendChild(mark);
+                        offset = matchedPosition[0] + matchedPosition[1];
+                    });
+                    field.appendChild(document.createTextNode(rest));
+                } else {
+                    field.appendChild(document.createTextNode(get_result_full(item)));
+                };
+                resultItem.appendChild(field);
+            });
             list.appendChild(resultItem);
-        }
-
+        };
     });
 });
