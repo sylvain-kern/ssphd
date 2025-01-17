@@ -1,8 +1,8 @@
 async function getJson() {
     let docs;
-    const res = await fetch('./documents.json')
+    const res = await fetch('./documents.json');
     docs = await res.json();
-    return docs
+    return docs;
 };
 
 const searchField = document.querySelector('.searchbar > input');
@@ -31,6 +31,7 @@ function ctrl_k(e) {
         } else {
             e.preventDefault();
             searchField.focus();
+            searchField.select();
             focused = true;
         };
     } else if (e.key == "Escape") {
@@ -48,12 +49,55 @@ searchField.addEventListener('blur', function (e) {
     resultsContainer.classList.add('inactive');
 });
 
+function displayResultFull (field, item, rest, fieldsPositions) {
+    var offset = 0;
+    fieldsPositions[item].forEach(matchedPosition => {
+        textBefore = rest.slice(0, matchedPosition[0] - offset);
+        textMarked = rest.slice(matchedPosition[0] - offset, matchedPosition[0] + matchedPosition[1] - offset);
+        rest = rest.slice(matchedPosition[0] + matchedPosition[1] - offset, rest.length);
+        field.appendChild(document.createTextNode(textBefore));
+        mark = document.createElement('mark');
+        mark.appendChild(document.createTextNode(textMarked));
+        field.appendChild(mark);
+        offset = matchedPosition[0] + matchedPosition[1];
+    });
+    field.appendChild(document.createTextNode(rest));  
+};
+
+function displayResult (field, item, rest, fieldsPositions) {
+
+    headChars = 80;
+    tailChars = 140;
+
+    position = fieldsPositions[item][0]
+
+    start = Math.max(position[0] - headChars, 0);
+    end = Math.min(position[0] + tailChars, rest.length)
+
+    textBefore = rest.slice(start, position[0]);
+    textMarked = rest.slice(position[0], position[0] + position[1]);
+    textAfter = rest.slice(position[0] + position[1], end);
+
+    mark = document.createElement('mark');
+
+    if (start > 0) {
+        field.appendChild(document.createTextNode('…'))
+    }
+    mark.appendChild(document.createTextNode(textMarked));
+    field.appendChild(document.createTextNode(textBefore));
+    field.appendChild(mark);
+    field.appendChild(document.createTextNode(textAfter));
+    if (end < rest.length) {
+        field.appendChild(document.createTextNode('…'))
+    }
+}
+
 getJson().then(docs => {
     const idx = lunr(function () {
         this.ref('link');
         this.field('title', { boost: 10 });
         this.field('content', { boost: 1 });
-        
+
         this.pipeline.remove(lunr.stopWordFilter);
 
         this.metadataWhitelist = ['position'];
@@ -67,7 +111,7 @@ getJson().then(docs => {
 
         clearResults();
 
-        let query = e.target.value + '~1';
+        let query = e.target.value + '~1 ' + e.target.value + '*';
         results = idx.search(query);
 
         console.log(results);
@@ -81,6 +125,19 @@ getJson().then(docs => {
         console.log(results_full);
 
         for (const [result, result_full] of zip([results, results_full])) {
+
+            function get_field(field) {
+                switch (field) {
+                    case 'title': return resultTitle;
+                    case 'content': return resultContent;
+                };
+            };
+            function get_result_full(field) {
+                switch (field) {
+                    case 'title': return result_full.title;
+                    case 'content': return result_full.content;
+                };
+            };
 
             // creating a li element for each result item
             const resultItem = document.createElement('li');
@@ -104,19 +161,6 @@ getJson().then(docs => {
                 });
             });
 
-            function get_field(field) {
-                switch (field) {
-                    case 'title': return resultTitle;
-                    case 'content': return resultContent;
-                }
-            }
-            function get_result_full(field) {
-                switch (field) {
-                    case 'title': return result_full.title;
-                    case 'content': return result_full.content;
-                }
-            }
-
             resultItemLayout = ['title', 'content'];
 
             var fieldsPositions = new Object;
@@ -130,22 +174,10 @@ getJson().then(docs => {
                 var field = get_field(item);
 
                 if (matchedFields.includes(item)) {
-                    var offset = 0;
                     var rest = get_result_full(item);
-            
-                    fieldsPositions[item].forEach(matchedPosition => {
-                        textBefore = rest.slice(0, matchedPosition[0] - offset);
-                        textMarked = rest.slice(matchedPosition[0] - offset, matchedPosition[0] + matchedPosition[1] - offset);
-                        rest = rest.slice(matchedPosition[0] + matchedPosition[1] - offset, rest.length);
-                        field.appendChild(document.createTextNode(textBefore));
-                        mark = document.createElement('mark');
-                        mark.appendChild(document.createTextNode(textMarked));
-                        field.appendChild(mark);
-                        offset = matchedPosition[0] + matchedPosition[1];
-                    });
-                    field.appendChild(document.createTextNode(rest));
-                } else {
-                    field.appendChild(document.createTextNode(get_result_full(item)));
+                    displayResult(field, item, rest , fieldsPositions)
+                } else {+
+                    field.appendChild(document.createTextNode(get_result_full(item).slice(0, 80+140)+'…'));
                 };
                 resultItem.appendChild(field);
             });
