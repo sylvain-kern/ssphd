@@ -1,0 +1,55 @@
+# Asset paths
+assets:
+  css:
+    - path: "assets/css/main.css"
+    - path: "assets/css/print.css"
+      media: "print"
+  js:
+    - path: "assets/js/main.js"
+    - path: "assets/js/interactive.js"
+      defer: true
+  
+# Template configuration
+templates:
+  html: "templates/html/default.html"
+  latex: "templates/latex/default.tex"
+  docx: "templates/docx/reference.docx"
+
+# Output formats configuration
+formats:
+  html:
+    enabled: true
+    template: "templates/html/default.html"
+    filters:
+      - pandoc-sidenote
+      - pandoc-crossref
+    options:
+      toc: true
+      number-sections: true
+  
+  latex:
+    enabled: false
+    template: "templates/latex/default.tex"
+    filters:
+      - pandoc-crossref
+    options:
+      pdf-engine: xelatex
+
+# Bibliography configuration
+bibliography:
+  bibtex:
+    - path: "references.bib"
+  csl:
+    - path: "apa.csl"
+
+# Customization
+theme:
+  primary-color: "#007acc"
+  font-family: "Source Sans Pro"
+  code-font: "Fira Code"
+
+# Build settings
+build:
+  output-dir: "dist"
+  clean-before-build: true
+  parallel-processing: true
