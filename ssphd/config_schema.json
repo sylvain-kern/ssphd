@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "output": {
+            "type": "string",
+            "description": "Output directory for the project. Optional but can be used to automatically find all the following folders inside of it, given they have the right default names."
+        },
+        "root": {
+            "type": "string",
+            "description": "Root directory for the project. Optional but can be used to automatically find all the following folders inside of it, given they have the right default names."
+        },
+        "css": {
+            "type": "string",
+            "description": "CSS directory. Required in case the folder name is not default."
+        },
+        "pandoc-filters": {
+            "type": "string",
+            "description": "Pandoc-filter directory. Required in case the folder name is not default."
+        },
+        "fonts": {
+            "type": "string",
+            "description": "Fonts directory. Required in case the folder name is not default."
+        },
+        "graphs": {
+            "type": "string",
+            "description": "Graphs directory. Required in case the folder name is not default."
+        },
+        "js": {
+            "type": "string",
+            "description": "JS directory. Required in case the folder name is not default."
+        },
+        "meta": {
+            "type": "string",
+            "description": "Meta directory. Required in case the folder name is not default."
+        },
+        "graphics": {
+            "type": "string",
+            "description": "Graphics directory. Required in case the folder name is not default."
+        },
+        "references": {
+            "type": "string",
+            "description": "References directory. Required in case the folder name is not default."
+        },
+        "templates": {
+            "type": "string",
+            "description": "Templates directory. Required in case the folder name is not default."
+        },
+        "latex": {
+            "type": "string",
+            "description": "Latex directory. Required in case the folder name is not default."
+        },
+    },
+    "additionalProperties": false 
+}

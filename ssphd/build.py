@@ -4,6 +4,9 @@ import pypandoc
 import argparse
 import re
 import json
+from jsonschema import validate, ValidationError
+from yaml import safe_load
+import pathlib as pl
 
 import pandocfilters as pf
 
@@ -16,22 +19,74 @@ from rich.progress import track
 
 ABOUT = "The ultimate document processor."
 
+class ParseConfig:
+    def __init__(self, config: str, schema_file: str) -> None:
+        # Load config and schema
+        with open(config, 'r') as file:
+            self.config = safe_load(file)
+
+        with open(schema_file, 'r') as schema_file:
+            self.schema = json.load(schema_file)
+
+        self.properties = self.schema.get('properties', {})
+
+        # Enforce schema validation
+        try:
+            validate(instance=self.config, schema=self.schema)
+        except ValidationError as e:
+            raise ValueError(f"Config file does not match schema: {e.message}") from e
+        except Exception as e:
+            raise ValueError(f"An error occurred while validating the config file: {e}") from e
+
+        # Check root directory
+        self.root = self.config.get('root')
+        if not self.root:
+            raise KeyError("The configuration file must include the 'root' key.")
+        if not pl.Path(self.root).exists():
+            raise FileNotFoundError(f"Root directory '{self.root}' does not exist.")
+
+        # Construct paths
+        for key, value in self.config.items():
+            if key == 'root':
+                continue
+
+            # Construct path from root and value (relative path)
+            path = pl.Path(self.root) / value
+
+            # If the path doesn't exist, print a warning
+            if not path.exists():
+                print(f"Warning: Path '{path}' does not exist.")
+            
+            # Set the key as an attribute of the class
+            setattr(self, key, path)
 
 class Document:
 
-    def __init__(self, source):
+    def __init__(self, source: str, config: str) -> None:
+        self.source_file = source
 
-        self.source_file    = source
-        self.root_path      = os.path.dirname(os.path.abspath(self.source_file))
-        self.dest_path      = self.source_file.split('.')[0]+'-html/'
-        self.latex_path      = self.source_file.split('.')[0]+'-latex/'
-        self.config_file    = os.path.join(self.root_path, 'config.yaml')
-        self.meta_file      = os.path.join(self.root_path, '_assets/meta/meta.yaml')
-        self.assets_path    = os.path.join(self.root_path, '_assets')
-        self.templates_path = os.path.join(self.dest_path, '_assets/templates')
-        self.css_path       = os.path.join(self.root_path, '_assets/css')
-        self.pictures_path  = os.path.join(self.root_path, '_assets/pics')
-        self.refs_path      = os.path.join(self.root_path, '_assets/refs')
+        try:
+            parser = ParseConfig(config, 'config_schema.json')
+        except Exception as e:
+            print(e)
+            exit(1)
+
+        self.root           = parser.root
+        self.dest_path      = parser.output
+        self.meta_file      = parser.meta
+        self.templates_path = parser.templates
+        self.css_path       = parser.css
+        self.pictures_path  = parser.graphics
+        self.refs_path      = parser.references
+        self.latex_path     = parser.latex
+
+        try:
+            with open(source, 'r') as file:
+                self.source = file.read()
+        except Exception as e:
+            print(e)
+            exit(1)
+        
 
         self.ast = pypandoc.convert_file(
                 self.source_file,
@@ -43,7 +98,7 @@ class Document:
 
     ## FILTERS
 
-    def add_title_to_references(self, key, value, format_, meta):
+    def add_title_to_references(self, key: str, value: list, format_: str, meta: dict) -> list:
         if key == "Div" and "refs" in value[0][0]:
             attrs, children = value
             t1 = ["unnumbered"]
@@ -51,7 +106,7 @@ class Document:
             title = pf.Header(1, ["references", t1, t2], [pf.Str("References")])
             return [title, pf.Div(attrs, children)]
 
-    def get_abbreviation_dict(self, key, value, format_, meta):
+    def get_abbreviation_dict(self, key: str, value: list, format_: str, meta: dict) -> list:
         abbr_def_pattern = r'\+\[(.*?)\]:\s(.*?)$'
         if key == 'Para':
             text = pf.stringify(value)
@@ -61,7 +116,7 @@ class Document:
                 self.abbreviation_dict[abbreviation] = description
                 return []
 
-    def replace_abbreviations(self, key, value, format_, meta):
+    def replace_abbreviations(self, key: str, value: str, format_: str, meta: dict) -> list:
         if key == 'Str':
             text = value
             abbr_start = text.find('+[')
@@ -85,7 +140,7 @@ class Document:
                         abbr_html = f'<abbr title="{abbr_description}" class="{clss}">{abbr_text}</abbr>{following_char}'
                         return pf.RawInline('html', abbr_html)
 
-    def generate_link_dict(self, key, value, format_, meta):
+    def generate_link_dict(self, key: str, value: list, format_: str, meta: dict) -> None:
 
         if key == 'Header':
             [level, [label, t1, t2], header] = value
@@ -117,7 +172,7 @@ class Document:
         # with open('links.json', 'w') as f:
         #     json.dump(self.link_dict, f)
 
-    def links_filter(self, key, value, format_, meta):
+    def links_filter(self, key: str, value: list, format_: str, meta: dict) -> list:
         if key == 'Link':
             [t1, linktext, [href, t4]] = value
             ref = href[1:]
@@ -125,7 +180,7 @@ class Document:
                 newhref = self.link_dict[ref]
                 return pf.Link(t1, linktext, [newhref, t4])
 
-    def nav_filter(self, key, value, format_, meta):
+    def nav_filter(self, key: str, value: list, format_: str, meta: dict) -> list:
         if key == 'BulletList':
             items = []
             for element in value:
@@ -143,19 +198,19 @@ class Document:
 
     ## OPERATIONS
 
-    def copy(self, ast, opts):
+    def copy(self, ast: str, opts: list) -> str:
         return pypandoc.convert_text(
             ast,
             to='json',
             format='json',
             extra_args=opts)
 
-    def pipe(self, opts):
+    def pipe(self, opts: list) -> None:
         self.ast = self.copy(
             self.ast,
             opts)
 
-    def filter(self, handles, ast=None):
+    def filter(self, handles: list, ast: str = None) -> str:
         if ast==None:
             doc = pf.json.loads(self.ast)
             for handle in handles:
@@ -167,13 +222,13 @@ class Document:
                 doc = pf.walk(doc, handle, "", None)
             return pf.json.dumps(doc)
 
-    def build_folder_structure(self):
+    def build_folder_structure(self) -> None:
         if not os.path.exists(self.dest_path + '_assets/'):
-            shutil.copytree(self.assets_path, self.dest_path + '_assets/')
+            shutil.copytree(self.root, self.dest_path + '_assets/')
 
     # SEARCH
 
-    def generate_search_index(self, key, value, format_, meta):
+    def generate_search_index(self, key: str, value: list, format_: str, meta: dict) -> None:
 
         self.search_dict = {}
 
@@ -185,7 +240,7 @@ class Document:
 
     # STRUCTURE
 
-    def generate_nav(self):
+    def generate_nav(self) -> None:
         print("generating nav")
         self.nav = pypandoc.convert_text(
             self.ast,
@@ -222,7 +277,7 @@ class Document:
             # ]
         )
 
-    def extract_structure(self):
+    def extract_structure(self) -> None:
         markdown_list = pypandoc.convert_text(
             self.nav,
             format="html",
@@ -294,7 +349,7 @@ class Document:
 
         self.structure_dict = structure_dict
 
-    def split_structure(self):
+    def split_structure(self) -> None:
         print("generating split structure")
         for key, val in track(self.structure_dict.items()):
             id = key
@@ -307,7 +362,7 @@ class Document:
                         os.mkdir(self.dest_path + key + '/' + child)
 
     # GRAPHS
-    def graphs_filter(self, key, value, format, meta):
+    def graphs_filter(self, key: str, value: list, format: str, meta: dict) -> list:
         import csv
         if key == 'Image':
             [ident, stuff, keyvals], caption, [filename, typef] = value
@@ -339,7 +394,7 @@ class Document:
                     pf.RawInline("html", f"<div class='graph-container' id={graph_id} legendPosition={kwargs['legendPosition']}></div>")
                 ]
 
-    def get_next(self, key):
+    def get_next(self, key: str) -> tuple:
         index = self.structure_list.index(key)
         if index == len(self.structure_list):
             return "", ""
@@ -352,7 +407,7 @@ class Document:
             prefix = number + " "
         return self.link_dict[nextkey],  prefix + self.structure_dict[nextkey]["title"]
 
-    def get_prev(self, key):
+    def get_prev(self, key: str) -> tuple:
         index = self.structure_list.index(key)
         if index == 0:
             return "", ""
@@ -367,7 +422,7 @@ class Document:
 
     # S P L I T
 
-    def split(self):
+    def split(self) -> None:
         print('splitting to html files'),
         # [meta, blocks] = self.ast
         dico = json.loads(self.ast)
@@ -447,7 +502,7 @@ class Document:
         with open('./structure_dict.json', 'w') as f:
             f.write(json.dumps(self.structure_dict))
 
-    def generate_index(self):
+    def generate_index(self) -> None:
         pypandoc.convert_text(
             self.ast,
             format='json',
@@ -458,10 +513,10 @@ class Document:
             ]
         )
 
-    def generate_404():
+    def generate_404(self) -> None:
         pass
 
-    def to_latex(self):
+    def to_latex(self) -> None:
         if not os.path.exists(self.latex_path):
             os.mkdir(self.latex_path)
         pypandoc.convert_text(
@@ -470,17 +525,17 @@ class Document:
             to = 'latex',
             outputfile = self.latex_path + 'main.tex',
             extra_args = [
-                "--metadata-file=_assets/meta/meta.yaml",
+                "--metadata-file=" + self.meta_file,
                 "--standalone",
                 "--filter=pandoc-crossref",
-                "--bibliography=_assets/refs/refs.json",
+                "--bibliography=" + os.path.join(self.refs_path, 'refs.json'),
                 "--citeproc",
                 "--number-sections",
             ]
         )
 
 
-    def to_html(self):
+    def to_html(self) -> None:
 
         self.ast_html = self.ast
 
@@ -501,15 +556,15 @@ class Document:
 
         self.pipe(
             [
-                "--metadata-file=_assets/meta/meta.yaml",
-                "--csl=_assets/refs/for-the-web.csl",
+                "--metadata-file=" + self.meta_file,
+                "--csl=" + os.path.join(self.refs_path, 'for-the-web.csl'),
                 # "--filter=_assets/filters/title_above_references.py",
                 # "--number-sections",
                 "--katex",
                 # "--filter=pandoc-xnos",
                 # "--filter=pandoc-secnos",
                 "--filter=pandoc-crossref",
-                "--bibliography=_assets/refs/refs.json",
+                "--bibliography=" + os.path.join(self.refs_path, 'refs.json'),
                 "--citeproc",
             ]
         )
@@ -542,24 +597,8 @@ class Document:
 
         self.generate_index()
 
-        # pandoc.write(
-        #     self.ast_html,
-        #     file="simpletext.html",
-        #     format="html",
-        #     options=[
-        #         "--standalone",
-        #         "--number-sections",
-        #         # "--filter=pandoc-eqnos",
-        #         "--katex",
-        #         "--filter=pandoc-plot",
-        #         "--template=_assets/templates/template-section.html",
-        #         "--css=_assets/css/style.css",
-        #         "--section-divs",
-        #         "--variable=base=C:/Users/sylva/Documents/latex shit/htmlcss"
-        #     ])
 
-
-def main():
+def main() -> None:
 
     parser = argparse.ArgumentParser(description=ABOUT)
     parser.add_argument("markdown_source", help="Path to a Markdown source file.")
@@ -579,5 +618,5 @@ def main():
 
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
