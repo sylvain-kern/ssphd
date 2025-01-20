@@ -457,7 +457,61 @@ class Document:
                 "--template="+self.dest_path+"_assets/templates/template-index.html"
             ]
         )
+        
+    def extractFromSitemap(self):
+        with open('./-/sitemap.json') as f:
+            sitemap = json.load(f)
+        return sitemap
+        
+    def chunk(self, splitLevel=6, tocLevel=3):
+        # pypandoc.convert_text(
+        #     self.ast,
+        #     format='json',
+        #     to='chunkedhtml',
+        #     extra_args=[
+        #         f'--split-level={splitLevel}',
+        #     ]
+        # )
+        
+        sitemap = self.extractFromSitemap()
+        
+        def transform_sitemap(input_json):
+            def process_section(section, parent_id):
+                print(len(section))
+                section_id = section["section"]["id"]
+                if not section_id:
+                    return {}
 
+                # Add the current section
+                transformed[section_id] = {
+                    "title": section["section"]["title"],
+                    "level": int(section["section"]["level"]),
+                    "number": section["section"].get("number"),
+                    "parent": parent_id,
+                    "children": []
+                }
+
+                # Process subsections
+                for subsection in section.get("subsections", []):
+                    child_id = subsection["section"]["id"]
+                    if child_id:
+                        transformed[section_id]["children"].append(child_id)
+                        process_section(subsection, section_id)
+            # Initialize the transformed structure
+            transformed = {}
+
+            # Process the root section and its subsections
+            process_section(input_json, None)
+
+            return transformed
+        
+        structure = transform_sitemap(sitemap)
+    
+        with open('./structure_dict.json', 'w', encoding="utf-8") as f:
+            json.dump(structure, f, indent=4, ensure_ascii="false")
+            
+        a, b = 0
+        
     def generate_404():
         pass
 
@@ -513,6 +567,7 @@ class Document:
                 "--citeproc",
             ]
         )
+        
 
         # print(doc.ast_html)
 
@@ -533,6 +588,8 @@ class Document:
             self.generate_link_dict,
             self.links_filter
         ])
+        
+        self.chunk()
 
         self.generate_nav()
         self.filter([self.graphs_filter])

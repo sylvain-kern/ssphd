@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Sylvain Kern" />
+  <title>Subfigures</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    div.abstract {
+      margin: 2em 2em 2em 2em;
+      text-align: left;
+      font-size: 85%;
+    }
+    div.abstract-title {
+      font-weight: bold;
+      text-align: center;
+      padding: 0;
+      margin-bottom: 0.5em;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">Capteurs MEMS pour la mesure d’écoulements en environnements sévères</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">Capteurs MEMS pour la mesure d’écoulements en environnements sévères</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="6-cross-links-with-pandoc-crossref.html" accesskey="n" rel="next">Cross-links with <code>pandoc-crossref</code></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="5.3-margin-figures.html" accesskey="p" rel="previous">Margin figures</a>
+</span>
+</div>
+</nav>
+<h2 data-number="5.4" id="subfigures">Subfigures</h2>
+<p>With <code>&lt;div&gt;</code> syntax:</p>
+<figure id="fig:figureRef" class="subfigures">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 99%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><figure id="fig:figureRefA">
+<img src="_assets/pics/usa-census.png" alt="subfigure 1 caption " />
+<figcaption><span class="captionprefix">(a)</span> subfigure 1 caption
+<abbr title="Standard Vector Graphics" class="acronym">SVG</abbr></figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><figure id="fig:figureRefB">
+<img src="_assets/pics/usa-census.png" alt="subfigure 2 caption" />
+<figcaption><span class="captionprefix">(b)</span> subfigure 2
+caption</figcaption>
+</figure></td>
+</tr>
+</tbody>
+</table>
+<figcaption><p><span class="captionprefix">Figure 5.6.</span><br>
+Caption of figure</p></figcaption>
+</figure>
+<p>With <code>::: {#fig:figureRef}</code> syntax (and in line):</p>
+<figure id="fig:figureRef2" class="subfigures">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 49%" />
+<col style="width: 49%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><figure id="fig:figureRef2A">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(a) subfigure 1 caption" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(a)</span>
+subfigure 1 caption</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:figureRef2B">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(b) subfigure 2 caption" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(b)</span>
+subfigure 2 caption</p></figcaption>
+</figure></td>
+</tr>
+</tbody>
+</table>
+<figcaption><p><span class="captionprefix">Figure 5.7.</span><br>
+Caption of figure</p></figcaption>
+</figure>
+<p>Grid:</p>
+<figure id="fig:coolfig" class="subfigures">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><figure id="fig:cfa">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(a) caption a" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(a)</span>
+caption a</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfb">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(b) caption b" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(b)</span>
+caption b</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfc">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(c) caption c" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(c)</span>
+caption c</p></figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><figure id="fig:cfd">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(d) caption d" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(d)</span>
+caption d</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfe">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(e) Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor." />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(e)</span>
+Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis
+imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus
+egestas tellus rutrum tellus pellentesque eu tincidunt
+tortor.</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cff">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(f) caption f" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(f)</span>
+caption f</p></figcaption>
+</figure></td>
+</tr>
+</tbody>
+</table>
+<figcaption><p><span class="captionprefix">Figure 5.8.</span><br> Cool
+figure!</p></figcaption>
+</figure>
+<p>Grid 2 :</p>
+<figure id="fig:grid2" class="subfigures wide">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><figure id="fig:cfa">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(a) caption a" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(a)</span>
+caption a</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfb">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(b) caption b" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(b)</span>
+caption b</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfc">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(c) caption c" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(c)</span>
+caption c</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfd">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(d) caption d" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(d)</span>
+caption d</p></figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><figure id="fig:cfe">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(e) Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor." />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(e)</span>
+Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis
+imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus
+egestas tellus rutrum tellus pellentesque eu tincidunt
+tortor.</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cff">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(f) caption f" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(f)</span>
+caption f</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfg">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(g) caption g" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(g)</span>
+caption g</p></figcaption>
+</figure></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<figcaption><p><span class="captionprefix">Figure 5.9.</span><br> Cool
+figure!</p></figcaption>
+</figure>
+<figure id="fig:widefig" class="subfigures wide">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><figure id="fig:cfa">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(a) caption a" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(a)</span>
+caption a</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfb">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(b) caption b" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(b)</span>
+caption b</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfc">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(c) caption c" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(c)</span>
+caption c</p></figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><figure id="fig:cfd">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(d) caption d" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(d)</span>
+caption d</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cfe">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(e) Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor." />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(e)</span>
+Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis
+imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus
+egestas tellus rutrum tellus pellentesque eu tincidunt
+tortor.</p></figcaption>
+</figure></td>
+<td style="text-align: center;"><figure id="fig:cff">
+<img src="_assets/pics/usa-census.png" style="width:100.0%"
+alt="(f) caption f" />
+<figcaption aria-hidden="true"><p><span class="captionprefix">(f)</span>
+caption f</p></figcaption>
+</figure></td>
+</tr>
+</tbody>
+</table>
+<figcaption><p><span class="captionprefix">Figure 5.10.</span><br> Wide
+figure!</p></figcaption>
+</figure>
+<p>Regular figure :</p>
+<figure id="fig:regular">
+<img src="_assets/pics/usa-census.png" alt="Figure caption." />
+<figcaption><span class="captionprefix">Figure 5.11.</span><br> Figure
+caption.</figcaption>
+</figure>
+</body>
+</html>
