@@ -5,8 +5,12 @@ setup(
     version="0.1.0",
     packages=find_packages(),
     install_requires=[
-        "pandoc-python",
         "click",
+        "pypandoc",
+        "pyyaml",
+        "jsonschema",
+        "rich",
+        "pandocfilters",
     ],
     entry_points={
         'console_scripts': [
@@ -15,7 +19,7 @@ setup(
     },
     author="",
     description="Single-source PhD manuscript builder",
-    long_description=open("README.md").read(),
+    long_description=open("readme.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/yourusername/ssphd",
     classifiers=[
