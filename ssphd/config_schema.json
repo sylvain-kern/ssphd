@@ -49,7 +49,7 @@
         "latex": {
             "type": "string",
             "description": "Latex directory. Required in case the folder name is not default."
-        },
+        }
     },
     "additionalProperties": false 
 }

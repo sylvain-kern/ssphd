@@ -1,5 +1,5 @@
 import shutil
-import os
+import os  # kept for other potential os operations
 import pypandoc
 import argparse
 import re
@@ -21,6 +21,8 @@ ABOUT = "The ultimate document processor."
 
 class ParseConfig:
     def __init__(self, config: str, schema_file: str) -> None:
+        current_root = pl.Path(config).parent
+
         # Load config and schema
         with open(config, 'r') as file:
             self.config = safe_load(file)
@@ -42,12 +44,20 @@ class ParseConfig:
         self.root = self.config.get('root')
         if not self.root:
             raise KeyError("The configuration file must include the 'root' key.")
-        if not pl.Path(self.root).exists():
+        if not pl.Path(current_root / self.root).exists():
             raise FileNotFoundError(f"Root directory '{self.root}' does not exist.")
 
+        self.root = pl.Path(current_root / self.root)
+
+        self.output = self.config.get('output')
+        if not self.output:
+            raise KeyError("The configuration file must include the 'output' key.")
+        if not pl.Path(current_root / self.output).exists():
+            raise FileNotFoundError(f"Output directory '{self.output}' does not exist.")
+        
         # Construct paths
         for key, value in self.config.items():
-            if key == 'root':
+            if key == 'root' or key == 'output':
                 continue
 
             # Construct path from root and value (relative path)
@@ -60,16 +70,26 @@ class ParseConfig:
             # Set the key as an attribute of the class
             setattr(self, key, path)
 
+    def __str__(self):
+        # Everyhing except self.properties, self.schema and self.config
+        string = [f"{key}: {value}" for key, value in self.__dict__.items() if key not in ('properties', 'schema', 'config')]
+        return '\n'.join(string)
+    
 class Document:
 
     def __init__(self, source: str, config: str) -> None:
         self.source_file = source
 
         try:
-            parser = ParseConfig(config, 'config_schema.json')
+            # Get absolute path of the script
+            script_path = pl.Path(__file__).resolve()
+            script_dir = script_path.parent
+            parser = ParseConfig(config, script_dir / 'config_schema.json')
         except Exception as e:
             print(e)
             exit(1)
+
+        source_root = pl.Path(config).parent
 
         self.root           = parser.root
         self.dest_path      = parser.output
@@ -184,7 +204,7 @@ class Document:
         if key == 'BulletList':
             items = []
             for element in value:
-                id = element[0]['c'][0]['c'][0][0][4:]
+                id = element[0]['c'][0]['c'][0][4:]
                 level = self.structure_dict[id]["level"]
                 if level == 2:
                     # print(f"{id} -> {level}")
@@ -223,8 +243,8 @@ class Document:
             return pf.json.dumps(doc)
 
     def build_folder_structure(self) -> None:
-        if not os.path.exists(self.dest_path + '_assets/'):
-            shutil.copytree(self.root, self.dest_path + '_assets/')
+        if not self.dest_path.exists():
+            shutil.copytree(self.root, self.dest_path)
 
     # SEARCH
 
@@ -246,13 +266,13 @@ class Document:
             self.ast,
             format = "json",
             to="html",
-            # file= self.templates_path+"/nav.html",
             extra_args=[
                 "--number-sections",
-                "--template="+self.templates_path+"/template-toc.html",
+                f"--template={self.templates_path / 'template-toc.html'}",
                 "--toc",
                 "--toc-depth=3",
             ])
+
         self.extract_structure()
         self.nav = pypandoc.convert_text(
             self.nav,
@@ -270,7 +290,7 @@ class Document:
             self.nav,
             format = "json",
             to = "html",
-            outputfile = self.templates_path+"/nav.html",
+            outputfile = self.templates_path / "nav.html",
             # extra_args=[
             #     "--number-sections",
             #     "--template="+self.templates_path+"/template-toc.html",
@@ -355,11 +375,13 @@ class Document:
             id = key
             level = val["level"]
             if level == 1:
-                if not os.path.exists(self.dest_path + key):
-                    os.mkdir(self.dest_path + key)
+                chapter_path = self.dest_path / key
+                if not chapter_path.exists():
+                    chapter_path.mkdir()
                 for child in val["children"]:
-                    if not os.path.exists(self.dest_path + key + '/' + child):
-                        os.mkdir(self.dest_path + key + '/' + child)
+                    child_path = chapter_path / child
+                    if not child_path.exists():
+                        child_path.mkdir()
 
     # GRAPHS
     def graphs_filter(self, key: str, value: list, format: str, meta: dict) -> list:
@@ -386,7 +408,7 @@ class Document:
                 graph_script = f"""
                     var {graph_id} = generateGraph(id="{graph_id}", data="{filename}", xdata="{xcolumn}", ydata="{ycolumns}", xlabel="{kwargs['xlabel']}", ylabel="{kwargs['ylabel']}", legendPosition="{kwargs['legendPosition']}");
                 """
-                graphsjs_file = self.dest_path+'_assets/js/graphs.js'
+                graphsjs_file = self.dest_path / "graphs.js"
                 with open(graphsjs_file, 'a', encoding='utf-8') as f:
                     f.write('\n')
                     f.write(graph_script)
@@ -459,15 +481,15 @@ class Document:
                             hasprev = ""
                         content = []
                         if mylevel == 1:
-                            file = self.dest_path + key + '/index.html'
+                            file = f"{self.dest_path}{key}/index.html"
                             ischapter = "true"
                             parent = ""
                             parenttitle = ""
                         elif mylevel == 2:
-                            file = self.dest_path + self.structure_dict[key]["parent"]  + '/' + key + '/index.html'
+                            file = f"{self.dest_path}{self.structure_dict[key]['parent']}/{key}/index.html"
                             ischapter = ""
                             parent = self.structure_dict[key]["parent"]
-                            parenttitle = self.structure_dict[parent]["number"] + " " + self.structure_dict[parent]["title"]
+                            parenttitle = f"{self.structure_dict[parent]['number']} {self.structure_dict[parent]['title']}"
                         pypandoc.convert_text(
                             json.dumps(slice),
                             outputfile = file,
@@ -476,21 +498,20 @@ class Document:
                             extra_args = [
                                 "--standalone",
                                 "--katex",
-                                # "--filter=pandoc-plot",
-                                "--template="+self.dest_path+"_assets/templates/template-section.html",
+                                f"--template={self.dest_path / 'templates/template-section.html'}",
                                 "--variable=base=/",
-                                "--variable=pagetitle="+pagetitle,
-                                "--variable=ischapter:"+ischapter,
-                                "--variable=parent="+parent,
-                                "--variable=parenttitle="+parenttitle,
-                                "--variable=hasprev="+hasprev,
-                                "--variable=prev="+prev,
-                                "--variable=prevtitle="+prevtitle,
-                                "--variable=hasnext="+hasnext,
-                                "--variable=next="+next,
-                                "--variable=nexttitle="+nexttitle,
+                                f"--variable=pagetitle={pagetitle}",
+                                f"--variable=ischapter:{ischapter}",
+                                f"--variable=parent={parent}",
+                                f"--variable=parenttitle={parenttitle}",
+                                f"--variable=hasprev={hasprev}",
+                                f"--variable=prev={prev}",
+                                f"--variable=prevtitle={prevtitle}",
+                                f"--variable=hasnext={hasnext}",
+                                f"--variable=next={next}",
+                                f"--variable=nexttitle={nexttitle}",
                                 "--number-sections",
-                                "--number-offset="+offset.replace(".", ","),
+                                f"--number-offset={offset.replace('.', ',')}",
                                 "--toc-depth=3",
                                 "--section-divs",
                                 "--filter=pandoc-sidenote" # the filter is not yet compatible with the latest version of pandoc
@@ -507,9 +528,9 @@ class Document:
             self.ast,
             format='json',
             to='html',
-            outputfile = self.dest_path + '/index.html',
+            outputfile = self.dest_path / 'index.html',
             extra_args = [
-                "--template="+self.dest_path+"_assets/templates/template-index.html"
+                "--template="+str(self.dest_path / "templates/template-index.html")
             ]
         )
 
@@ -517,18 +538,20 @@ class Document:
         pass
 
     def to_latex(self) -> None:
-        if not os.path.exists(self.latex_path):
-            os.mkdir(self.latex_path)
+        if not self.latex_path.exists():
+            self.latex_path.mkdir()
+
+        print (self.meta_file)
         pypandoc.convert_text(
             self.ast,
             format = 'json',
             to = 'latex',
-            outputfile = self.latex_path + 'main.tex',
+            outputfile = self.latex_path / 'main.tex',
             extra_args = [
-                "--metadata-file=" + self.meta_file,
+                f"--metadata-file={self.meta_file}/meta.yaml",
                 "--standalone",
                 "--filter=pandoc-crossref",
-                "--bibliography=" + os.path.join(self.refs_path, 'refs.json'),
+                f"--bibliography={self.refs_path / 'refs.json'}",
                 "--citeproc",
                 "--number-sections",
             ]
@@ -553,18 +576,16 @@ class Document:
         meta_before = dico["meta"]
 
         # meta = self.ast_html[0] # saving metadata bc it seems overriden by --metadata-file
-
+        print (self.meta_file)
         self.pipe(
             [
-                "--metadata-file=" + self.meta_file,
-                "--csl=" + os.path.join(self.refs_path, 'for-the-web.csl'),
-                # "--filter=_assets/filters/title_above_references.py",
-                # "--number-sections",
+                f"--metadata-file={self.meta_file}",
+                f"--csl={self.refs_path / 'for-the-web.csl'}",
                 "--katex",
                 # "--filter=pandoc-xnos",
                 # "--filter=pandoc-secnos",
                 "--filter=pandoc-crossref",
-                "--bibliography=" + os.path.join(self.refs_path, 'refs.json'),
+                f"--bibliography={self.refs_path / 'refs.json'}",
                 "--citeproc",
             ]
         )
@@ -597,26 +618,19 @@ class Document:
 
         self.generate_index()
 
+def build(source: str, config: str) -> None:
+    doc = Document(source, config)
+    doc.to_latex()
+    doc.to_html()
 
 def main() -> None:
 
     parser = argparse.ArgumentParser(description=ABOUT)
     parser.add_argument("markdown_source", help="Path to a Markdown source file.")
+    parser.add_argument("config", help="Path to the configuration file.")
 
     args = parser.parse_args()
-
-    args.markdown_source = os.path.abspath(args.markdown_source)
-
-    # print(args.markdown_source)
-
-    doc = Document(args.markdown_source)
-
-    doc.to_latex()
-
-    doc.to_html()
-
-
-
+    build(args.markdown_source, args.config)
 
 if __name__ == '__main__':
     main()
