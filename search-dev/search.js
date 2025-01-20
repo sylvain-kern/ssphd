@@ -122,7 +122,7 @@ getJson().then(docs => {
         clearResults();
 
         let query = e.target.value + '~1 ' + e.target.value + '*';
-        results = idx.search(query);
+        results = idx.search(query.replace(/\s+$/, ''));
 
         console.log(results);
 
