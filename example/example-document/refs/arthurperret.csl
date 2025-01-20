@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="fr-FR">
+    <!-- Informations obligatoires -->
+    <info>
+        <title>CSL Minimaliste</title>
+        <id>https://www.arthurperret.frminicsl/</id>
+        <updated>2016-04-05T08:00:00+00:00</updated>
+    </info>
+    <!-- Macros -->
+    <macro name="author">
+        <names variable="author">
+            <name name-as-sort-order="first" sort-separator=", " initialize-with="."/>
+        </names>
+    </macro>
+    <macro name="year">
+        <date variable="issued">
+            <date-part name="year"/>
+        </date>
+    </macro>
+    <!-- Format des citations dans le texte -->
+    <citation>
+        <sort>
+            <key macro="author"/>
+            <key macro="year"/>
+        </sort>
+        <layout prefix="[" suffix="]" delimiter=" ; ">
+            <group delimiter=", ">
+                <text variable="author" form="short"/>
+                <text macro="year"/>
+            </group>
+        </layout>
+    </citation>
+    <!-- Format de la bibliographie -->
+    <bibliography>
+        <sort>
+            <key macro="author"/>
+            <key macro="year"/>
+            <key variable="title"/>
+        </sort>
+        <layout suffix=".">
+            <group delimiter=". ">
+                <text macro="author"/>
+                <text variable="title" font-style="italic"/>
+                <text macro="year"/>
+            </group>
+        </layout>
+    </bibliography>
+</style>
