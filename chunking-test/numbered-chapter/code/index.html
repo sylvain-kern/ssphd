@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Sylvain Kern" />
+  <title>Code</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    div.abstract {
+      margin: 2em 2em 2em 2em;
+      text-align: left;
+      font-size: 85%;
+    }
+    div.abstract-title {
+      font-weight: bold;
+      text-align: center;
+      padding: 0;
+      margin-bottom: 0.5em;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="numbered-chapter.html" accesskey="u" rel="up">Numbered chapter</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">Capteurs MEMS pour la mesure d’écoulements en environnements sévères</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="section-after-references.html" accesskey="n" rel="next">Section after references</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="tables-1.html" accesskey="p" rel="previous">Tables</a>
+</span>
+</div>
+</nav>
+<h2 data-number="8.5" id="code">Code</h2>
+<div class="sourceCode" id="cb1" data-startFrom="100"><pre
+class="sourceCode numberSource python numberLines wide"><code class="sourceCode python" style="counter-reset: source-line 99;"><span id="cb1-100"><a href="#cb1-100"></a><span class="kw">class</span> Document:</span>
+<span id="cb1-101"><a href="#cb1-101"></a></span>
+<span id="cb1-102"><a href="#cb1-102"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, source):</span>
+<span id="cb1-103"><a href="#cb1-103"></a></span>
+<span id="cb1-104"><a href="#cb1-104"></a>        <span class="va">self</span>.source_file    <span class="op">=</span> source</span>
+<span id="cb1-105"><a href="#cb1-105"></a>        <span class="va">self</span>.root_path      <span class="op">=</span> os.path.dirname(os.path.abspath(<span class="va">self</span>.source_file))</span>
+<span id="cb1-106"><a href="#cb1-106"></a>        <span class="va">self</span>.dest_path      <span class="op">=</span> <span class="va">self</span>.source_file.split(<span class="st">&#39;.&#39;</span>)[<span class="dv">0</span>]<span class="op">+</span><span class="st">&#39;/&#39;</span></span>
+<span id="cb1-107"><a href="#cb1-107"></a>        <span class="va">self</span>.config_file    <span class="op">=</span> os.path.join(<span class="va">self</span>.root_path, <span class="st">&#39;config.yaml&#39;</span>)</span>
+<span id="cb1-108"><a href="#cb1-108"></a>        <span class="va">self</span>.meta_file      <span class="op">=</span> os.path.join(<span class="va">self</span>.root_path, <span class="st">&#39;_assets/meta/meta.yaml&#39;</span>)</span>
+<span id="cb1-109"><a href="#cb1-109"></a>        <span class="va">self</span>.assets_path    <span class="op">=</span> os.path.join(<span class="va">self</span>.root_path, <span class="st">&#39;_assets&#39;</span>)</span>
+<span id="cb1-110"><a href="#cb1-110"></a>        <span class="va">self</span>.templates_path <span class="op">=</span> os.path.join(<span class="va">self</span>.dest_path, <span class="st">&#39;_assets/templates&#39;</span>)</span>
+<span id="cb1-111"><a href="#cb1-111"></a>        <span class="va">self</span>.css_path       <span class="op">=</span> os.path.join(<span class="va">self</span>.root_path, <span class="st">&#39;_assets/css&#39;</span>)</span>
+<span id="cb1-112"><a href="#cb1-112"></a>        <span class="va">self</span>.pictures_path  <span class="op">=</span> os.path.join(<span class="va">self</span>.root_path, <span class="st">&#39;_assets/pics&#39;</span>)</span>
+<span id="cb1-113"><a href="#cb1-113"></a>        <span class="va">self</span>.refs_path      <span class="op">=</span> os.path.join(<span class="va">self</span>.root_path, <span class="st">&#39;_assets/refs&#39;</span>)</span>
+<span id="cb1-114"><a href="#cb1-114"></a></span>
+<span id="cb1-115"><a href="#cb1-115"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="va">self</span>.source_file, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb1-116"><a href="#cb1-116"></a>            content <span class="op">=</span> f.read()</span>
+<span id="cb1-117"><a href="#cb1-117"></a>        <span class="va">self</span>.ast <span class="op">=</span> pandoc.read(</span>
+<span id="cb1-118"><a href="#cb1-118"></a>            content,</span>
+<span id="cb1-119"><a href="#cb1-119"></a>            options<span class="op">=</span>[</span>
+<span id="cb1-120"><a href="#cb1-120"></a>            ])</span>
+<span id="cb1-121"><a href="#cb1-121"></a></span>
+<span id="cb1-122"><a href="#cb1-122"></a>        <span class="va">self</span>.abbreviation_definitions <span class="op">=</span> {}</span>
+<span id="cb1-123"><a href="#cb1-123"></a>        <span class="va">self</span>.link_dict <span class="op">=</span> {}</span>
+<span id="cb1-124"><a href="#cb1-124"></a>        <span class="va">self</span>.path <span class="op">=</span> [<span class="st">&#39;&#39;</span>, <span class="st">&#39;&#39;</span>]</span>
+<span id="cb1-125"><a href="#cb1-125"></a>        <span class="va">self</span>.structure_list <span class="op">=</span> []</span>
+<span id="cb1-126"><a href="#cb1-126"></a></span>
+<span id="cb1-127"><a href="#cb1-127"></a>    <span class="co">## FILTERS</span></span>
+<span id="cb1-128"><a href="#cb1-128"></a></span>
+<span id="cb1-129"><a href="#cb1-129"></a>    <span class="kw">def</span> add_title_to_references(<span class="va">self</span>, key, value, format_, meta):</span>
+<span id="cb1-130"><a href="#cb1-130"></a>        <span class="cf">if</span> key <span class="op">==</span> <span class="st">&quot;Div&quot;</span> <span class="kw">and</span> <span class="st">&quot;refs&quot;</span> <span class="kw">in</span> value[<span class="dv">0</span>][<span class="dv">0</span>]:</span>
+<span id="cb1-131"><a href="#cb1-131"></a>            attrs, children <span class="op">=</span> value</span>
+<span id="cb1-132"><a href="#cb1-132"></a>            t1 <span class="op">=</span> [<span class="st">&quot;unnumbered&quot;</span>]</span>
+<span id="cb1-133"><a href="#cb1-133"></a>            t2 <span class="op">=</span> []</span>
+<span id="cb1-134"><a href="#cb1-134"></a>            title <span class="op">=</span> pf.Header(<span class="dv">1</span>, [<span class="st">&quot;references&quot;</span>, t1, t2], [pf.Str(<span class="st">&quot;References&quot;</span>)])</span>
+<span id="cb1-135"><a href="#cb1-135"></a>            <span class="cf">return</span> [title, pf.Div(attrs, children)]</span></code></pre></div>
+<div class="sourceCode" id="cb2" data-fileName="scripts/script.js"><pre
+class="sourceCode numberSource javascript numberLines"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">const</span> menu <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;.sidebar&quot;</span>)<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">const</span> menuItems <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">&quot;.menuItem&quot;</span>)<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">const</span> hamburger<span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;.hamburger&quot;</span>)<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">const</span> closeIcon<span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;.closeIcon&quot;</span>)<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="kw">const</span> menuIcon <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;.menuIcon&quot;</span>)<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="kw">function</span> <span class="fu">collapseMenu</span>() {</span>
+<span id="cb2-8"><a href="#cb2-8"></a>  menu<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">remove</span>(<span class="st">&quot;showMenu&quot;</span>)<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>  closeIcon<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&quot;none&quot;</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>  menuIcon<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&quot;block&quot;</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="kw">function</span> <span class="fu">toggleMenu</span>() {</span>
+<span id="cb2-14"><a href="#cb2-14"></a>  <span class="cf">if</span> (menu<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">contains</span>(<span class="st">&quot;showMenu&quot;</span>)) {</span>
+<span id="cb2-15"><a href="#cb2-15"></a>    menu<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">remove</span>(<span class="st">&quot;showMenu&quot;</span>)<span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>    closeIcon<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&quot;none&quot;</span><span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a>    menuIcon<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&quot;block&quot;</span><span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-19"><a href="#cb2-19"></a>    menu<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;showMenu&quot;</span>)<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>    closeIcon<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&quot;block&quot;</span><span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a>    menuIcon<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&quot;none&quot;</span><span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a>  }</span>
+<span id="cb2-23"><a href="#cb2-23"></a>}</span>
+<span id="cb2-24"><a href="#cb2-24"></a></span>
+<span id="cb2-25"><a href="#cb2-25"></a>hamburger<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span><span class="op">,</span> toggleMenu)<span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span><span class="op">,</span> <span class="kw">function</span> (<span class="bu">event</span>) {</span>
+<span id="cb2-28"><a href="#cb2-28"></a>  <span class="cf">if</span> (<span class="op">!</span>menu<span class="op">.</span><span class="fu">contains</span>(<span class="bu">event</span><span class="op">.</span><span class="at">target</span>) <span class="op">&amp;&amp;</span> <span class="op">!</span>hamburger<span class="op">.</span><span class="fu">contains</span>(<span class="bu">event</span><span class="op">.</span><span class="at">target</span>)) {</span>
+<span id="cb2-29"><a href="#cb2-29"></a>    <span class="fu">collapseMenu</span>()<span class="op">;</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a>  }</span>
+<span id="cb2-31"><a href="#cb2-31"></a>})<span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a></span>
+<span id="cb2-33"><a href="#cb2-33"></a>menuItems<span class="op">.</span><span class="fu">forEach</span>(</span>
+<span id="cb2-34"><a href="#cb2-34"></a>  <span class="kw">function</span>(menuItem) {</span>
+<span id="cb2-35"><a href="#cb2-35"></a>    menuItem<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span><span class="op">,</span> toggleMenu)<span class="op">;</span></span>
+<span id="cb2-36"><a href="#cb2-36"></a>  }</span>
+<span id="cb2-37"><a href="#cb2-37"></a>)</span></code></pre></div>
+<h3 class="unnumbered" id="to-do">To Do</h3>
+<p>Find a way to implement offset in line numbers. Syntax :</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{.python .numberLines startFrom=&quot;100&quot;}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="in">class Document:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="in">    def __init__(self, source):</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="in">    ...</span></span></code></pre></div>
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-almogThermalStabilityThin2021" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline"><div
+class="csl-block"><strong>Thermal stability of thin Au films deposited
+on salt whiskers</strong></div> <div class="csl-block">Ehud Almog, Vadim
+Derkach, Amit Sharma, Amy Novick-Cohen, Julia R Greer, Eugen
+Rabkin</div> <div class="csl-block"><div
+class="csl-right-inline">Février <strong>2021</strong></div> · <em>Acta
+Materialia</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/gsdf45">gsdf45</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">1359-6454</span></div></div></div>
+</div>
+<div id="ref-mauriceDesignMicrofabricationCharacterization2016"
+class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline"><div
+class="csl-block"><strong><a
+href="https://theses.hal.science/tel-02154818">Design, microfabrication
+and characterization of alkali vapor cells for miniature atomic
+frequency references</a></strong></div> <div class="csl-block">Vincent
+Maurice</div> <div class="csl-block"><div
+class="csl-right-inline">Juillet <strong>2016</strong></div> ·
+<em>Université de Franche-Comté</em></div></div>
+</div>
+<div id="ref-talbiMicroscaleHotWire2015" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline"><div
+class="csl-block"><strong>A micro-scale hot wire anemometer based on low
+stress (Ni/W) multi-layers deposited on nano-crystalline diamond for air
+flow sensing</strong></div> <div class="csl-block">A Talbi, L Gimeno,
+J-C Gerbedoen, R Viard, A Soltani, V Mortet, V Preobrazhensky, A Merlen,
+P Pernod</div> <div class="csl-block"><div
+class="csl-right-inline">Novembre <strong>2015</strong></div> ·
+<em>Journal of Micromechanics and Microengineering</em></div> <div
+class="csl-block"><div class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/gsdf4p">gsdf4p</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0960-1317</span></div></div></div>
+</div>
+<div id="ref-arwatzDynamicCalibrationModeling2013" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline"><div
+class="csl-block"><strong>Dynamic calibration and modeling of a cold
+wire for temperature measurement</strong></div> <div
+class="csl-block">Gilad Arwatz, Carla Bahri, Alexander J Smits, Marcus
+Hultmark</div> <div class="csl-block"><div
+class="csl-right-inline">Octobre <strong>2013</strong></div> ·
+<em>Measurement Science and Technology</em></div> <div
+class="csl-block"><div class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/ggkxdh">ggkxdh</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0957-0233</span></div></div></div>
+</div>
+<div id="ref-comte-bellotHotWireAnemometry1976" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline"><div
+class="csl-block"><strong>Hot-Wire Anemometry</strong></div> <div
+class="csl-block">G Comte-Bellot</div> <div class="csl-block"><div
+class="csl-right-inline"><strong>1976</strong></div> · <em>Annual Review
+of Fluid Mechanics</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/cng527">cng527</a></span></div></div></div>
+</div>
+<div id="ref-cahillThermalConductivityMeasurement1990" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">6. </div><div class="csl-right-inline"><div
+class="csl-block"><strong>Thermal conductivity measurement from 30 to
+750 K: the 3ω method</strong></div> <div class="csl-block">David G
+Cahill</div> <div class="csl-block"><div
+class="csl-right-inline">Février <strong>1990</strong></div> ·
+<em>Review of Scientific Instruments</em></div> <div
+class="csl-block"><div class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/fsqs2m">fsqs2m</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0034-6748</span></div></div></div>
+</div>
+<div id="ref-fanLowdimensionalSiCNanostructures2006" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">7. </div><div class="csl-right-inline"><div
+class="csl-block"><strong>Low-dimensional SiC nanostructures:
+Fabrication, luminescence, and electrical properties</strong></div> <div
+class="csl-block">JY Fan, XL Wu, Paul K Chu</div> <div
+class="csl-block"><div class="csl-right-inline">Novembre
+<strong>2006</strong></div> · <em>Progress in Materials
+Science</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/b3j2tf">b3j2tf</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0079-6425</span></div></div></div>
+</div>
+<div id="ref-pisanoBridgeConceptualFrameworks2015" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">8. </div><div class="csl-right-inline"><div
+class="csl-block"><strong>A Bridge between Conceptual Frameworks:
+Sciences, Society and Technology Studies</strong></div> <div
+class="csl-block">Raffaele Pisano</div> <div class="csl-block"><div
+class="csl-right-inline">Juin <strong>2015</strong></div> ·
+<em>Springer</em></div> <div class="csl-block"><div
+class="csl-block">ISBN<span
+class="smallcaps">978-94-017-9645-3</span></div></div></div>
+</div>
+<div id="ref-ummelsStochasticMultiplayerGames2010" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">9. </div><div class="csl-right-inline"><div
+class="csl-block"><strong>Stochastic multiplayer games: theory and
+algorithms</strong></div> <div class="csl-block">Michael Ummels</div>
+<div class="csl-block"><div
+class="csl-right-inline"><strong>2010</strong></div> · <em>Pallas
+Publications</em></div> <div class="csl-block"><div
+class="csl-block">ISBN<span
+class="smallcaps">978-90-485-1387-1</span></div></div></div>
+</div>
+<div id="ref-baarMicromachinedStructuresThermal2001" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">10. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>Micromachined
+structures for thermal measurements of fluid and flow
+parameters</strong></div> <div class="csl-block">JJ van Baar, RJ
+Wiegerink, TSJ Lammerink, GJM Krijnen, M Elwenspoek</div> <div
+class="csl-block"><div class="csl-right-inline">Juillet
+<strong>2001</strong></div> · <em>Journal of Micromechanics and
+Microengineering</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/fpr3nq">fpr3nq</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0960-1317</span></div></div></div>
+</div>
+<div id="ref-balakrishnanHighlySensitive3CSiC2018" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">11. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>Highly sensitive
+3C-SiC on glass based thermal flow sensor realized using MEMS
+technology</strong></div> <div class="csl-block">Vivekananthan
+Balakrishnan, Toan Dinh, Hoang-Phuong Phan, Dzung Viet Dao, Nam-Trung
+Nguyen</div> <div class="csl-block"><div class="csl-right-inline">Août
+<strong>2018</strong></div> · <em>Sensors and Actuators A:
+Physical</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/gfbgrf">gfbgrf</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0924-4247</span></div></div></div>
+</div>
+<div id="ref-balakrishnanHotfilmAirFlow2019" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">12. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>A hot-film air
+flow sensor for elevated temperatures</strong></div> <div
+class="csl-block">Vivekananthan Balakrishnan, Toan Dinh, Thanh Nguyen,
+Hoang-Phuong Phan, Tuan-Khoa Nguyen, Dzung Viet Dao, Nam-Trung
+Nguyen</div> <div class="csl-block"><div
+class="csl-right-inline">Janvier <strong>2019</strong></div> ·
+<em>Review of Scientific Instruments</em></div> <div
+class="csl-block"><div class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/gmjgcf">gmjgcf</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0034-6748</span></div></div></div>
+</div>
+<div id="ref-buderAeroMEMSPolyimideBased2008" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">13. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>AeroMEMS
+polyimide based wall double hot-wire sensors for flow separation
+detection</strong></div> <div class="csl-block">Ulrich Buder, Ralf Petz,
+Moritz Kittel, Wolfgang Nitsche, Ernst Obermeier</div> <div
+class="csl-block"><div class="csl-right-inline">Mars
+<strong>2008</strong></div> · <em>Sensors and Actuators A:
+Physical</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/dfprnf">dfprnf</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0924-4247</span></div></div></div>
+</div>
+<div id="ref-chandrasekharanMicroscaleDifferentialCapacitive2011"
+class="csl-entry" role="listitem">
+<div class="csl-left-margin">14. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>A Microscale
+Differential Capacitive Direct Wall-Shear-Stress Sensor</strong></div>
+<div class="csl-block">Vijay Chandrasekharan, Jeremy Sells, Jessica
+Meloy, David P Arnold, Mark Sheplak</div> <div class="csl-block"><div
+class="csl-right-inline">Juin <strong>2011</strong></div> · <em>Journal
+of Microelectromechanical Systems</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/fb3rm5">fb3rm5</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">1941-0158</span></div></div></div>
+</div>
+<div id="ref-dinhApplicationsThermoelectricalEffect2018"
+class="csl-entry" role="listitem">
+<div class="csl-left-margin">15. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>Applications of
+Thermoelectrical Effect in SiC</strong></div> <div
+class="csl-block">Toan Dinh, Nam-Trung Nguyen, Dzung Viet Dao</div> <div
+class="csl-block"><div
+class="csl-right-inline"><strong>2018</strong></div> ·
+<em>Thermoelectrical Effect in SiC for High-Temperature MEMS
+Sensors</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/10.1007/978-981-13-2571-7_6">10.1007/978-981-13-2571-7_6</a></span></div>
+<div class="csl-block">ISBN<span
+class="smallcaps">9789811325717</span></div></div></div>
+</div>
+<div id="ref-chenInstrumentationGradeShearStress2016" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">16. </div><div
+class="csl-right-inline"><div class="csl-block"><strong><a
+href="https://itea.org/images/pdf/conferences/2016%20TIW/Proceedings/CHEN.pdf">Instrumentation-Grade
+Shear Stress Sensors for Direct Measurement of Mean and Fluctuating Skin
+Friction</a></strong></div> <div class="csl-block">Tai-An Chen, Casey
+Barnard, David Mills, Stephen Horowitz, Mark Sheplak</div> <div
+class="csl-block"><div class="csl-right-inline">Décembre
+<strong>2016</strong></div></div></div>
+</div>
+<div id="ref-dinhOnChipSiCMEMS2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">17. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>An On-Chip SiC
+MEMS Device with Integrated Heating, Sensing, and Microfluidic Cooling
+Systems</strong></div> <div class="csl-block">Toan Dinh, Hoang-Phuong
+Phan, Navid Kashaninejad, Tuan-Khoa Nguyen, Dzung Viet Dao, Nam-Trung
+Nguyen</div> <div class="csl-block"><div
+class="csl-right-inline"><strong>2018</strong></div> · <em>Advanced
+Materials Interfaces</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/gfm946">gfm946</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">2196-7350</span></div></div></div>
+</div>
+<div id="ref-flemishDryEtchingSiC1996" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">18. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>Dry Etching of
+SiC for Advanced Device Applications</strong></div> <div
+class="csl-block">JR Flemish, K Xie, GF McLane</div> <div
+class="csl-block"><div class="csl-right-inline">Décembre
+<strong>1996</strong></div> · <em>MRS Online Proceedings
+Library</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/b84sfc">b84sfc</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">1946-4274</span></div></div></div>
+</div>
+<div id="ref-ghouila-houriHighTemperatureGradient2021" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">19. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>High temperature
+gradient micro-sensors for skin-friction measurement in flow control
+applications</strong></div> <div class="csl-block">C Ghouila-Houri, M
+Benedito, E Garnier, A Talbi, A Mazzamurro, R Viard, A Merlen, P Pernod,
+T Arnoult, Q Gallas</div> <div class="csl-block"><div
+class="csl-right-inline">Août <strong>2021</strong></div> · <em>2021
+Symposium on Design, Test, Integration &amp; Packaging of MEMS and MOEMS
+(DTIP)</em></div> <div class="csl-block"><div class="csl-block">DOI<span
+class="smallcaps"><a
+href="https://doi.org/gsdf2p">gsdf2p</a></span></div></div></div>
+</div>
+<div id="ref-gimenoSyntheticJetsBased2010" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">20. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>Synthetic jets
+based on micro magneto mechanical systems for aerodynamic flow
+control</strong></div> <div class="csl-block">L Gimeno, A Talbi, R
+Viard, A Merlen, P Pernod, V Preobrazhensky</div> <div
+class="csl-block"><div class="csl-right-inline">Mai
+<strong>2010</strong></div> · <em>Journal of Micromechanics and
+Microengineering</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/bxxgcs">bxxgcs</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0960-1317</span></div></div></div>
+</div>
+<div id="ref-hoMicroElectroMechanicalSystemsMemsFluid1998"
+class="csl-entry" role="listitem">
+<div class="csl-left-margin">21. </div><div
+class="csl-right-inline"><div
+class="csl-block"><strong>Micro-Electro-Mechanical-Systems (mems) and
+Fluid Flows</strong></div> <div class="csl-block">Chih-Ming Ho, Yu-Chong
+Tai</div> <div class="csl-block"><div
+class="csl-right-inline"><strong>1998</strong></div> · <em>Annual Review
+of Fluid Mechanics</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/d8r5wp">d8r5wp</a></span></div></div></div>
+</div>
+<div id="ref-gerlachGoldSiliconPhase1967" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">22. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>Gold silicon
+phase diagram</strong></div> <div class="csl-block">W Gerlach, B
+Goel</div> <div class="csl-block"><div class="csl-right-inline">Juin
+<strong>1967</strong></div> · <em>Solid-State Electronics</em></div>
+<div class="csl-block"><div class="csl-block">DOI<span
+class="smallcaps"><a
+href="https://doi.org/b35nw7">b35nw7</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0038-1101</span></div></div></div>
+</div>
+<div id="ref-hourlierThermalDecompositionCalcium2019" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">23. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>Thermal
+decomposition of calcium oxalate: beyond appearances</strong></div> <div
+class="csl-block">Djamila Hourlier</div> <div class="csl-block"><div
+class="csl-right-inline">Juin <strong>2019</strong></div> · <em>Journal
+of Thermal Analysis and Calorimetry</em></div> <div
+class="csl-block"><div class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/gjgfs5">gjgfs5</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">1588-2926</span></div></div></div>
+</div>
+<div id="ref-jiangMicromachinedPolysiliconHotWire1994" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">24. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>A Micromachined
+Polysilicon Hot-Wire Anemometer</strong></div> <div
+class="csl-block">Fukang Jiang, Yu-Chong Tai, Chih-Ming Ho, Wen J
+Li</div> <div class="csl-block"><div
+class="csl-right-inline"><strong>1994</strong></div></div></div>
+</div>
+<div id="ref-weiHighlySensitiveDiodeBased2019" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">25. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>Highly Sensitive
+Diode-Based Micro-Pirani Vacuum Sensor with Low Power
+Consumption</strong></div> <div class="csl-block">Debo Wei, Jianyu Fu,
+Ruiwen Liu, Ying Hou, Chao Liu, Weibing Wang, Dapeng Chen</div> <div
+class="csl-block"><div class="csl-right-inline">Janvier
+<strong>2019</strong></div> · <em>Sensors (Basel,
+Switzerland)</em></div> <div class="csl-block"><div
+class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/gsdf43">gsdf43</a></span></div> <div
+class="csl-block">PMID<span class="smallcaps"><a
+href="https://www.ncbi.nlm.nih.gov/pubmed/30621043">30621043</a></span></div>
+<div class="csl-block">PMCID<span class="smallcaps"><a
+href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6338961">PMC6338961</a></span></div>
+<div class="csl-block">ISSN<span
+class="smallcaps">1424-8220</span></div></div></div>
+</div>
+<div id="ref-arwatzDevelopmentCharacterizationNanoscale2015"
+class="csl-entry" role="listitem">
+<div class="csl-left-margin">26. </div><div
+class="csl-right-inline"><div class="csl-block"><strong>Development and
+characterization of a nano-scale temperature sensor (T-NSTAP) for
+turbulent temperature measurements</strong></div> <div
+class="csl-block">Gilad Arwatz, Yuyang Fan, Carla Bahri, Marcus
+Hultmark</div> <div class="csl-block"><div
+class="csl-right-inline">Février <strong>2015</strong></div> ·
+<em>Measurement Science and Technology</em></div> <div
+class="csl-block"><div class="csl-block">DOI<span class="smallcaps"><a
+href="https://doi.org/ggkxdt">ggkxdt</a></span></div> <div
+class="csl-block">ISSN<span
+class="smallcaps">0957-0233</span></div></div></div>
+</div>
+</div>
+<div id="abbr">
+
+</div>
+</body>
+</html>

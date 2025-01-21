@@ -134,9 +134,9 @@ class Document:
                 if level == 2:
                     # print(f"{id} -> {level}")
                     # print(yaml.dump(element))
-                    items.append([
+                    items.append(element + [
                         pf.Div(("", ["toc-dropdown-btn"], []), []),
-                    ] + element)
+                    ])
                 else:
                     items.append(element)
             return pf.BulletList(items)
@@ -458,59 +458,123 @@ class Document:
             ]
         )
         
-    def extractFromSitemap(self):
-        with open('./-/sitemap.json') as f:
-            sitemap = json.load(f)
-        return sitemap
+    def chunk_link_filter(self, key, value, _fmt, meta):
+        if key == 'Link':
+            [t1, linktext, [href, t4]] = value
+            section_id = href.split('#')[0][:-5]
+            anchor = href.split('#')[1]
+            newhref = self.structure[section_id]["path"]
+            if anchor != section_id:
+                newhref+=f'/#{anchor}'
+            return pf.Link(t1, linktext, [newhref, t4])
         
-    def chunk(self, splitLevel=6, tocLevel=3):
-        # pypandoc.convert_text(
-        #     self.ast,
-        #     format='json',
-        #     to='chunkedhtml',
-        #     extra_args=[
-        #         f'--split-level={splitLevel}',
-        #     ]
-        # )
-        
-        sitemap = self.extractFromSitemap()
-        
+    def chunk(self, splitLevel=2, tocLevel=3):
+        root_path = 'chunking-test'
         def transform_sitemap(input_json):
+            if not os.path.exists(root_path):
+                os.mkdir('chunking-test')
             def process_section(section, parent_id):
-                print(len(section))
                 section_id = section["section"]["id"]
                 if not section_id:
                     return {}
 
+                # create paths and folder structure
+                level = int(section["section"]["level"])
+                
+                if level == 1:
+                    path = section_id
+                    dr = root_path + '/' + section_id
+                    if not os.path.exists(dr):
+                        os.mkdir(dr)
+                elif level <= splitLevel:
+                    path = transformed[parent_id].get("path") + '/' + section_id
+                    dr = root_path +'/'+ transformed[parent_id].get("path") + '/' + section_id
+                    if not os.path.exists(dr):
+                        os.mkdir(dr)
+                else:
+                    path = transformed[parent_id].get("path").split('/#')[0] + '/#' + section_id
+
+                print(path)
+
                 # Add the current section
                 transformed[section_id] = {
                     "title": section["section"]["title"],
-                    "level": int(section["section"]["level"]),
+                    "level": level,
+                    "path": path,
                     "number": section["section"].get("number"),
                     "parent": parent_id,
                     "children": []
                 }
-
-                # Process subsections
+                
                 for subsection in section.get("subsections", []):
                     child_id = subsection["section"]["id"]
                     if child_id:
                         transformed[section_id]["children"].append(child_id)
                         process_section(subsection, section_id)
-            # Initialize the transformed structure
+
             transformed = {}
 
+            for section in track(input_json["subsections"]):
+                process_section(section, None)
             # Process the root section and its subsections
-            process_section(input_json, None)
-
+            
             return transformed
         
-        structure = transform_sitemap(sitemap)
+        # generate the nav
+        pypandoc.convert_text(
+            self.ast,
+            format='json',
+            to='chunkedhtml',
+            extra_args=[
+                '--number-sections',
+                '--toc',
+                f'--toc-depth={tocLevel}',
+                f'--template={self.templates_path}/template-toc.html',
+                '--chunk-template=%i.html'
+            ]
+        )
+        
+        with open('-/sitemap.json', 'r', encoding='utf-8') as f:
+            sitemap = json.load(f)
+        
+        with open('-/index.html', 'r', encoding='utf-8') as f:
+            toc = pypandoc.convert_text(
+                f.read(),
+                format='html',
+                to='json'
+            )
+        
+        shutil.rmtree('-/')
+        
+        self.structure = transform_sitemap(sitemap)
     
         with open('./structure_dict.json', 'w', encoding="utf-8") as f:
-            json.dump(structure, f, indent=4, ensure_ascii="false")
+            json.dump(self.structure, f, indent=4, ensure_ascii="false")
             
-        a, b = 0
+        toc = self.filter(
+            [self.chunk_link_filter],
+            ast=toc
+        )
+        
+        # generate files
+        pypandoc.convert_text(
+            self.ast,
+            format='json',
+            to='chunkedhtml',
+            extra_args=[
+                f'--split-level={splitLevel}',
+                '--chunk-template=%i.html'
+            ]
+        )
+        
+        for file in os.listdir('-/'):
+            if file.endswith('.html'):
+                if file == 'index.html':
+                    shutil.move(f'-/{file}', f'{root_path}/{file}')
+                else:
+                    shutil.move(f'-/{file}', f'{root_path}/{self.structure[file.split(".")[0]]["path"]}/index.html')
+
+        shutil.rmtree('-/')
         
     def generate_404():
         pass
@@ -580,6 +644,7 @@ class Document:
         dico["meta"] = self.meta
 
         self.ast_html = json.dumps(dico)
+        self.chunk()
 
         self.filter([
             self.add_title_to_references,
@@ -589,7 +654,6 @@ class Document:
             self.links_filter
         ])
         
-        self.chunk()
 
         self.generate_nav()
         self.filter([self.graphs_filter])

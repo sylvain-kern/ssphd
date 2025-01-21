@@ -1,39 +1,18 @@
 {
-    "root": {
-        "title": "Capteurs MEMS pour la mesure d\u00e2\u20ac\u2122\u00c3\u00a9coulements en environnements s\u00c3\u00a9v\u00c3\u00a8res",
-        "level": 0,
-        "number": null,
-        "parent": null,
-        "children": [
-            "introduction",
-            "markdown-kitchen-sink",
-            "h1",
-            "alt-h1",
-            "definition-lists",
-            "graphics",
-            "cross-links-with-pandoc-crossref",
-            "citations",
-            "numbered-chapter",
-            "references",
-            "section-after-references",
-            "abbreviations",
-            "and-a-chapter",
-            "what-if-two-headings-have-the-same-title",
-            "lists-1"
-        ]
-    },
     "introduction": {
         "title": "Introduction",
         "level": 1,
+        "path": "introduction",
         "number": null,
-        "parent": "root",
+        "parent": null,
         "children": []
     },
     "markdown-kitchen-sink": {
         "title": "Markdown Kitchen Sink",
         "level": 1,
+        "path": "markdown-kitchen-sink",
         "number": "1",
-        "parent": "root",
+        "parent": null,
         "children": [
             "table-of-contents",
             "headers"
@@ -42,6 +21,7 @@
     "table-of-contents": {
         "title": "Table of Contents",
         "level": 5,
+        "path": "markdown-kitchen-sink/#table-of-contents",
         "number": "1.0.0.0.1",
         "parent": "markdown-kitchen-sink",
         "children": []
@@ -49,6 +29,7 @@
     "headers": {
         "title": "Headers",
         "level": 2,
+        "path": "markdown-kitchen-sink/headers",
         "number": "1.1",
         "parent": "markdown-kitchen-sink",
         "children": []
@@ -56,8 +37,9 @@
     "h1": {
         "title": "H1",
         "level": 1,
+        "path": "h1",
         "number": "2",
-        "parent": "root",
+        "parent": null,
         "children": [
             "h2"
         ]
@@ -65,6 +47,7 @@
     "h2": {
         "title": "H2",
         "level": 2,
+        "path": "h1/h2",
         "number": "2.1",
         "parent": "h1",
         "children": [
@@ -74,6 +57,7 @@
     "h3": {
         "title": "H3",
         "level": 3,
+        "path": "h1/h2/#h3",
         "number": "2.1.1",
         "parent": "h2",
         "children": [
@@ -83,6 +67,7 @@
     "h4": {
         "title": "H4",
         "level": 4,
+        "path": "h1/h2/#h4",
         "number": "2.1.1.1",
         "parent": "h3",
         "children": [
@@ -92,6 +77,7 @@
     "h5": {
         "title": "H5",
         "level": 5,
+        "path": "h1/h2/#h5",
         "number": "2.1.1.1.1",
         "parent": "h4",
         "children": [
@@ -101,6 +87,7 @@
     "h6": {
         "title": "H6",
         "level": 6,
+        "path": "h1/h2/#h6",
         "number": "2.1.1.1.1.1",
         "parent": "h5",
         "children": []
@@ -108,8 +95,9 @@
     "alt-h1": {
         "title": "Alt-H1",
         "level": 1,
+        "path": "alt-h1",
         "number": "3",
-        "parent": "root",
+        "parent": null,
         "children": [
             "alt-h2",
             "emphasis",
@@ -128,6 +116,7 @@
     "alt-h2": {
         "title": "Alt-H2",
         "level": 2,
+        "path": "alt-h1/alt-h2",
         "number": "3.1",
         "parent": "alt-h1",
         "children": []
@@ -135,6 +124,7 @@
     "emphasis": {
         "title": "Emphasis",
         "level": 2,
+        "path": "alt-h1/emphasis",
         "number": "3.2",
         "parent": "alt-h1",
         "children": []
@@ -142,6 +132,7 @@
     "lists": {
         "title": "Lists",
         "level": 2,
+        "path": "alt-h1/lists",
         "number": "3.3",
         "parent": "alt-h1",
         "children": []
@@ -149,6 +140,7 @@
     "links": {
         "title": "Links",
         "level": 2,
+        "path": "alt-h1/links",
         "number": "3.4",
         "parent": "alt-h1",
         "children": []
@@ -156,6 +148,7 @@
     "images": {
         "title": "Images",
         "level": 2,
+        "path": "alt-h1/images",
         "number": "3.5",
         "parent": "alt-h1",
         "children": []
@@ -163,6 +156,7 @@
     "code-and-syntax-highlighting": {
         "title": "Code and Syntax Highlighting",
         "level": 2,
+        "path": "alt-h1/code-and-syntax-highlighting",
         "number": "3.6",
         "parent": "alt-h1",
         "children": []
@@ -170,6 +164,7 @@
     "tables": {
         "title": "Tables",
         "level": 2,
+        "path": "alt-h1/tables",
         "number": "3.7",
         "parent": "alt-h1",
         "children": []
@@ -177,6 +172,7 @@
     "blockquotes": {
         "title": "Blockquotes",
         "level": 2,
+        "path": "alt-h1/blockquotes",
         "number": "3.8",
         "parent": "alt-h1",
         "children": []
@@ -184,6 +180,7 @@
     "inline-html": {
         "title": "Inline HTML",
         "level": 2,
+        "path": "alt-h1/inline-html",
         "number": "3.9",
         "parent": "alt-h1",
         "children": []
@@ -191,6 +188,7 @@
     "horizontal-rule": {
         "title": "Horizontal Rule",
         "level": 2,
+        "path": "alt-h1/horizontal-rule",
         "number": "3.10",
         "parent": "alt-h1",
         "children": []
@@ -198,6 +196,7 @@
     "line-breaks": {
         "title": "Line Breaks",
         "level": 2,
+        "path": "alt-h1/line-breaks",
         "number": "3.11",
         "parent": "alt-h1",
         "children": []
@@ -205,6 +204,7 @@
     "youtube-videos": {
         "title": "YouTube Videos",
         "level": 2,
+        "path": "alt-h1/youtube-videos",
         "number": "3.12",
         "parent": "alt-h1",
         "children": []
@@ -212,15 +212,17 @@
     "definition-lists": {
         "title": "Definition lists",
         "level": 1,
+        "path": "definition-lists",
         "number": "4",
-        "parent": "root",
+        "parent": null,
         "children": []
     },
     "graphics": {
         "title": "Graphics",
         "level": 1,
+        "path": "graphics",
         "number": "5",
-        "parent": "root",
+        "parent": null,
         "children": [
             "graphs",
             "svg-images",
@@ -231,6 +233,7 @@
     "graphs": {
         "title": "Graphs",
         "level": 2,
+        "path": "graphics/graphs",
         "number": "5.1",
         "parent": "graphics",
         "children": [
@@ -240,6 +243,7 @@
     "dygraphs": {
         "title": "Dygraphs",
         "level": 3,
+        "path": "graphics/graphs/#dygraphs",
         "number": "5.1.1",
         "parent": "graphs",
         "children": [
@@ -249,13 +253,15 @@
     "what-i-want-to-have-in-the-.md-source": {
         "title": "What I want to have in the .md source",
         "level": 4,
+        "path": "graphics/graphs/#what-i-want-to-have-in-the-.md-source",
         "number": null,
         "parent": "dygraphs",
         "children": []
     },
     "svg-images": {
-        "title": " images",
+        "title": "+[SVG] images",
         "level": 2,
+        "path": "graphics/svg-images",
         "number": "5.2",
         "parent": "graphics",
         "children": []
@@ -263,6 +269,7 @@
     "margin-figures": {
         "title": "Margin figures",
         "level": 2,
+        "path": "graphics/margin-figures",
         "number": "5.3",
         "parent": "graphics",
         "children": []
@@ -270,6 +277,7 @@
     "subfigures": {
         "title": "Subfigures",
         "level": 2,
+        "path": "graphics/subfigures",
         "number": "5.4",
         "parent": "graphics",
         "children": []
@@ -277,22 +285,25 @@
     "cross-links-with-pandoc-crossref": {
         "title": "Cross-links with pandoc-crossref",
         "level": 1,
+        "path": "cross-links-with-pandoc-crossref",
         "number": "6",
-        "parent": "root",
+        "parent": null,
         "children": []
     },
     "citations": {
         "title": "Citations",
         "level": 1,
+        "path": "citations",
         "number": "7",
-        "parent": "root",
+        "parent": null,
         "children": []
     },
     "numbered-chapter": {
         "title": "Numbered chapter",
         "level": 1,
+        "path": "numbered-chapter",
         "number": "8",
-        "parent": "root",
+        "parent": null,
         "children": [
             "section",
             "other-section",
@@ -304,6 +315,7 @@
     "section": {
         "title": "Section",
         "level": 2,
+        "path": "numbered-chapter/section",
         "number": "8.1",
         "parent": "numbered-chapter",
         "children": [
@@ -318,6 +330,7 @@
     "subsection": {
         "title": "Subsection",
         "level": 3,
+        "path": "numbered-chapter/section/#subsection",
         "number": "8.1.1",
         "parent": "section",
         "children": [
@@ -327,6 +340,7 @@
     "subsubsection": {
         "title": "Subsubsection",
         "level": 4,
+        "path": "numbered-chapter/section/#subsubsection",
         "number": "8.1.1.1",
         "parent": "subsection",
         "children": []
@@ -334,6 +348,7 @@
     "subsection-2": {
         "title": "Subsection 2",
         "level": 3,
+        "path": "numbered-chapter/section/#subsection-2",
         "number": "8.1.2",
         "parent": "section",
         "children": [
@@ -343,6 +358,7 @@
     "level-5-heading": {
         "title": "Level 5 heading",
         "level": 5,
+        "path": "numbered-chapter/section/#level-5-heading",
         "number": "8.1.2.0.1",
         "parent": "subsection-2",
         "children": [
@@ -352,6 +368,7 @@
     "level-6-heading": {
         "title": "Level 6 heading",
         "level": 6,
+        "path": "numbered-chapter/section/#level-6-heading",
         "number": "8.1.2.0.1.1",
         "parent": "level-5-heading",
         "children": []
@@ -359,6 +376,7 @@
     "subsection-3": {
         "title": "Subsection 3",
         "level": 3,
+        "path": "numbered-chapter/section/#subsection-3",
         "number": "8.1.3",
         "parent": "section",
         "children": []
@@ -366,6 +384,7 @@
     "subsection-4": {
         "title": "Subsection 4",
         "level": 3,
+        "path": "numbered-chapter/section/#subsection-4",
         "number": "8.1.4",
         "parent": "section",
         "children": []
@@ -373,6 +392,7 @@
     "subsection-5-which-is-unfortunately-unnumbered": {
         "title": "Subsection 5 (which is unfortunately unnumbered)",
         "level": 3,
+        "path": "numbered-chapter/section/#subsection-5-which-is-unfortunately-unnumbered",
         "number": null,
         "parent": "section",
         "children": []
@@ -380,6 +400,7 @@
     "subsection-6": {
         "title": "Subsection 6",
         "level": 3,
+        "path": "numbered-chapter/section/#subsection-6",
         "number": "8.1.5",
         "parent": "section",
         "children": []
@@ -387,6 +408,7 @@
     "other-section": {
         "title": "Other section",
         "level": 2,
+        "path": "numbered-chapter/other-section",
         "number": "8.2",
         "parent": "numbered-chapter",
         "children": []
@@ -394,6 +416,7 @@
     "math": {
         "title": "Math",
         "level": 2,
+        "path": "numbered-chapter/math",
         "number": "8.3",
         "parent": "numbered-chapter",
         "children": []
@@ -401,6 +424,7 @@
     "tables-1": {
         "title": "Tables",
         "level": 2,
+        "path": "numbered-chapter/tables-1",
         "number": "8.4",
         "parent": "numbered-chapter",
         "children": [
@@ -410,6 +434,7 @@
     "footnotes-in-tables-in-table-footer": {
         "title": "Footnotes in tables in table footer?",
         "level": 3,
+        "path": "numbered-chapter/tables-1/#footnotes-in-tables-in-table-footer",
         "number": "8.4.1",
         "parent": "tables-1",
         "children": []
@@ -417,6 +442,7 @@
     "code": {
         "title": "Code",
         "level": 2,
+        "path": "numbered-chapter/code",
         "number": "8.5",
         "parent": "numbered-chapter",
         "children": [
@@ -426,36 +452,33 @@
     "to-do": {
         "title": "To Do",
         "level": 3,
+        "path": "numbered-chapter/code/#to-do",
         "number": null,
         "parent": "code",
-        "children": []
-    },
-    "references": {
-        "title": "References",
-        "level": 1,
-        "number": null,
-        "parent": "root",
         "children": []
     },
     "section-after-references": {
         "title": "Section after references",
         "level": 1,
+        "path": "section-after-references",
         "number": "9",
-        "parent": "root",
+        "parent": null,
         "children": []
     },
     "abbreviations": {
         "title": "Abbreviations",
         "level": 1,
+        "path": "abbreviations",
         "number": "10",
-        "parent": "root",
+        "parent": null,
         "children": [
             "test-in-titles-yes-and-even-in-toc"
         ]
     },
     "test-in-titles-yes-and-even-in-toc": {
-        "title": "Test (in titles ? Yes, and even in  !)",
+        "title": "Test (in titles ? Yes, and even in +[TOC] !)",
         "level": 2,
+        "path": "abbreviations/test-in-titles-yes-and-even-in-toc",
         "number": "10.1",
         "parent": "abbreviations",
         "children": [
@@ -465,6 +488,7 @@
     "this-is-a-sub-section": {
         "title": "This is a sub-section",
         "level": 3,
+        "path": "abbreviations/test-in-titles-yes-and-even-in-toc/#this-is-a-sub-section",
         "number": "10.1.1",
         "parent": "test-in-titles-yes-and-even-in-toc",
         "children": []
@@ -472,8 +496,9 @@
     "and-a-chapter": {
         "title": "And a chapter",
         "level": 1,
+        "path": "and-a-chapter",
         "number": "11",
-        "parent": "root",
+        "parent": null,
         "children": [
             "and-a-level-3-section",
             "and-a-level-2-section",
@@ -483,6 +508,7 @@
     "and-a-level-3-section": {
         "title": "And a level 3 section",
         "level": 3,
+        "path": "and-a-chapter/#and-a-level-3-section",
         "number": null,
         "parent": "and-a-chapter",
         "children": []
@@ -490,6 +516,7 @@
     "and-a-level-2-section": {
         "title": "And a level 2 section",
         "level": 2,
+        "path": "and-a-chapter/and-a-level-2-section",
         "number": "11.1",
         "parent": "and-a-chapter",
         "children": []
@@ -497,6 +524,7 @@
     "markdown-formatting-in-section-headings": {
         "title": "Markdown formatting in section-headings",
         "level": 2,
+        "path": "and-a-chapter/markdown-formatting-in-section-headings",
         "number": "11.2",
         "parent": "and-a-chapter",
         "children": []
@@ -504,8 +532,9 @@
     "what-if-two-headings-have-the-same-title": {
         "title": "What if two headings have the same title ?",
         "level": 1,
+        "path": "what-if-two-headings-have-the-same-title",
         "number": "12",
-        "parent": "root",
+        "parent": null,
         "children": [
             "this-is-a-title",
             "this-is-a-title-1"
@@ -514,6 +543,7 @@
     "this-is-a-title": {
         "title": "This is a title",
         "level": 2,
+        "path": "what-if-two-headings-have-the-same-title/this-is-a-title",
         "number": "12.1",
         "parent": "what-if-two-headings-have-the-same-title",
         "children": []
@@ -521,6 +551,7 @@
     "this-is-a-title-1": {
         "title": "This is a title",
         "level": 2,
+        "path": "what-if-two-headings-have-the-same-title/this-is-a-title-1",
         "number": "12.2",
         "parent": "what-if-two-headings-have-the-same-title",
         "children": []
@@ -528,8 +559,9 @@
     "lists-1": {
         "title": "Lists",
         "level": 1,
+        "path": "lists-1",
         "number": "13",
-        "parent": "root",
+        "parent": null,
         "children": []
     }
 }
