@@ -23,10 +23,13 @@ $endif$
   <link rel="stylesheet" href="./_assets/css/highlighting.css" />
   <link rel="stylesheet" href="./_assets/css/dygraph.css" />
   <link rel="stylesheet" href="./_assets/css/katex.css" />
-  <script src="./_assets/js/dygraphs/dygraph.min.js"></script>
 
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <script src="./_assets/js/dygraphs/dygraph.min.js"></script>
   <script src="./_assets/js/dygraphs/synchronizer.js"></script>
   <script src="./_assets/js/graph_generator.js"></script>
+
 </head>
 
 <body>
@@ -85,18 +88,24 @@ $endif$
         <div class="buttons-top">
             <div class="burger">
                 <button class="show" type="button" title="Table of contents">
-                <img class="icon" src="./toc-icon.svg" alt="">
-                </button>
-                <button class="hide" type="button" title="Table of contents">
-                    <img class="icon" src="./switch_light.svg" alt="">
+                    <i class='bx bx-list-ul' ></i>
                 </button>
             </div>
             <div class="breadcrumbs">
             </div>
             <div class="buttons-right">
-            <button class="light-dark-switch" type="button" title="Switch to dark mode" accesskey="d">
-                <img class="icon" src="./switch_light.svg" alt="">
-            </button>
+                <button class="light-dark-switch" type="button" title="Switch to dark mode" accesskey="d">
+                    <i class='bx bx-moon'></i>
+                </button>
+                <a href='$previous.url$' class="previous" title="Previous: $previous.title$" accesskey="p">
+                    <i class='bx bx-chevron-left' ></i>
+                </a>
+                <a href='$next.url$' class="next" title="Next: $next.title$" accesskey="d">
+                    <i class='bx bx-chevron-right'></i>
+                </button>
+                <a href="" class="dl" title="Download pdf" accesskey="s">
+                    <i class='bx bx-download'></i>
+                </button>
             </div>
           </div>
 
@@ -105,7 +114,7 @@ $endif$
         <div class="bottom">
             <div class="prevnext">
                 $if(previous.url)$
-                <a href="$previous.url$" class="pager prev" accesskey="p">
+                <a href="$previous.url$" class="pager prev">
                     <span class="prefix">← prev</span>
                     $previous.title$
                 </a>
@@ -114,7 +123,7 @@ $endif$
                 </div>
                 $endif$
                 $if(next.url)$
-                <a href="$next.url$" class="pager next" accesskey="n">
+                <a href="$next.url$" class="pager next">
                     <span class="prefix">next →</span>
                     $next.title$
                 </a>

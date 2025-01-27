@@ -171,11 +171,7 @@ class Document:
                 return pf.Link(t1, linktext, [newhref, t4])
                 
     def chunk(self, splitLevel=4, tocLevel=6):
-        root_path = 'test-html'
-        if os.path.exists(f'{root_path}'):
-            shutil.rmtree(f'{root_path}')
-        os.mkdir(f'{root_path}')
-        shutil.copytree('_assets/', f'{root_path}/_assets')
+        
         def transform_sitemap(input_json):
             if not os.path.exists(root_path):
                 os.mkdir('chunking-test')
@@ -226,6 +222,12 @@ class Document:
             
             return transformed
         
+        root_path = 'test-html'
+        if os.path.exists(f'{root_path}'):
+            shutil.rmtree(f'{root_path}')
+        os.mkdir(f'{root_path}')
+        shutil.copytree('_assets/', f'{root_path}/_assets')
+        
         # pre filters
         self.filter(
             [self.add_title_to_references]
@@ -273,29 +275,36 @@ class Document:
         for file in track(os.listdir('-/')):
             if file.endswith('.html') and file != 'index.html':
                 section_id = file.split('/')[-1][:-5]
+                ids = []
                 titles = []
                 paths = []
                 while section_id != '-index':
-                    titles.insert(0, section_id)
+                    ids.insert(0, section_id)
+                    if self.structure[section_id]["number"]:
+                        name = self.structure[section_id]["number"] + ' ' + self.structure[section_id]["title"]
+                    else:
+                        name = self.structure[section_id]["title"]
+                    titles.insert(0, name)
                     section_id = self.structure[section_id]["parent"]
-                for title in titles:
-                    paths.append(self.structure[title]["path"])
+                for iid in ids:
+                    paths.append(self.structure[iid]["path"])
                 with open(f'-/{file}', 'r', encoding='utf-8') as f:
                     soup = BeautifulSoup(f, 'html.parser')
                     breadcrumbs = soup.find('div', class_='breadcrumbs')
                     if breadcrumbs:
                         home = soup.new_tag('a', href='')
-                        home.string = 'home'
+                        homebtn = soup.new_tag('i', **{'class': 'bx bx-home-alt-2'})
+                        home.append(homebtn)
                         breadcrumbs.append(home)
                         for title, path in zip(titles, paths):
-                            separator = soup.new_tag('span', class_='separator')
+                            separator = soup.new_tag('span',  **{'class': 'separator'})
                             separator.string = '/'
                             item = soup.new_tag('a', href=path)
                             item.string = title                         
                             breadcrumbs.append(separator)
                             breadcrumbs.append(item)
                 with open(f'-/{file}', 'w', encoding='utf-8') as f:
-                    f.write(str(soup.prettify()))
+                    f.write(str(soup))
                         
                 with open(f'-/{file}', 'r', encoding='utf-8') as f:
                     soup = BeautifulSoup(f, 'html.parser')

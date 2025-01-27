@@ -499,10 +499,9 @@ footer {
 }
 
 .buttons-top {
-    height: var(--space-l);
+    height: var(--space-m);
     margin-left: var(--content-margin-left);
     margin-right: var(--content-margin-right);
-    border-bottom: 1px solid var(--color-midgray);
     display: flex;
     align-items: center;
     margin-bottom: var(--space-l);
@@ -510,31 +509,45 @@ footer {
     font-size-adjust: var(--scale-inter-to-source-serif);
     font-size: var(--font-size-s);
     font-variant-numeric: tabular-nums;
+    display: flex;
 }
 
-.buttons-top a {
-    color: var(--color-darkergray);
-    text-decoration: none;
-    height: var(--space-ml);
-    display: flex;
-    align-items: center;
-    padding: var(--space-xs) var(--space-s);
+.buttons-top > * {
+    border: 1px solid var(--color-lightgray);
     border-radius: 50ch;
 }
 
-.buttons-top>*:nth-child(2) {
-    margin-left: calc(0px - var(--space-s));
+.buttons-top > * {
+    display: flex;
+    vertical-align: center;
+    padding: 2px;
 }
 
-.buttons-top a:hover {
+.breadcrumbs .separator {
+    vertical-align: middle;
+    color: lightgray;
+    padding-left: 2px;
+    padding-right: 2px;
+}    
+
+.buttons-top a, .buttons-top button {
+    color: var(--color-darkergray);
+    text-decoration: none;
+    /* height: var(--space-ml); */
+    /* display: flex; */
+    align-items: center;
+    padding: 0px var(--space-s);
+    border-radius: 50ch;
+}
+
+.buttons-top a:hover, .buttons-top button:hover  {
     background-color: var(--color-lightergray);
 }
 
-.buttons-top-separator {
-    color: var(--color-midgray);
-    margin-left: var(--space-xs);
-    margin-right: var(--space-xs);
-}
+/* 
+.buttons-top>*:nth-child(2) {
+    margin-left: calc(0px - var(--space-s));
+} */
 
 button {
     background-color: transparent;
@@ -573,6 +586,10 @@ button:hover {
     margin-right: calc(0px - var(--space-xs));
 }
 
+.buttons-top .buttons-right {
+    margin-left: auto;
+}
+
 
 main > section,
 .bottom {
@@ -583,7 +600,6 @@ main > section,
 .bottom {
     margin-top: var(--space-h);
     padding-top: var(--space-m);
-    border-top: 1px solid var(--color-darkgray);
     margin-bottom: var(--space-xh);
     font-family: var(--sans);
     font-size-adjust: var(--scale-inter-to-source-serif);
@@ -598,7 +614,8 @@ main > section,
     height: var(--space-m);
     width: calc(0.5*(var(--section-width) - var(--pager-sep)));
     height: auto;
-    border: 1px solid var(--color-darkgray);
+    border: 1px solid var(--color-lightergray);
+    background-color: var(--color-lightergray);
     padding: var(--space-xs) var(--space-s) var(--space-s) var(--space-s);
     border-radius: var(--border-radius-s);
     line-height: var(--table-line-height);
