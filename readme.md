@@ -61,6 +61,24 @@ python ./build.py main.md
 
 This will produce a bunch of folders, like `main-html`, `main-latex` which contain the outputs.
 
+## Workflow
+
+```mermaid
+flowchart LR
+
+source(./main.md) --> pchunked[pandoc chunkedhtml]
+
+assdir --> |templates-chunk.html| pchunked
+
+pchunked --> chunk1(./-/chunk1.html)
+pchunked --> chunk2(./-/chunk2.html)
+pchunked --> chunk3(./-/chunk3.html)
+
+assdir(./_assets/) --> |copy| assdir_copied(./-/_assets/)
+
+
+```
+
 ## Roadmap
 
 ### Core features

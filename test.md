@@ -7,9 +7,38 @@ abstract: |
   Check ipsum **dolor** sit amet, *consectetur* adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis.
 ---
 
+# -root {-}
+
+# This is new {-}
+
+abc
+
+## Hello {-}
+
+hii
+
+### Yoooop  {-}
+
+bounce
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis.
+
+
+### Yoooopla {-}
+
+chickiddy
+
+### Dis is another h3 {-}
+
+chickiddy
+
+#### Dis is h4 {-}
+
+:smile: Lorem "ipsum" H~2~O **dolor** sit amet, *consectetur* adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis.
+
 # Introduction {-}
 
-Lorem ipsum **dolor** sit amet, *consectetur* adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis.
+:smile: Lorem "ipsum" H~2~O **dolor** sit amet, *consectetur* adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis.
 
@@ -677,7 +706,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ## Math
 
-Inline: $y = ax+b$.
+Inline: $\Sigma y = \Sigma ax+b$.
+
+$$
+M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}
+$$
 
 $$
 M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}

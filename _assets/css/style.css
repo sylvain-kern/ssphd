@@ -498,7 +498,7 @@ footer {
     width: calc(var(--sidebar-width) - var(--sidebar-margin-left) - var(--sidebar-margin-right));
 }
 
-.top-nav {
+.buttons-top {
     height: var(--space-l);
     margin-left: var(--content-margin-left);
     margin-right: var(--content-margin-right);
@@ -512,7 +512,7 @@ footer {
     font-variant-numeric: tabular-nums;
 }
 
-.top-nav a {
+.buttons-top a {
     color: var(--color-darkergray);
     text-decoration: none;
     height: var(--space-ml);
@@ -522,15 +522,15 @@ footer {
     border-radius: 50ch;
 }
 
-.top-nav>*:nth-child(2) {
+.buttons-top>*:nth-child(2) {
     margin-left: calc(0px - var(--space-s));
 }
 
-.top-nav a:hover {
+.buttons-top a:hover {
     background-color: var(--color-lightergray);
 }
 
-.top-nav-separator {
+.buttons-top-separator {
     color: var(--color-midgray);
     margin-left: var(--space-xs);
     margin-right: var(--space-xs);
@@ -545,7 +545,7 @@ button:hover {
     cursor: pointer;
 }
 
-.top-nav > button {
+.buttons-top > button {
     padding: var(--space-xs);
     height: var(--space-ml);
     border-radius: var(--border-radius-s);
@@ -553,21 +553,21 @@ button:hover {
     align-items: center;
 }
 
-.top-nav>.burger>.icon {
+.buttons-top>.burger>.icon {
     width: 100%;
 }
 
-.top-nav>.light-dark-switch>.icon {
+.buttons-top>.light-dark-switch>.icon {
     height: 320%;
 }
 
-.top-nav>.burger {
+.buttons-top>.burger {
     margin-right: var(--space-m);
     display: none;
     width: var(--space-ml);
 }
 
-.top-nav>.light-dark-switch {
+.buttons-top>.light-dark-switch {
     width: var(--space-xl);
     margin-left: auto;
     margin-right: calc(0px - var(--space-xs));
@@ -1418,11 +1418,11 @@ hr::before {
         transform: translateY(0);
     }
 
-    .top-nav>.burger {
+    .buttons-top>.burger {
         display: block;
     }
 
-    .top-nav {
+    .buttons-top {
         width: 100vw;
         margin-left: 0px;
         padding-left: var(--content-margin-left);
@@ -1434,7 +1434,7 @@ hr::before {
         z-index: 1;
     }
 
-    .top-nav>*:nth-child(2) {
+    .buttons-top>*:nth-child(2) {
         margin-left: 0px;
     }
 

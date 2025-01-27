@@ -73,7 +73,7 @@ $endif$
         </div>
 
         <nav id="toc" role="doc-toc">
-          ${ nav.html() }
+            $table-of-contents$
         </nav>
         <footer>
             footer
@@ -82,7 +82,7 @@ $endif$
 
     <main>
 
-        <div class="top-nav">
+        <div class="buttons-top">
             <div class="burger">
                 <button class="show" type="button" title="Table of contents">
                 <img class="icon" src="./toc-icon.svg" alt="">
@@ -91,35 +91,32 @@ $endif$
                     <img class="icon" src="./switch_light.svg" alt="">
                 </button>
             </div>
-            <a href='/'>~</a>
-            <span class="top-nav-separator">›</span>
-            $if(ischapter)$
-            $else$
-            <a href='/$parent$/'>$parenttitle$</a>
-            <span class="top-nav-separator">›</span>
-            $endif$
-            <button class="light-dark-switch" type="button" title="Switch to dark mode">
+            <div class="breadcrumbs">
+            </div>
+            <div class="buttons-right">
+            <button class="light-dark-switch" type="button" title="Switch to dark mode" accesskey="d">
                 <img class="icon" src="./switch_light.svg" alt="">
-             </button>
+            </button>
+            </div>
           </div>
 
         $body$
 
         <div class="bottom">
             <div class="prevnext">
-                $if(hasprev)$
-                <a href="/$prev$/" class="pager prev">
+                $if(previous.url)$
+                <a href="$previous.url$" class="pager prev" accesskey="p">
                     <span class="prefix">← prev</span>
-                    $prevtitle$
+                    $previous.title$
                 </a>
                 $else$
                 <div class="empty-pager">
                 </div>
                 $endif$
-                $if(hasnext)$
-                <a href="/$next$/" class="pager next">
+                $if(next.url)$
+                <a href="$next.url$" class="pager next" accesskey="n">
                     <span class="prefix">next →</span>
-                    $nexttitle$
+                    $next.title$
                 </a>
                 $else$
                 <div class="empty-pager">
