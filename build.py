@@ -36,7 +36,8 @@ class Document:
 
         self.ast = pypandoc.convert_file(
                 self.source_file,
-                'json',
+                format='markdown+smart+emoji',
+                to='json',
                 extra_args = [
             ])
 
@@ -267,11 +268,9 @@ class Document:
             "children": [key for key in self.structure if self.structure[key]["level"] == 1]
         }
         
-        with open('./structure_dict.json', 'w', encoding="utf-8") as f:
-            json.dump(self.structure, f, indent=4, ensure_ascii="false")
-    
-        
-        # putting the files in the
+        # with open('./structure_dict.json', 'w', encoding="utf-8") as f:
+        #     json.dump(self.structure, f, indent=4, ensure_ascii="false")
+
         for file in track(os.listdir('-/')):
             if file.endswith('.html') and file != 'index.html':
                 section_id = file.split('/')[-1][:-5]
@@ -292,10 +291,6 @@ class Document:
                     soup = BeautifulSoup(f, 'html.parser')
                     breadcrumbs = soup.find('div', class_='breadcrumbs')
                     if breadcrumbs:
-                        home = soup.new_tag('a', href='')
-                        homebtn = soup.new_tag('i', **{'class': 'bx bx-home-alt-2'})
-                        home.append(homebtn)
-                        breadcrumbs.append(home)
                         for title, path in zip(titles, paths):
                             separator = soup.new_tag('span',  **{'class': 'separator'})
                             separator.string = '/'
@@ -401,8 +396,6 @@ def main():
     # doc.to_latex()
 
     doc.to_html()
-
-
 
 
 if __name__=='__main__':

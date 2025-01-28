@@ -763,6 +763,16 @@ p {
     /* text-align: justify; */
 }
 
+sup {
+    vertical-align: text-top;
+    line-height: 1;
+}
+
+sub {
+    vertical-align: text-bottom;
+    line-height: 1;
+}
+
 /* inline markup */
 
 del {
@@ -1246,8 +1256,6 @@ hr::before {
     font-size-adjust: var(--scale-inter-to-source-serif);
     color: var(--color-darkergray);
     font-variant-numeric: tabular-nums;
-    vertical-align: text-top;
-    line-height: 1;
 }
 
 /* references */
