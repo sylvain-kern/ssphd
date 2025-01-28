@@ -706,7 +706,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ## Math
 
-Inline: $\Sigma y = \Sigma ax+b$.
+Inline: $\sum y = \sum ax+b$.
 
 $$
 M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}

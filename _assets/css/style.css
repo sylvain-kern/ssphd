@@ -588,6 +588,15 @@ button:hover {
 
 .buttons-top .buttons-right {
     margin-left: auto;
+    position: fixed;
+    top: var(--content-margin-top);
+    right: calc(0.25*var(--content-margin-right));
+    flex-direction: column;
+}
+
+.buttons-top .buttons-right > * {
+    width: var(--space-ml);
+    /* padding: 0 */
 }
 
 
