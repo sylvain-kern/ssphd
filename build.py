@@ -145,10 +145,8 @@ class Document:
                     to='plain',
                 ).split('\n')[2:-1])
                 section_id = file.split('/')[-1][:-5]
-                if self.structure[section_id]["number"]:
-                    title = self.structure[section_id]["number"] + ' ' + self.structure[section_id]["title"]
-                else:
-                    name = self.structure[section_id]["title"]
+                title = self.structure[section_id]["title"]
+                number = self.structure[section_id]["number"]
                 path = self.structure[section_id]["path"]
                 level = self.structure[section_id]["level"]
                 
@@ -156,7 +154,8 @@ class Document:
                     "link": path,
                     "title": title,
                     "level": level,
-                    "content": content
+                    "number": number,
+                    "content": content,
                 }
                 
                 self.search_documents.append(document)

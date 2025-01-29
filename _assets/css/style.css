@@ -345,8 +345,6 @@ kbd {
 .search-result-title mark, .search-result-content mark {
     font-weight: bold;
     color: var(--color-main);
-    text-decoration: underline;
-    text-decoration-skip-ink: all;
     background-color: var(--color-main-lightest);
     border-radius: var(--border-radius-xs);
     padding-left: .2em;

@@ -129,15 +129,11 @@ getJson('./_assets/documents.json').then(docs => {
         let query = e.target.value + '~1 ' + e.target.value + '*';
         results = idx.search(query.replace(/\s+$/, ''));
 
-        console.log(results);
-
         var results_full = results.map(function (item) {
             return docs.filter(function (query, index, arr) {
                 return query.link == item.ref;
             })[0];
         });
-
-        console.log(results_full);
 
         for (const [result, result_full] of zip([results, results_full])) {
 
@@ -166,6 +162,10 @@ getJson('./_assets/documents.json').then(docs => {
 
             resultTitle = document.createElement('div');
             resultTitle.classList.add('search-result-title');
+
+            if (result_full.number != null) {
+                resultTitle.appendChild(document.createTextNode(result_full.number+ ' '))
+            }
             resultContent = document.createElement('div');
             resultContent.classList.add('search-result-content');
 
