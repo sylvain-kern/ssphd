@@ -113,16 +113,53 @@ class Document:
                 doc = pf.walk(doc, handle, "", None)
             return pf.json.dumps(doc)
 
-    # SEARCH
-    def generate_search_index(self, key, value, format_, meta):
-
-        self.search_dict = {}
-
+    def remove_header_filter(self, key, value, format, meta):
         if key == 'Header':
-             [level, [label, t1, t2], header] = value
+            return pf.Null
 
-        elif key == 'Paragraph':
-            pass
+    # SEARCH
+    def generate_search_index(self):
+
+        self.search_documents = []
+        
+        pypandoc.convert_text(
+            self.ast,
+            format='json',
+            to='chunkedhtml',
+            extra_args=[
+                '--chunk-template=%i.html',
+                '--split-level=6',
+                '--template=template-search-section.html',
+            ]
+        )
+        
+        for file in track(os.listdir('-/'), description='Generating search index'):
+            if file.endswith('.html') and file != 'index.html':
+                with open(f'-/{file}', 'r', encoding='utf-8') as f:
+                    section = f.read() 
+                content = ''.join(pypandoc.convert_text(
+                    section,
+                    format='html',
+                    to='plain',
+                ).split('\n')[2:-1])
+                section_id = file.split('/')[-1][:-5]
+                title = self.structure[section_id]["title"]
+                path = self.structure[section_id]["path"]
+                level = self.structure[section_id]["level"]
+                
+                document = {
+                    "link": path,
+                    "title": title,
+                    "level": level,
+                    "content": content
+                }
+                
+                self.search_documents.append(document)
+                
+        with open('./documents.json', 'w', encoding='utf-8') as f:
+            json.dump(self.search_documents, f, indent=4)
+                
+        shutil.rmtree('-/')
 
     # GRAPHS
     def graphs_filter(self, key, value, format, meta):
@@ -157,21 +194,7 @@ class Document:
                     pf.RawInline("html", f"<div class='graph-container' id={graph_id} legendPosition={kwargs['legendPosition']}></div>")
                 ]
                 
-    def chunk_link_filter(self, key, value, _fmt, meta):
-        if key == 'Link':
-            [t1, linktext, [href, t4]] = value
-            print()
-            print(f'oldlink: {href}')
-            section_id = href.split('#')[0][:-5]
-            print(f'section id: {section_id}')
-            if section_id in self.structure:
-                anchor = href.split('#')[1]
-                print(f'anchor: {anchor}')
-                newhref = self.structure[anchor]["path"]
-                print(f'newlink: {newhref}')
-                return pf.Link(t1, linktext, [newhref, t4])
-                
-    def chunk(self, splitLevel=4, tocLevel=6):
+    def chunk(self, splitLevel=2, tocLevel=3):
         
         def transform_sitemap(input_json):
             if not os.path.exists(root_path):
@@ -272,6 +295,8 @@ class Document:
         #     json.dump(self.structure, f, indent=4, ensure_ascii="false")
 
         for file in track(os.listdir('-/')):
+            
+            # add breadcrumbs
             if file.endswith('.html') and file != 'index.html':
                 section_id = file.split('/')[-1][:-5]
                 ids = []
@@ -298,11 +323,11 @@ class Document:
                             item.string = title                         
                             breadcrumbs.append(separator)
                             breadcrumbs.append(item)
-                with open(f'-/{file}', 'w', encoding='utf-8') as f:
-                    f.write(str(soup))
-                        
-                with open(f'-/{file}', 'r', encoding='utf-8') as f:
-                    soup = BeautifulSoup(f, 'html.parser')
+                # with open(f'-/{file}', 'w', encoding='utf-8') as f:
+                #     f.write(str(soup))
+                          
+                # with open(f'-/{file}', 'r', encoding='utf-8') as f:
+                    # soup = BeautifulSoup(f, 'html.parser')
                     for link in soup.find_all("a", href=True):
                         href = link["href"]
                         section_id = href.split('#')[0][:-5]
@@ -365,7 +390,6 @@ class Document:
                 "--citeproc",
             ]
         )
-        
 
         # append doc meta to metadata file
         dico = json.loads(self.ast_html)
@@ -378,6 +402,8 @@ class Document:
             self.replace_abbreviations
         ])
         self.chunk()
+        
+        self.generate_search_index()
 
 
 def main():
