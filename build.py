@@ -6,6 +6,8 @@ import re
 import json
 
 import pandocfilters as pf
+
+from lunr import lunr
 from bs4 import BeautifulSoup
 from rich.progress import track
 
@@ -137,13 +139,16 @@ class Document:
             if file.endswith('.html') and file != 'index.html':
                 with open(f'-/{file}', 'r', encoding='utf-8') as f:
                     section = f.read() 
-                content = ''.join(pypandoc.convert_text(
+                content = ' '.join(pypandoc.convert_text(
                     section,
                     format='html',
                     to='plain',
                 ).split('\n')[2:-1])
                 section_id = file.split('/')[-1][:-5]
-                title = self.structure[section_id]["title"]
+                if self.structure[section_id]["number"]:
+                    title = self.structure[section_id]["number"] + ' ' + self.structure[section_id]["title"]
+                else:
+                    name = self.structure[section_id]["title"]
                 path = self.structure[section_id]["path"]
                 level = self.structure[section_id]["level"]
                 
@@ -156,8 +161,21 @@ class Document:
                 
                 self.search_documents.append(document)
                 
-        with open('./documents.json', 'w', encoding='utf-8') as f:
+        with open(f'test-html/_assets/documents.json', 'w', encoding='utf-8') as f:
             json.dump(self.search_documents, f, indent=4)
+        
+        # pre-building index
+        # index = lunr(
+        #     ref="link",
+        #     fields=[{
+        #             "field_name": "title", "boost": 10,
+        #         },{
+        #             "field_name": "content", "boost": 1,
+        #     }],
+        #     documents=self.search_documents
+        # )        
+        # with open('search-dev/index.json', 'w', encoding='utf-8') as f:
+        #     json.dump(index.serialize(), f, ensure_ascii=False)
                 
         shutil.rmtree('-/')
 

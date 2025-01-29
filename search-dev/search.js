@@ -1,6 +1,6 @@
-async function getJson() {
+async function getJson(path) {
     let docs;
-    const res = await fetch('./documents.json');
+    const res = await fetch(path);
     docs = await res.json();
     return docs;
 };
@@ -102,7 +102,7 @@ function displayResultDefault (field, rest) {
     };
 }
 
-getJson().then(docs => {
+getJson('./documents.json').then(docs => {
     const idx = lunr(function () {
         this.ref('link');
         this.field('title', { boost: 10 });
@@ -116,6 +116,8 @@ getJson().then(docs => {
             this.add(doc)
         }, this);
     });
+
+    // const idx = lunr.Index.load(index);
 
     searchField.addEventListener('input', (e) => {
 
@@ -151,6 +153,10 @@ getJson().then(docs => {
 
             // creating a li element for each result item
             const resultItem = document.createElement('li');
+
+            const resultLink = document.createElement('a');
+
+            resultLink.href = result_full['link'];
 
             // adding a class to each item of the results
             resultItem.classList.add('result-item');
@@ -189,14 +195,15 @@ getJson().then(docs => {
                 } else {
                     displayResultDefault(field, rest);
                 };
-                resultItem.appendChild(field);
+                resultLink.appendChild(field);
 
                 //css property (remove when integrating to full layout)
                 if (item=='title') {
                     field.style['font-weight'] = 'bold';
                 };
             });
-            list.appendChild(resultItem);
+            resultLink.appendChild(resultItem)
+            list.appendChild(resultLink);
         };
     });
 });

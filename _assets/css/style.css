@@ -19,7 +19,7 @@
     /* graysccale */
     --color-background: #fff;
     --color-lightergray: #f6f6f7;
-    --color-lightgray: #ededf4;;
+    --color-lightgray: #ededf4;
     --color-midgray: #d1d1dc;
     --color-darkgray: #a6a6c5;
     --color-darkergray: #6f6f83;
@@ -28,7 +28,7 @@
     /* highlights */
     --color-main: #1c58c6;
     --color-main-light: #b2cdfa;
-    --color-main-lightest: #e5ebf6;;
+    --color-main-lightest: #e5ebf6;
 
     /* plotting - qualitative */
     --color-qualitiative-blue: #077cc0;
@@ -81,7 +81,6 @@
 
     /* RELATIVE SPACING */
     --space-nav-top-bot: .4em;
-
 
     /* TYPE SCALE */
     --base-font-size: 17px;
@@ -343,17 +342,18 @@ kbd {
     font-variant-numeric: tabular-nums;
 }
 
-.search-result-text .match{
+.search-result-title mark, .search-result-content mark {
     font-weight: bold;
     color: var(--color-main);
     text-decoration: underline;
     text-decoration-skip-ink: all;
+    background-color: var(--color-main-lightest);
+    border-radius: var(--border-radius-xs);
+    padding-left: .2em;
+    padding-right: .2em;
+    margin-left: -.2em;
+    margin-right: -.2em;
 }
-
-.search-result-text .match::after {
-    content: "";
-}
-
 
 .search-results-list .empty {
     color: var(--color-darkergray);
