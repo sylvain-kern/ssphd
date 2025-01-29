@@ -64,7 +64,9 @@ function displayResultFull (field, item, rest, fieldsPositions) {
         field.appendChild(mark);
         offset = matchedPosition[0] + matchedPosition[1];
     });
-    field.appendChild(document.createTextNode(rest));  
+    sp = document.createElement('span');
+    sp.appendChild(document.createTextNode(rest));  
+    field.appendChild(sp)
 };
 
 function displayResult (field, item, rest, fieldsPositions) {
@@ -81,28 +83,36 @@ function displayResult (field, item, rest, fieldsPositions) {
     textAfter = rest.slice(position[0] + position[1], end);
 
     mark = document.createElement('mark');
-
+    sp =  document.createElement('span')
+    
     if (start > 0) {
-        field.appendChild(document.createTextNode('…'))
+        sp.appendChild(document.createTextNode('…'))
     }
     mark.appendChild(document.createTextNode(textMarked));
-    field.appendChild(document.createTextNode(textBefore));
-    field.appendChild(mark);
-    field.appendChild(document.createTextNode(textAfter));
+
+
+    sp.appendChild(document.createTextNode(textBefore));
+    sp.appendChild(mark);
+    sp.appendChild(document.createTextNode(textAfter));
     if (end < rest.length) {
-        field.appendChild(document.createTextNode('…'))
+        sp.appendChild(document.createTextNode('…'));
     }
+    field.appendChild(sp);
 }
 
 function displayResultDefault (field, rest) {
     start = 0;
     end = Math.min(start+260);
 
+    sp = document.createElement('span');
+
     if(end > rest.length) {
-        field.appendChild(document.createTextNode(rest));
+        sp.appendChild(document.createTextNode(rest));
     } else {
-        field.appendChild(document.createTextNode(rest.slice(start, end)+'…'));
+        sp.appendChild(document.createTextNode(rest.slice(start, end)+'…'));
     };
+
+    field.appendChild(sp);
 }
 
 getJson('./_assets/documents.json').then(docs => {
@@ -164,7 +174,10 @@ getJson('./_assets/documents.json').then(docs => {
             resultTitle.classList.add('search-result-title');
 
             if (result_full.number != null) {
-                resultTitle.appendChild(document.createTextNode(result_full.number+ ' '))
+                numberSpan = document.createElement('span');
+                numberSpan.classList.add('search-result-number')
+                numberSpan.appendChild(document.createTextNode(result_full.number))
+                resultTitle.append(numberSpan)
             }
             resultContent = document.createElement('div');
             resultContent.classList.add('search-result-content');

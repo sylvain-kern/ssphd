@@ -340,6 +340,14 @@ kbd {
     font-weight: bold;
     margin-bottom: var(--space-xs);
     font-variant-numeric: tabular-nums;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.search-result-title .search-result-number {
+    margin-right: var(--space-xxs);
 }
 
 .search-result-title mark, .search-result-content mark {
@@ -351,6 +359,10 @@ kbd {
     padding-right: .2em;
     margin-left: -.2em;
     margin-right: -.2em;
+}
+
+.search-result-title span:last-child {
+    width: 100%;
 }
 
 .search-results-list .empty {
@@ -1157,8 +1169,8 @@ img.margin {
     font-family: var(--sans);
     font-size: var(--font-size-ms);
     font-size-adjust: var(--scale-inter-to-source-serif);
-    border-top: 2px solid var(--color-darkergray);
-    border-bottom: 2px solid var(--color-darkergray);
+    border-top: 2px solid var(--color-darkgray);
+    border-bottom: 2px solid var(--color-darkgray);
     border-collapse: separate;
     border-spacing: 0;
     line-height: var(--table-line-height);
@@ -1172,7 +1184,7 @@ img.margin {
 }
 
 .table-wrapper table tfoot td {
-    border-top: 1px solid var(--color-darkergray);
+    border-top: 1px solid var(--color-midgray);
 }
 
 .table-wrapper table caption {
@@ -1195,7 +1207,7 @@ img.margin {
 }
 
 .table-wrapper table th {
-    border-bottom: 1px solid var(--color-darkergray);
+    border-bottom: 1px solid var(--color-darkgray);
     vertical-align: bottom;
     line-height: var(--table-header-line-height);
 }
@@ -1203,11 +1215,11 @@ img.margin {
 
 .table-wrapper table tbody th {
     vertical-align: middle;
-    border-right: 1px solid var(--color-midgray);
+    border-right: 1px solid var(--color-darkgray);
 }
 
 .table-wrapper table tr td {
-    border-bottom: 1px solid var(--color-midgray);
+    border-bottom: 1px solid var(--color-lightgray);
     vertical-align: text-top;
 }
 
