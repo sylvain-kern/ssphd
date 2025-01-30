@@ -40,15 +40,15 @@ codeDivs.forEach(sourceCodeDiv => {
 
         copybutton.codeToCopy = code.innerText;
 
-        copybutton.innerHTML = 'copy';
+        copybutton.innerHTML = '<i class="bx bx-copy"></i>';
         copybutton.setAttribute("title", "Copy to clipboard")
         langCopy.appendChild(copybutton);
 
         copybutton.addEventListener("click", async () => {
             await navigator.clipboard.writeText(copybutton.codeToCopy);
-            copybutton.innerHTML = 'copied!';
+            copybutton.innerHTML = '<i class="bx bx-check"></i>';
             await delay(2500);
-            copybutton.innerHTML = 'copy';
+            copybutton.innerHTML = '<i class="bx bx-copy"></i>';
         });
     };
 
@@ -89,15 +89,15 @@ lonelyPres.forEach(pre => {
 
         copybutton.codeToCopy = code.innerText;
 
-        copybutton.innerHTML = 'copy';
-        copybutton.setAttribute("title", "Copy code")
+        copybutton.innerHTML = '<i class="bx bx-copy"></i>';
+        copybutton.setAttribute("title", "Copy to clipboard")
         langCopy.appendChild(copybutton);
 
         copybutton.addEventListener("click", async () => {
             await navigator.clipboard.writeText(copybutton.codeToCopy);
-            copybutton.innerHTML = 'copied!';
+            copybutton.innerHTML = '<i class="bx bx-check"></i>';
             await delay(2500);
-            copybutton.innerHTML = 'copy';
+            copybutton.innerHTML = '<i class="bx bx-copy"></i>';
         });
     };
 

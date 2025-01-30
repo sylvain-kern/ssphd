@@ -525,12 +525,10 @@ footer {
 .buttons-top > * {
     border: 1px solid var(--color-lightgray);
     border-radius: 50ch;
-}
-
-.buttons-top > * {
     display: flex;
     vertical-align: center;
     padding: 2px;
+    background-color: var(--color-background);
 }
 
 .breadcrumbs .separator {
@@ -600,15 +598,10 @@ button:hover {
     margin-left: auto;
     position: fixed;
     top: var(--content-margin-top);
-    right: calc(0.25*var(--content-margin-right));
+    right: calc(var(--content-margin-right) - 2*var(--space-ml));
     flex-direction: column;
+    padding: 2px;
 }
-
-.buttons-top .buttons-right > * {
-    width: var(--space-ml);
-    /* padding: 0 */
-}
-
 
 main > section,
 .bottom {
@@ -1169,8 +1162,8 @@ img.margin {
     font-family: var(--sans);
     font-size: var(--font-size-ms);
     font-size-adjust: var(--scale-inter-to-source-serif);
-    border-top: 2px solid var(--color-darkgray);
-    border-bottom: 2px solid var(--color-darkgray);
+    border-top: 2px solid var(--color-midgray);
+    border-bottom: 2px solid var(--color-midgray);
     border-collapse: separate;
     border-spacing: 0;
     line-height: var(--table-line-height);
@@ -1207,7 +1200,7 @@ img.margin {
 }
 
 .table-wrapper table th {
-    border-bottom: 1px solid var(--color-darkgray);
+    border-bottom: 1px solid var(--color-midgray);
     vertical-align: bottom;
     line-height: var(--table-header-line-height);
 }
@@ -1467,19 +1460,16 @@ hr::before {
     }
 
     .buttons-top {
-        width: 100vw;
-        margin-left: 0px;
-        padding-left: var(--content-margin-left);
-        padding-right: var(--content-margin-right);
-        position: fixed;
-        top: 0px;
-        background-color: #ffffffcc;
-        backdrop-filter: blur(20px);
-        z-index: 1;
+        width: var(--title-width);
+        position: sticky;
+        top: var(--content-margin-top);
     }
 
-    .buttons-top>*:nth-child(2) {
-        margin-left: 0px;
+    .buttons-top .buttons-right {
+        position: relative;
+        flex-direction: row;
+        right: 0px;
+        top: 0px;
     }
 
     .sidenote::before {

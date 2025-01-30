@@ -140,7 +140,8 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 
 ⋅⋅⋅To have a line break without a paragraph, you will need to use two trailing spaces.⋅⋅
 ⋅⋅⋅Note that this line is separate, but within the same paragraph.⋅⋅
-⋅⋅⋅(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+⋅⋅⋅(This is contrary to the typical +[GFM] line break behaviour, where trailing spaces are not required.)
+
 
 * Unordered list can use asterisks
 - Or minuses
@@ -158,7 +159,9 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 
    To have a line break without a paragraph, you will need to use two trailing spaces.
    Note that this line is separate, but within the same paragraph.
-   (This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+   (This is contrary to the typical +[GFM] line break behaviour, where trailing spaces are not required.)
+
++[GFM]: Github Flavored Markdown
 
 * Unordered list can use asterisks
 - Or minuses
@@ -293,7 +296,7 @@ But let's throw in a <b>tag</b>.
 
 ## Tables
 
-Tables aren't part of the core Markdown spec, but they are part of GFM and *Markdown Here* supports them. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.
+Tables aren't part of the core Markdown spec, but they are part of +[GFM] and *Markdown Here* supports them. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.
 
 ```no-highlight
 Colons can be used to align columns.
@@ -431,7 +434,7 @@ This line is separated from the one above by two newlines, so it will be a *sepa
 This line is also begins a separate paragraph, but...\
 This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
 
-(Technical note: *Markdown Here* uses GFM line breaks, so there's no need to use MD's two-space line breaks.)
+(Technical note: *Markdown Here* uses +[GFM] line breaks, so there's no need to use MD's two-space line breaks.)
 
 <a name="videos"></a>
 

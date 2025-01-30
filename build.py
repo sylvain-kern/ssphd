@@ -196,7 +196,6 @@ class Document:
                 kwargs['legendPosition'] = 'graph'
                 for keyval in keyvals:
                     kwargs[keyval[0]] = keyval[1]
-                    print(keyval)
                 # formatting the graph
                 graph_id = f"dygraph_{self.graph_count}"
                 self.graph_count += 1
@@ -236,8 +235,6 @@ class Document:
                         os.mkdir(dr)
                 else:
                     path = transformed[parent_id].get("path").split('/#')[0] + '/#' + section_id
-
-                print(path)
 
                 # Add the current section
                 transformed[section_id] = {
@@ -331,6 +328,8 @@ class Document:
                     paths.append(self.structure[iid]["path"])
                 with open(f'-/{file}', 'r', encoding='utf-8') as f:
                     soup = BeautifulSoup(f, 'html.parser')
+                    
+                    # breadcrumbs
                     breadcrumbs = soup.find('div', class_='breadcrumbs')
                     if breadcrumbs:
                         for title, path in zip(titles, paths):
@@ -340,20 +339,20 @@ class Document:
                             item.string = title                         
                             breadcrumbs.append(separator)
                             breadcrumbs.append(item)
-                # with open(f'-/{file}', 'w', encoding='utf-8') as f:
-                #     f.write(str(soup))
-                          
-                # with open(f'-/{file}', 'r', encoding='utf-8') as f:
-                    # soup = BeautifulSoup(f, 'html.parser')
+                            
+                    # link replacement
                     for link in soup.find_all("a", href=True):
                         href = link["href"]
                         section_id = href.split('#')[0][:-5]
                         if section_id in self.structure:
                             if len(href.split('#')) > 1:
                                 anchor = '#'+href.split('#')[1]
+                                if section_id == anchor[1:]:
+                                    newhref = self.structure[section_id]["path"]
+                                else:
+                                    newhref = self.structure[section_id]["path"] + anchor
                             else:
-                                anchor = ''
-                            newhref = self.structure[section_id]["path"] + anchor
+                                newhref = self.structure[section_id]["path"]
                             link["href"] = newhref
                 
                 if file == 'index.html':
