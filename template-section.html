@@ -33,9 +33,8 @@ $endif$
 </head>
 
 <body>
-
+    $if(previous.url)$
     <div class='sidebar'>
-
         <div class="header-container">
             <header class='title-block'>
                 <a href="/" title="$title$">
@@ -137,6 +136,30 @@ $endif$
             </div>
         </div>
     </main>
+
+    $else$
+    <main>
+        <header>
+            <h1>$title$</h1>
+            $author$
+            $date$
+        </header>
+        $if(abstract)$
+        <div class="abstract">
+            <div class="abstract-title">
+                $abstract-title$
+            </div>
+            <div class="abstract-content">
+                $abstract$
+            </div>
+        </div>
+        $endif$
+        <nav>
+            $table-of-contents$
+        </nav>
+    </main>
+    $endif$
+
 </body>
 
 <script src="./_assets/js/get-scrollbar-width.js"></script>

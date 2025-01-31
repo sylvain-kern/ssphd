@@ -285,7 +285,7 @@ class Document:
                 '--section-divs',
                 '--filter=pandoc-sidenote',
                 f'--template=template-section.html',
-                '--variable=base=/'
+                '--variable=base=/',
             ]
         )
 
@@ -310,9 +310,11 @@ class Document:
 
         for file in track(os.listdir('-/')):
             
-            # add breadcrumbs
-            if file.endswith('.html') and file != 'index.html':
+            #converting index.html
+            if file.endswith('.html'):
                 section_id = file.split('/')[-1][:-5]
+                if section_id=='index':
+                    section_id = '-index'
                 ids = []
                 titles = []
                 paths = []
@@ -356,7 +358,7 @@ class Document:
                             link["href"] = newhref
                 
                 if file == 'index.html':
-                    with open(f'-/{file}', f'{root_path}/{file}', 'w', encoding='utf-8') as f:
+                    with open(f'{root_path}/index.html', 'w', encoding='utf-8') as f:
                         f.write(str(soup))
                 else:
                     with open(f'{root_path}/{self.structure[file[:-5]]["path"]}/index.html', 'w', encoding='utf-8') as f:
