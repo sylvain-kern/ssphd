@@ -1145,7 +1145,7 @@ img.margin {
 
 /* tables */
 
-.table-wrapper {
+/* .table-wrapper {
     margin-left: auto;
     margin-right: auto;
     width: fit-content;
@@ -1156,9 +1156,11 @@ img.margin {
     max-height: 75vh;
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 .table-wrapper table {
+    margin-left: auto;
+    margin-right: auto  ;
     font-family: var(--sans);
     font-size: var(--font-size-ms);
     font-size-adjust: var(--scale-inter-to-source-serif);
@@ -1170,17 +1172,17 @@ img.margin {
     width: auto !important;
 }
 
-.table-wrapper table thead {
+table thead {
     position: sticky;
     top: 0px;
     background-color: var(--color-background);
 }
 
-.table-wrapper table tfoot td {
+table tfoot td {
     border-top: 1px solid var(--color-midgray);
 }
 
-.table-wrapper table caption {
+table caption {
     max-width: calc(var(--section-width) - var(--scrollbar-width));
     position: sticky;
     left: 0px;
@@ -1192,35 +1194,36 @@ img.margin {
     text-align: left;
 }
 
-.table-wrapper table td,
-.table-wrapper table th {
+table td,
+table th {
     font-size: var(--font-size-ms);
     font-variant-numeric: tabular-nums;
-    padding: var(--space-xs) var(--space-s);
+    padding: var(--space-xs) var(--space-s);    
 }
 
-.table-wrapper table th {
+table thead th {
     border-bottom: 1px solid var(--color-midgray);
     vertical-align: bottom;
     line-height: var(--table-header-line-height);
+    position: sticky;
 }
 
 
-.table-wrapper table tbody th {
+table tbody th {
     vertical-align: middle;
     border-right: 1px solid var(--color-darkgray);
 }
 
-.table-wrapper table tr td {
+table tr td {
     border-bottom: 1px solid var(--color-lightgray);
     vertical-align: text-top;
 }
 
-.table-wrapper table tr:last-child td {
+table tr:last-child td {
     border-bottom: none;
 }
 
-.table-wrapper table tr:hover {
+table tr:hover {
     background-color: var(--color-lightergray);
 }
 

@@ -266,11 +266,6 @@ class Document:
         os.mkdir(f'{root_path}')
         shutil.copytree('_assets/', f'{root_path}/_assets')
         
-        # pre filters
-        self.filter(
-            [self.add_title_to_references]
-        )
-        
         # generate files
         pypandoc.convert_text(
             self.ast,
@@ -285,7 +280,7 @@ class Document:
                 '--section-divs',
                 '--filter=pandoc-sidenote',
                 f'--template=template-section.html',
-                '--variable=base=/',
+                '--variable=base=/'
             ]
         )
 
@@ -416,9 +411,11 @@ class Document:
         self.ast_html = json.dumps(dico)
     
         self.filter([
+            self.add_title_to_references,
             self.get_abbreviation_dict,
-            self.replace_abbreviations
+            self.replace_abbreviations,
         ])
+        
         self.chunk()
         
         self.generate_search_index()
