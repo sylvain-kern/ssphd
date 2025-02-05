@@ -967,10 +967,11 @@ pre.numberLines > code > span {
     padding: 0px var(--space-s);
     border-top-right-radius: var(--border-radius-xs);
     border-bottom-right-radius: var(--border-radius-xs);
+    color: var(--color-darkgray);
 }
 
 .lang-copy .copy:hover {
-    background-color: var(--color-lightgray);
+    color: var(--color-text);
 }
 
 
@@ -1145,20 +1146,12 @@ img.margin {
 
 /* tables */
 
-/* .table-wrapper {
-    margin-left: auto;
-    margin-right: auto;
-    width: fit-content;
-    max-width: var(--section-width);
-    display: block;
-    overflow-x: auto;
-    overflow-y: auto;
-    max-height: 75vh;
-    margin-left: auto;
-    margin-right: auto;
-} */
+.table-wrapper {
+    /* overflow-y: auto; */
+    /* max-height: 100vh !important; */
+}
 
-.table-wrapper table {
+table {
     margin-left: auto;
     margin-right: auto  ;
     font-family: var(--sans);
@@ -1207,7 +1200,6 @@ table thead th {
     line-height: var(--table-header-line-height);
     position: sticky;
 }
-
 
 table tbody th {
     vertical-align: middle;

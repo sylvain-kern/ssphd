@@ -301,36 +301,36 @@ Tables aren't part of the core Markdown spec, but they are part of +[GFM] and *M
 ```no-highlight
 Colons can be used to align columns.
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
+| Tables        |      Are      |  Cool |
+| ------------- | :-----------: | ----: |
 | col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| col 2 is      |   centered    |   $12 |
+| zebra stripes |   are neat    |    $1 |
 
 There must be at least 3 dashes separating each header cell.
 The outer pipes (|) are optional, and you don't need to make the
 raw Markdown line up prettily. You can also use inline Markdown.
 
-Markdown | Less | Pretty
---- | --- | ---
-*Still* | `renders` | **nicely**
-1 | 2 | 3
+| Markdown | Less      | Pretty     |
+| -------- | --------- | ---------- |
+| *Still*  | `renders` | **nicely** |
+| 1        | 2         | 3          |
 ```
 
 Colons can be used to align columns.
 
-| Tables        | Are           | Cool |
-| ------------- |:-------------:| -----:|
+| Tables        |      Are      |  Cool |
+| ------------- | :-----------: | ----: |
 | col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| col 2 is      |   centered    |   $12 |
+| zebra stripes |   are neat    |    $1 |
 
 There must be at least 3 dashes separating each header cell. The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.
 
-Markdown | Less | Pretty
---- | --- | ---
-*Still* | `renders` | **nicely**
-1 | 2 | 3
+| Markdown | Less      | Pretty     |
+| -------- | --------- | ---------- |
+| *Still*  | `renders` | **nicely** |
+| 1        | 2         | 3          |
 
 <a name="blockquotes"></a>
 
@@ -821,6 +821,46 @@ Table: Table with no header {#tbl:noheader}
 +===============+===============+
 | Sum           | $3.44         |
 +===============+===============+
+
+### Super long tables
+
+   -------------------------------------------------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ----------------
+  Mois                                                           jan.                fév.                mars                avril               mai                 juin                jui.                août                sep.                oct.                nov.                déc.                année
+  -------------------------------------------------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ----------------
+  Température minimale moyenne                                   1,7                 1,9                 3,8                 5,9                 9,3                 12,1                14,2                14                  11,4                8,4                 4,9                 2,3                 **7,5**
+  ([°C](/fr/articles/Degr%C3%A9_Celsius "Degré Celsius"){.wl})                                                                                                                                                                                                                                                   
+
+  Température moyenne (°C)                                       4,1                 4,7                 7,5                 10,5                13,8                16,7                18,9                18,8                15,8                11,9                7,6                 4,7                 **11,3**
+
+  Température maximale moyenne (°C)                              6,6                 7,5                 11,2                15                  18,4                21,3                23,7                23,7                20,2                15,4                10,3                7                   **15**
+
+  Record de froid (°C)\                                          −19,5\              −17,8\              −10,5\              −4,7\               −2,3\               0\                  3,4\                3,9\                1,2\                −4,4\               −7,8\               −17,3\              **−19,5**\
+  [date du record]{.small}                                       [14.1982]{.small}   [21.1956]{.small}   [13.2013]{.small}   [09.1968]{.small}   [03.1967]{.small}   [02.1962]{.small}   [05.1964]{.small}   [31.1956]{.small}   [23.1979]{.small}   [28.1950]{.small}   [24.1998]{.small}   [29.1964]{.small}   [1982]{.small}
+
+  Record de chaleur (°C)\                                        15,2\               19\                 24,8\               27,9\               31,7\               34,8\               41,5\               37,1\               35,1\               27,8\               20,3\               16,1\               **41,5**\
+  [date du record]{.small}                                       [18.2007]{.small}   [24.2021]{.small}   [31.2021]{.small}   [15.2007]{.small}   [27.2005]{.small}   [28.1947]{.small}   [25.2019]{.small}   [08.2020]{.small}   [15.2020]{.small}   [01.2011]{.small}   [06.2018]{.small}   [31.2022]{.small}   [2019]{.small}
+
+  Ensoleillement ([h](/fr/articles/Heure "Heure"){.wl})          62,2                73,6                127,3               175,9               195,7               201,5               209,7               196,8               155,3               115,3               61,7                52,5                **1 627,4**
+
+  Précipitations                                                 58,2                50,8                52,1                45,3                61,6                63,7                67,8                71,3                56,8                64,1                75                  73,3                **740**
+  ([mm](/fr/articles/Millim%C3%A8tre "Millimètre"){.wl})                                                                                                                                                                                                                                                         
+
+  [dont nombre de jours avec précipitations ≥ 1 mm]{.small}      11,2                10,6                10,1                9,2                 9,5                 9,8                 9,9                 9,9                 9,7                 10,8                13,3                12,2                **126,2**
+
+  [dont nombre de jours avec précipitations ≥ 5 mm]{.small}      4,4                 3,7                 3,5                 3,2                 4,3                 4,3                 4,2                 4,5                 3,7                 4,5                 5,2                 5,3                 **50,8**
+
+  [dont nombre de jours avec précipitations ≥ 10 mm]{.small}     1,4                 0,8                 1,2                 0,8                 1,7                 2,1                 2,2                 2,2                 1,4                 1,7                 2,2                 2,1                 **19,9**
+  -------------------------------------------------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ----------------
+
+  : Statistiques 1991-2020 et records Station LILLE-LESQUIN (59) Alt:
+  47m [50° 34′ 12″ N,
+  3° 05′ 51″ E](https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Map/13/50.57/3.0975/fr?oldformat=true){.mw-kartographer-maplink
+  mw-kartographer="maplink" data-style="osm-intl" zoom="13" lat="50.57"
+  lon="3.0975"
+  overlays="[\"_c100301887790bfa44d06d51cedb985ae8080355\"]"
+  target="_blank"}
+
+
 
 ### Footnotes in tables in table footer?
 
