@@ -1198,7 +1198,6 @@ table thead th {
     border-bottom: 1px solid var(--color-midgray);
     vertical-align: bottom;
     line-height: var(--table-header-line-height);
-    position: sticky;
 }
 
 table tbody th {

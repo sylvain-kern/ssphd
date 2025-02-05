@@ -1,0 +1,37 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    margin: auto;
+    width: 600px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    line-height: 1.2;
+    border-top: 2px solid slategray;
+    border-bottom: 2px solid slategray;
+    font-variant-numeric: tabular-nums;
+}
+
+th, td {
+    padding: 8px;
+    text-align: right;
+}
+
+tr {
+    border-bottom: 1px solid lightgray;
+}
+
+table thead {
+    /* position: sticky; */
+    top: 0px;
+    background-color: #eee;
+}
+
