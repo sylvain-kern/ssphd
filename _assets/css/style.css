@@ -983,9 +983,8 @@ pre.numberLines > code > span {
 
 
 /* math */
-.katex {
-    overflow-y: hidden;
-    overflow-x: auto;
+.katex-display {
+    overflow: auto hidden;
 }
 
 /* wide elements */
