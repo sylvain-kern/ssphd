@@ -23,9 +23,7 @@ eqnPrefixTemplate: $$p$$&nbsp;$$i$$
 secPrefix:
   - "section"
   - "sections"
-tableEqns: True
 sectionsDepth: 3
-# numberSections: true
 
 references-section-title: True
 link-citations: True

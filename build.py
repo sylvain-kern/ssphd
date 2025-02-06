@@ -132,6 +132,7 @@ class Document:
                 '--chunk-template=%i.html',
                 '--split-level=6',
                 '--template=template-search-section.html',
+                '--katex',
             ]
         )
         
@@ -280,7 +281,8 @@ class Document:
                 '--section-divs',
                 '--filter=pandoc-sidenote',
                 f'--template=template-section.html',
-                '--variable=base=/'
+                '--variable=base=/',
+                '--katex',
             ]
         )
 
