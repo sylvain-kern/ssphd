@@ -21,7 +21,10 @@ table {
 }
 
 th, td {
-    padding: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
     text-align: right;
 }
 
@@ -34,4 +37,3 @@ table thead {
     top: 0px;
     background-color: #eee;
 }
-
