@@ -726,6 +726,28 @@ $$
 \frac{\mathrm{d}}{\mathrm{d} t} \int_V \phi \mathrm{d} V+\int_{\partial V} \phi \vec{v} \cdot \vec{n} \mathrm{~d} A=\int_V S \mathrm{~d} V.
 $$ {#eq:conservation}
 
+Matrices are commonly related to linear algebra. Notable exceptions include incidence matrices and adjacency matrices in graph theory. This article focuses on matrices related to linear algebra, and, unless otherwise specified, all matrices represent linear maps or may be viewed as such.
+
+Square matrices, matrices with the same number of rows and columns, play a major role in matrix theory. Square matrices of a given dimension form a noncommutative ring, which is one of the most common examples of a noncommutative ring. The determinant of a square matrix is a number associated with the matrix, which is fundamental for the study of a square matrix; for example, a square matrix is invertible if and only if it has a nonzero determinant and the eigenvalues of a square matrix are the roots of a polynomial determinant.
+
+$$
+\mathbf{A}=\left[\begin{array}{cccc}
+a_{11} & a_{12} & \cdots & a_{1 n} \\
+a_{21} & a_{22} & \cdots & a_{2 n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m 1} & a_{m 2} & \cdots & a_{m n}
+\end{array}\right]=\left(\begin{array}{cccc}
+a_{11} & a_{12} & \cdots & a_{1 n} \\
+a_{21} & a_{22} & \cdots & a_{2 n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m 1} & a_{m 2} & \cdots & a_{m n}
+\end{array}\right)
+$$ {#eq:matrix}
+
+In geometry, matrices are widely used for specifying and representing geometric transformations (for example rotations) and coordinate changes. In numerical analysis, many computational problems are solved by reducing them to a matrix computation, and this often involves computing with matrices of huge dimensions. Matrices are used in most areas of mathematics and scientific fields, either directly, or through their use in geometry and numerical analysis.
+
+Matrix theory is the branch of mathematics that focuses on the study of matrices. It was initially a sub-branch of linear algebra, but soon grew to include subjects related to graph theory, algebra, combinatorics and statistics.
+
 ## Tables
 
 yo
