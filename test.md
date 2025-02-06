@@ -707,20 +707,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Felis imperdiet proin fermentum leo vel orci porta non pulvinar. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Congue eu consequat ac felis donec et odio pellentesque diam. Sit amet nulla facilisi morbi tempus iaculis urna id. Eget dolor morbi non arcu risus. Nulla facilisi etiam dignissim diam quis enim lobortis. Mattis ullamcorper velit sed ullamcorper. Diam volutpat commodo sed egestas egestas fringilla phasellus. Non nisi est sit amet facilisis.
 
-## Math
+## Math with Katex
 
-Inline: $\sum y = \sum ax+b$.
+This is an inline equation $y = ax+b$. The element $M_{ij}$ is the $i$^th^ line and the $j$^th^ column of the matrix $M$. When we measure the resistivity $\rho \approx \rho_0 \cdot T^{\alpha - 3/2} \cdot e^{E_\text d/(K_\text b T)}$, we get an approximation of the behaviour of a semiconductor in its extrinsic regime.
 
+This is an unlabeled equation:
 $$
-M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}
+M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}.
 $$
 
+This is the same equation, labeled:
 $$
-M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}
+M=N \mu_{0} \pi \frac{\pi R_{2}^{2}}{2 R_{1}}.
 $$ {#eq:example}
 
+Something more hefty, with integrals and stuff:
 $$
-\frac{\mathrm{d}}{\mathrm{d} t} \int_V \phi \mathrm{d} V+\int_{\partial V} \phi \vec{v} \cdot \vec{n} \mathrm{~d} A=\int_V S \mathrm{~d} V
+\frac{\mathrm{d}}{\mathrm{d} t} \int_V \phi \mathrm{d} V+\int_{\partial V} \phi \vec{v} \cdot \vec{n} \mathrm{~d} A=\int_V S \mathrm{~d} V.
 $$ {#eq:conservation}
 
 ## Tables
