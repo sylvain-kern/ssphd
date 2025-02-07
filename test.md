@@ -746,6 +746,22 @@ $$ {#eq:matrix}
 
 In geometry, matrices are widely used for specifying and representing geometric transformations (for example rotations) and coordinate changes. In numerical analysis, many computational problems are solved by reducing them to a matrix computation, and this often involves computing with matrices of huge dimensions. Matrices are used in most areas of mathematics and scientific fields, either directly, or through their use in geometry and numerical analysis.
 
+::: {.wide}
+$$
+\mathbf{A}=\left[\begin{array}{cccc}
+a_{11} & a_{12} & \cdots & a_{1 n} \\
+a_{21} & a_{22} & \cdots & a_{2 n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m 1} & a_{m 2} & \cdots & a_{m n}
+\end{array}\right]=\left(\begin{array}{cccc}
+a_{11} & a_{12} & \cdots & a_{1 n} \\
+a_{21} & a_{22} & \cdots & a_{2 n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m 1} & a_{m 2} & \cdots & a_{m n}
+\end{array}\right)
+$$ {#eq:matrix1}
+:::
+
 Matrix theory is the branch of mathematics that focuses on the study of matrices. It was initially a sub-branch of linear algebra, but soon grew to include subjects related to graph theory, algebra, combinatorics and statistics.
 
 ## Tables
@@ -789,63 +805,81 @@ Table: Table with no header {#tbl:noheader}
 
 : Sample grid table (this table is unnumbered ~~(the *grid tables* extension does not work for now))~~.
 
-+------------+:----------------------------------+
-|            | Temperature 1961-1990             |
-| Location   | (°C)                              |
-|            +--------+---------------+----------+
-|            | min    | mean          | max      |
-+:===========+=======:+==============:+=========:+
-| Antarctica | -89.2  | N/A           | 19.8[^1] |
-+------------+--------+---------------+----------+
-| Earth      | -89.2  | This is\      | 56.7     |
-+------------+--------+ free content. +----------+
-| check               | It can span\  | 56.7     |
-|                     | seveal lines! |          |
-+---------------------+---------------+----------+
++------------+:-----------------------------+
+|            | Temperature 1961-1990        |
+| Location   | (°C)                         |
+|            +-------+---------------+------+
+|            | min   | mean          | max  |
++:===========+======:+==============:+=====:+
+| Antarctica | -89.2 | N/A           | 19.8 |
++------------+-------+---------------+------+
+| Earth      | -89.2 | This is\      | 56.7 |
++------------+-------+ free content. +------+
+| check              | It can span\  | 56.7 |
+|                    | seveal lines! |      |
++--------------------+---------------+------+
 
-+-------------------+-------------------+
-| Grid Tables       | Are Beautiful     |
-+:==================+:==================+
-|                   | In code and docs  |
-| Easy to read      |                   |
-|                   |                   |
-+-------------------+-------------------+
-| Exceptionally flexible and powerful   |
-+-------+-------+-------+-------+-------+
-| Col 1 | Col 2 | Col 3 | Col 4 | Col 5 |
-+-------+-------+-------+-------+-------+
++-----------------------------------------------------------+
+| Merged columns on top                                     |
++-----------------------+-----------------------------------+
+| test                  | yo                                |
++:======================+:==================================+
+|      1                | this is a\multiline single\column |
++-----------------------+-----------------------------------+
+|   2                   | Fused cells                       |
++-----------------------+                                   +
+|    3                  |                                   |
++-----------------------+-----------------------------------+
+|    4                  | 5                                 |
++-----------------------+-----------------------------------+
+| 6                     | 7                                 |
++=======================+===================================+
+| This is the table footer which has the two columns merged |
++-----------------------------------------------------------+
 
-+---------------------+----------+
-| Property            | Earth    |
-+:============+======:+=========:+
-|             | min   | -89.2 °C |
-| Temperature +-------+----------+
-| 1961-1990   | mean  | 14 °C    |
-|             +-------+----------+
-|             | max   | 56.7 °C  |
-+-------------+-------+----------+
++------------------------------------------+------------------+
+| Grid Tables                              | Are Beautiful    |
++:=========================================+:=================+
+|                                          | In code and docs |
+| Easy to read                             |                  |
+|                                          |                  |
++------------------------------------------+------------------+
+| Exceptionally flexible and powerful                         |
++-------+-----------------------------+-------+-------+-------+
+| Col 1 | Col 2 which is a bit longer | Col 3 | Col 4 | Col 5 |
++-------+-----------------------------+-------+-------+-------+
 
-+--------------------------+
-| Number alignment test\   |
-| (*spoiler: it works!*)   |
-+=========================:+
-| 9008.68                  |
-+--------------------------+
-| 112.41                   |
-+--------------------------+
++--------------------+----------+
+| Property           | Earth    |
++:============+=====:+=========:+
+|             | min  | -89.2 °C |
+| Temperature +------+----------+
+| 1961-1990   | mean | 14 °C    |
+|             +------+----------+
+|             | max  | 56.7 °C  |
++-------------+------+----------+
+
++------------------------+
+| Number alignment test\ |
+| (*spoiler: it works!*) |
++=======================:+
+| 9008.68                |
++------------------------+
+| 112.41                 |
++------------------------+
 
 
 : Table footer
 
-+---------------+---------------+
-| Fruit         | Price         |
-+===============+==============:+
-| Bananas       | $1.34         |
-+---------------+---------------+
-| Oranges       | $2.10         |
-+===============+===============+
-| Sum           | $3.44         |
-+===============+===============+
++---------+-------+
+| Fruit   | Price |
++=========+======:+
+| Bananas | $1.34 |
++---------+-------+
+| Oranges | $2.10 |
++=========+=======+
+| Sum     | $3.44 |
++=========+=======+
 
 ### Super long tables
 

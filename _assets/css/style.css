@@ -987,6 +987,11 @@ pre.numberLines > code > span {
     overflow: auto hidden;
 }
 
+.katex-display .katex {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
 /* wide elements */
 
 .wide {
