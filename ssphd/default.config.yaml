@@ -1,6 +1,6 @@
 paths:
   assets: "_assets"
-  templates: "_assets/templates"
+  templates: "ssphd/templates"
   css: "_assets/css"
   pictures: "_assets/pics"
   refs: "_assets/refs"
