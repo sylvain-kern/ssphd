@@ -4,6 +4,7 @@ import pypandoc
 import argparse
 import re
 import json
+import pkg_resources
 
 import pandocfilters as pf
 
@@ -11,30 +12,40 @@ from lunr import lunr
 from bs4 import BeautifulSoup
 from rich.progress import track
 
+from .config import Config
 
-# from inspect import getsourcefile
-# from pandoc.types import Pandoc, Header, MetaType, MetaInlines, MetaBool, Str
-# from mpld3 import plugins
-
+import sys
 
 ABOUT = "The ultimate document processor."
 
 
 class Document:
 
-    def __init__(self, source):
+    def __init__(self, source, config_file=None):
+        self.config = Config(config_file)
+        # Use config's validation method
+        self.config.validate_file(source)
+        
+        self.package_path = pkg_resources.resource_filename('ssphd', '')
+        self.filters_path = os.path.join(self.package_path, 'filters')
 
-        self.source_file    = source
+        self.source_file    = os.path.abspath(source)
         self.root_path      = os.path.dirname(os.path.abspath(self.source_file))
-        self.dest_path      = self.source_file.split('.')[0]+'-html/'
-        self.latex_path      = self.source_file.split('.')[0]+'-latex/'
-        self.config_file    = os.path.join(self.root_path, 'config.yaml')
-        self.meta_file      = os.path.join(self.root_path, '_assets/meta/meta.yaml')
-        self.assets_path    = os.path.join(self.root_path, '_assets')
-        self.templates_path = os.path.join(self.dest_path, '_assets/templates')
-        self.css_path       = os.path.join(self.root_path, '_assets/css')
-        self.pictures_path  = os.path.join(self.root_path, '_assets/pics')
-        self.refs_path      = os.path.join(self.root_path, '_assets/refs')
+        
+        # Get base name without extension
+        base_name = os.path.splitext(os.path.basename(self.source_file))[0]
+        
+        # Create output paths using config and base name
+        self.dest_path      = os.path.join(self.root_path, base_name, self.config.get_path('output_html'))
+        self.latex_path     = os.path.join(self.root_path, base_name, self.config.get_path('output_latex'))
+        
+        # Use config paths
+        self.assets_path    = os.path.join(self.root_path, self.config.get_path('assets'))
+        self.templates_path = os.path.join(self.root_path, self.config.get_path('templates'))
+        self.css_path       = os.path.join(self.root_path, self.config.get_path('css'))
+        self.pictures_path  = os.path.join(self.root_path, self.config.get_path('pictures'))
+        self.refs_path      = os.path.join(self.root_path, self.config.get_path('refs'))
+        self.meta_path      = os.path.join(self.root_path, self.config.get_path('meta'))
 
         self.ast = pypandoc.convert_file(
                 self.source_file,
@@ -71,7 +82,7 @@ class Document:
             abbr_start = text.find('+[')
             if abbr_start >= 0:
                 abbr_end = text.find(']', abbr_start)
-                if abbr_end > abbr_start + 2:
+                if (abbr_end > abbr_start + 2):
                     # Search for the end of the abbreviation, including any non-space characters
                     abbr_text = text[abbr_start + 2:abbr_end]
                     following_char = text[-1]
@@ -124,6 +135,7 @@ class Document:
 
         self.search_documents = []
         
+        search_template = self.config.get_template_path('template-search-section.html')
         pypandoc.convert_text(
             self.ast,
             format='json',
@@ -131,7 +143,7 @@ class Document:
             extra_args=[
                 '--chunk-template=%i.html',
                 '--split-level=6',
-                '--template=template-search-section.html',
+                f'--template={search_template}',
                 '--katex',
             ]
         )
@@ -161,7 +173,7 @@ class Document:
                 
                 self.search_documents.append(document)
                 
-        with open(f'test-html/_assets/documents.json', 'w', encoding='utf-8') as f:
+        with open(f'{self.dest_path}/_assets/documents.json', 'w', encoding='utf-8') as f:
             json.dump(self.search_documents, f, indent=4)
         
         # pre-building index
@@ -174,7 +186,7 @@ class Document:
         #     }],
         #     documents=self.search_documents
         # )        
-        # with open('search-dev/index.json', 'w', encoding='utf-8') as f:
+        # with open(f'{self.dest_path}/_assets/index.json', 'w', encoding='utf-8') as f:
         #     json.dump(index.serialize(), f, ensure_ascii=False)
                 
         shutil.rmtree('-/')
@@ -197,25 +209,50 @@ class Document:
                 kwargs['legendPosition'] = 'graph'
                 for keyval in keyvals:
                     kwargs[keyval[0]] = keyval[1]
+                
                 # formatting the graph
                 graph_id = f"dygraph_{self.graph_count}"
                 self.graph_count += 1
-                graph_script = f"""
-                    var {graph_id} = generateGraph(id="{graph_id}", data="{filename}", xdata="{xcolumn}", ydata="{ycolumns}", xlabel="{kwargs['xlabel']}", ylabel="{kwargs['ylabel']}", legendPosition="{kwargs['legendPosition']}");
-                """
-                graphsjs_file = self.dest_path+'_assets/js/graphs.js'
-                with open(graphsjs_file, 'a', encoding='utf-8') as f:
-                    f.write('\n')
-                    f.write(graph_script)
-                return [
-                    pf.RawInline("html", f"<div class='graph-container' id={graph_id} legendPosition={kwargs['legendPosition']}></div>")
-                ]
                 
+                # Ensure the graphs directory exists
+                graphs_dir = os.path.join(self.dest_path, '_assets', 'graphs')
+                os.makedirs(graphs_dir, exist_ok=True)
+                
+                # Copy CSV file to assets
+                csv_dest = os.path.join(self.dest_path, '_assets', 'data', os.path.basename(filename))
+                os.makedirs(os.path.dirname(csv_dest), exist_ok=True)
+                shutil.copy2(filename, csv_dest)
+                
+                # Create graph script with proper relative paths
+                graph_script = f"""
+                    var {graph_id} = generateGraph(id="{graph_id}", 
+                        data="../data/{os.path.basename(filename)}", 
+                        xdata="{xcolumn}", 
+                        ydata="{ycolumns}", 
+                        xlabel="{kwargs['xlabel']}", 
+                        ylabel="{kwargs['ylabel']}", 
+                        legendPosition="{kwargs['legendPosition']}"
+                    );
+                """
+                
+                # Save script file
+                graph_file = os.path.join(graphs_dir, f'graph{self.graph_count}.js')
+                with open(graph_file, 'w', encoding='utf-8') as f:
+                    f.write(graph_script)
+                
+                # Use relative path in script tag
+                return [
+                    pf.RawInline("html", f"""
+                        <div class='graph-container' id={graph_id} legendPosition={kwargs['legendPosition']}></div>
+                        <script src="../_assets/graphs/graph{self.graph_count}.js"></script>
+                    """)
+                ]
+
     def chunk(self, splitLevel=2, tocLevel=3):
-        
         def transform_sitemap(input_json):
-            if not os.path.exists(root_path):
-                os.mkdir('chunking-test')
+            # Remove the chunking-test check - it was a development artifact
+            transformed = {}
+            
             def process_section(section, parent_id):
                 section_id = section["section"]["id"]
                 if not section_id:
@@ -225,15 +262,15 @@ class Document:
                 
                 if level == 1:
                     path = section_id
-                    dr = root_path + '/' + section_id
+                    dr = os.path.join(self.dest_path, section_id)
                     parent_id = "-index"
                     if not os.path.exists(dr):
-                        os.mkdir(dr)
+                        os.makedirs(dr)
                 elif level <= splitLevel:
                     path = transformed[parent_id].get("path") + '/' + section_id
-                    dr = root_path +'/'+ transformed[parent_id].get("path") + '/' + section_id
+                    dr = os.path.join(self.dest_path, transformed[parent_id].get("path"), section_id)
                     if not os.path.exists(dr):
-                        os.mkdir(dr)
+                        os.makedirs(dr)
                 else:
                     path = transformed[parent_id].get("path").split('/#')[0] + '/#' + section_id
 
@@ -253,21 +290,22 @@ class Document:
                         transformed[section_id]["children"].append(child_id)
                         process_section(subsection, section_id)
 
-            transformed = {}
-
             for section in track(input_json["subsections"]):
                 process_section(section, None)
             # Process the root section and its subsections
             
             return transformed
         
-        root_path = 'test-html'
-        if os.path.exists(f'{root_path}'):
-            shutil.rmtree(f'{root_path}')
-        os.mkdir(f'{root_path}')
-        shutil.copytree('_assets/', f'{root_path}/_assets')
+        # Remove old root_path variable and use self.dest_path instead
+        if os.path.exists(self.dest_path):
+            shutil.rmtree(self.dest_path)
+        os.makedirs(self.dest_path)
+        os.makedirs(os.path.join(self.dest_path, '_assets', 'graphs'), exist_ok=True)
+        os.makedirs(os.path.join(self.dest_path, '_assets', 'data'), exist_ok=True)
+        shutil.copytree('_assets/', os.path.join(self.dest_path, '_assets'), dirs_exist_ok=True)
         
         # generate files
+        template_name = self.config.get_template_path('template-section.html')
         pypandoc.convert_text(
             self.ast,
             format='json',
@@ -279,8 +317,8 @@ class Document:
                 '--chunk-template=%i.html',
                 '--number-sections',
                 '--section-divs',
-                '--filter=pandoc-sidenote',
-                f'--template=template-section.html',
+                "--filter=pandoc-sidenote",
+                f'--template={template_name}',
                 '--variable=base=/',
                 '--katex',
             ]
@@ -355,10 +393,12 @@ class Document:
                             link["href"] = newhref
                 
                 if file == 'index.html':
-                    with open(f'{root_path}/index.html', 'w', encoding='utf-8') as f:
+                    with open(os.path.join(self.dest_path, 'index.html'), 'w', encoding='utf-8') as f:
                         f.write(str(soup))
                 else:
-                    with open(f'{root_path}/{self.structure[file[:-5]]["path"]}/index.html', 'w', encoding='utf-8') as f:
+                    output_path = os.path.join(self.dest_path, self.structure[file[:-5]]["path"], 'index.html')
+                    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                    with open(output_path, 'w', encoding='utf-8') as f:
                         f.write(str(soup))
 
         shutil.rmtree('-/')
@@ -427,18 +467,19 @@ def main():
 
     parser = argparse.ArgumentParser(description=ABOUT)
     parser.add_argument("markdown_source", help="Path to a Markdown source file.")
+    parser.add_argument("--config", "-c", help="Path to config YAML file")
 
     args = parser.parse_args()
 
-    args.markdown_source = os.path.abspath(args.markdown_source)
-
-    # print(args.markdown_source)
-
-    doc = Document(args.markdown_source)
-
-    # doc.to_latex()
-
-    doc.to_html()
+    try:
+        doc = Document(args.markdown_source, args.config)
+        doc.to_html()
+    except (FileNotFoundError, ValueError, PermissionError) as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        sys.exit(1)
 
 
 if __name__=='__main__':
