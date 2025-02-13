@@ -4344,18 +4344,18 @@ capital letter with a period, by at least two spaces.[^2]
 [^2]:  The point of this rule is to ensure that normal paragraphs
     starting with people's initials, like
 
-        B. Russell won a Nobel Prize (but not for "On Denoting").
+    B. Russell won a Nobel Prize (but not for "On Denoting").
 
     do not get treated as list items.
 
     This rule will not prevent
 
-        (C) 2007 Joe Smith
+    (C) 2007 Joe Smith
 
     from being interpreted as a list item.  In this case, a backslash
     escape can be used:
 
-        (C\) 2007 Joe Smith
+    (C\) 2007 Joe Smith
 
 The `fancy_lists` extension also allows '`#`' to be used as an
 ordered list marker in place of a numeral:
@@ -6075,10 +6075,10 @@ in several respects:
 [^6]:  To see why laziness is incompatible with relaxing the requirement
     of a blank line between items, consider the following example:
 
-        bar
-        :    definition
-        foo
-        :    definition
+    bar
+    :    definition
+    foo
+    :    definition
 
     Is this a single list item with two definitions of "bar," the first of
     which is lazily wrapped, or two list items?  To remove the ambiguity
