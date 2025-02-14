@@ -1,0 +1,9 @@
+paths:
+  assets: "_assets"
+  templates: "ssphd/templates"
+  css: "_assets/css"
+  pictures: "_assets/pics"
+  refs: "_assets/refs"
+  meta: "_assets/meta"
+  output_html: "output/html"
+  output_latex: "output/latex"
