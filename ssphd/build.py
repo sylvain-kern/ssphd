@@ -36,8 +36,8 @@ class Document:
         base_name = os.path.splitext(os.path.basename(self.source_file))[0]
         
         # Create output paths using config and base name
-        self.dest_path      = os.path.join(self.root_path, base_name, self.config.get_path('output_html'))
-        self.latex_path     = os.path.join(self.root_path, base_name, self.config.get_path('output_latex'))
+        self.dest_path      = os.path.join(self.root_path, 'output/'+base_name, self.config.get_path('output_html'))
+        self.latex_path     = os.path.join(self.root_path, 'output/'+base_name, self.config.get_path('output_latex'))
         
         # Use config paths
         self.assets_path    = os.path.join(self.root_path, self.config.get_path('assets'))
@@ -51,8 +51,8 @@ class Document:
                 self.source_file,
                 format='markdown+smart+emoji',
                 to='json',
-                extra_args = [
-            ])
+                extra_args = []
+            )
 
         self.graph_count = 0
 
@@ -249,6 +249,7 @@ class Document:
                 ]
 
     def chunk(self, splitLevel=2, tocLevel=3):
+        
         def transform_sitemap(input_json):
             # Remove the chunking-test check - it was a development artifact
             transformed = {}

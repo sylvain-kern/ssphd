@@ -1,0 +1,11 @@
+output:
+  path: path/to/output/ 
+  html:
+    template: template.html
+  latex: 
+    template: template.tex
+lang: en-US
+split-level: 2
+plugins:
+  search
+  graphs

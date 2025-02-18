@@ -5,5 +5,5 @@ paths:
   pictures: "_assets/pics"
   refs: "_assets/refs"
   meta: "_assets/meta"
-  output_html: "output/html"
-  output_latex: "output/latex"
+  output_html: "html"
+  output_latex: "latex"
