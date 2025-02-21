@@ -1,5 +1,6 @@
 import shutil
 import os
+import sys
 import pypandoc
 import argparse
 import re
@@ -11,10 +12,10 @@ import pandocfilters as pf
 from lunr import lunr
 from bs4 import BeautifulSoup
 from rich.progress import track
+from urllib.parse import urlparse
 
 from .config import Config
 
-import sys
 
 ABOUT = "The ultimate document processor."
 
@@ -352,31 +353,7 @@ class Document:
                 with open(f'-/{file}', 'r', encoding='utf-8') as f:
                     soup = BeautifulSoup(f, 'html.parser')
                     
-                    # breadcrumbs
-                    breadcrumbs = soup.find('div', class_='breadcrumbs')
-                    if breadcrumbs:
-                        for title, path in zip(titles, paths):
-                            separator = soup.new_tag('span',  **{'class': 'separator'})
-                            separator.string = '/'
-                            item = soup.new_tag('a', href=path)
-                            item.string = title                         
-                            breadcrumbs.append(separator)
-                            breadcrumbs.append(item)
-                            
-                    # link replacement
-                    for link in soup.find_all("a", href=True):
-                        href = link["href"]
-                        section_id = href.split('#')[0][:-5]
-                        if section_id in self.structure:
-                            if len(href.split('#')) > 1:
-                                anchor = '#'+href.split('#')[1]
-                                if section_id == anchor[1:]:
-                                    newhref = self.structure[section_id]["path"]
-                                else:
-                                    newhref = self.structure[section_id]["path"] + anchor
-                            else:
-                                newhref = self.structure[section_id]["path"]
-                            link["href"] = newhref
+                    soup = self.post_process(soup, titles, paths)
                 
                 if file == 'index.html':
                     with open(os.path.join(self.dest_path, 'index.html'), 'w', encoding='utf-8') as f:
@@ -389,7 +366,71 @@ class Document:
 
         shutil.rmtree('-/')
         
-    def generate_404():
+    def post_process(self, soup, titles, paths):
+         # breadcrumbs
+        breadcrumbs = soup.find('div', class_='breadcrumbs')
+        if breadcrumbs:
+            for title, path in zip(titles, paths):
+                separator = soup.new_tag('span',  **{'class': 'separator'})
+                separator.string = '/'
+                item = soup.new_tag('a', href=path)
+                item.string = title                         
+                breadcrumbs.append(separator)
+                breadcrumbs.append(item)
+        
+        # link replacement
+        for link in soup.find_all("a", href=True):
+            href = link["href"]
+            section_id = href.split('#')[0][:-5]
+    
+            if section_id in self.structure:
+                if len(href.split('#')) > 1:
+                    anchor = '#'+href.split('#')[1]
+                    if section_id == anchor[1:]:
+                        newhref = self.structure[section_id]["path"]
+                    else:
+                        newhref = self.structure[section_id]["path"] + anchor
+                else:
+                    newhref = self.structure[section_id]["path"]
+                link["href"] = newhref
+                    
+            # append external to external link
+            def is_external_link(ref):
+                parsed_link = urlparse(ref)
+                return bool(parsed_link.netloc)  # If netloc is present, it's an external link
+
+            if is_external_link(href):
+                if 'class' in link.attrs:
+                    link['class'].append('external')
+                else:
+                    link['class'] = ['external']
+                            
+        # header anchors
+        for heading in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
+            parent = heading.find_parent()
+            
+            if parent and parent.has_attr('id'):
+                section_id = parent['id']
+                
+                anchor = soup.new_tag('a', href=soup.new_string(self.structure[section_id]["path"]))
+                anchor.string = '#'
+                anchor['class'] = 'heading-anchor'
+                
+                heading.insert(0, anchor)  # Insert anchor before the heading text  
+        
+        # wrap tables in wrappers
+        for table in soup.find_all('table'):
+            if table.find_parent('figure'):
+                continue  # Skip tables inside <figure>
+
+            wrapper = soup.new_tag('div', **{'class': 'table-wrapper'})
+            table.insert_before(wrapper)
+            
+            wrapper.append(table)
+                
+        return soup
+    
+    def generate_404(self):
         pass
 
     def to_latex(self):

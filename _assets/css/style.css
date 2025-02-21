@@ -1644,7 +1644,7 @@ hr::before {
         max-width: none;
     }
 
-    .table-wrapper {
+    section > div > .table-wrapper, section > .table-wrapper {
         width: 100vw;
         max-width: none;
         margin-left: calc(0px - var(--content-margin-left));
