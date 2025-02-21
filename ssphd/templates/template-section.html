@@ -24,13 +24,12 @@ $endif$
   <link rel="stylesheet" href="./_assets/css/dygraph.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link  rel='stylesheet' href='https://unpkg.com/boxicons/css/boxicons.min.css'>
   
-  <script src="./_assets/js/dygraphs/dygraph.min.js"></script>
-  <script src="./_assets/js/dygraphs/synchronizer.js"></script>
-  <script src="./_assets/js/graph_generator.js"></script>
-  <script src="./_assets/js/lunr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dygraphs/dist/dygraph.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lunr/lunr.min.js"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script src="./_assets/js/graph_generator.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
     var mathElements = document.getElementsByClassName("math");
     var macros = [];
@@ -152,8 +151,8 @@ $endif$
         </div>
     </main>
 
-    $else$
-    <main>
+    $else$ $-- index.html
+    <main class="hero">
         <header>
             <h1>$title$</h1>
             $author$

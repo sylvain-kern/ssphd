@@ -175,19 +175,6 @@ class Document:
                 
         with open(f'{self.dest_path}/_assets/documents.json', 'w', encoding='utf-8') as f:
             json.dump(self.search_documents, f, indent=4)
-        
-        # pre-building index
-        # index = lunr(
-        #     ref="link",
-        #     fields=[{
-        #             "field_name": "title", "boost": 10,
-        #         },{
-        #             "field_name": "content", "boost": 1,
-        #     }],
-        #     documents=self.search_documents
-        # )        
-        # with open(f'{self.dest_path}/_assets/index.json', 'w', encoding='utf-8') as f:
-        #     json.dump(index.serialize(), f, ensure_ascii=False)
                 
         shutil.rmtree('-/')
 
@@ -340,9 +327,7 @@ class Document:
             "parent": None,
             "children": [key for key in self.structure if self.structure[key]["level"] == 1]
         }
-        
-        # with open('./structure_dict.json', 'w', encoding="utf-8") as f:
-        #     json.dump(self.structure, f, indent=4, ensure_ascii="false")
+
 
         for file in track(os.listdir('-/')):
             

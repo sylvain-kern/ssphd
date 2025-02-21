@@ -5,18 +5,18 @@ const showIcon= document.querySelector(".burger > .show");
 const hideIcon = document.querySelector(".burger > .hide");
 
 function collapseMenu() {
-  menu.classList.remove("showMenu");
+  menu.classList.remove("show");
   hideIcon.style.display = "none";
   showIcon.style.display = "block";
 }
 
 function toggleMenu() {
-  if (menu.classList.contains("showMenu")) {
-    menu.classList.remove("showMenu");
+  if (menu.classList.contains("show")) {
+    menu.classList.remove("show");
     hideIcon.style.display = "none";
     showIcon.style.display = "block";
   } else {
-    menu.classList.add("showMenu");
+    menu.classList.add("show");
     hideIcon.style.display = "block";
     showIcon.style.display = "none";
   }
