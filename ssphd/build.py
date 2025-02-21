@@ -4,6 +4,7 @@ import sys
 import pypandoc
 import argparse
 import re
+import csv
 import json
 import pkg_resources
 
@@ -181,9 +182,11 @@ class Document:
 
     # GRAPHS
     def graphs_filter(self, key, value, format, meta):
-        import csv
         if key == 'Image':
             [ident, stuff, keyvals], caption, [filename, typef] = value
+            
+            print(filename)
+            
             if filename.split('.')[-1] == 'csv':
                 # parsing the data
                 with open(filename, newline='', encoding='utf-8') as f:
@@ -203,18 +206,18 @@ class Document:
                 self.graph_count += 1
                 
                 # Ensure the graphs directory exists
-                graphs_dir = os.path.join(self.dest_path, '_assets', 'graphs')
-                os.makedirs(graphs_dir, exist_ok=True)
+                data_dir = os.path.join(self.root_path, '_assets', 'data')
+                os.makedirs(data_dir, exist_ok=True)
+                print(data_dir)
                 
-                # Copy CSV file to assets
-                csv_dest = os.path.join(self.dest_path, '_assets', 'data', os.path.basename(filename))
-                os.makedirs(os.path.dirname(csv_dest), exist_ok=True)
-                shutil.copy2(filename, csv_dest)
+                # # Copy CSV file to assets
+                shutil.copy2(filename, data_dir)
+                # print(filename, data_dir)
                 
                 # Create graph script with proper relative paths
                 graph_script = f"""
                     var {graph_id} = generateGraph(id="{graph_id}", 
-                        data="../data/{os.path.basename(filename)}", 
+                        data="/_assets/data/{os.path.basename(filename)}", 
                         xdata="{xcolumn}", 
                         ydata="{ycolumns}", 
                         xlabel="{kwargs['xlabel']}", 
@@ -224,15 +227,15 @@ class Document:
                 """
                 
                 # Save script file
-                graph_file = os.path.join(graphs_dir, f'graph{self.graph_count}.js')
-                with open(graph_file, 'w', encoding='utf-8') as f:
-                    f.write(graph_script)
+                # graph_file = os.path.join(graphs_dir, f'graph{self.graph_count}.js')
+                # with open(graph_file, 'w', encoding='utf-8') as f:
+                #     f.write(graph_script)
                 
                 # Use relative path in script tag
                 return [
                     pf.RawInline("html", f"""
                         <div class='graph-container' id={graph_id} legendPosition={kwargs['legendPosition']}></div>
-                        <script src="../_assets/graphs/graph{self.graph_count}.js"></script>
+                        <script>{graph_script}</script>
                     """)
                 ]
 
@@ -290,7 +293,7 @@ class Document:
             shutil.rmtree(self.dest_path)
         os.makedirs(self.dest_path)
         os.makedirs(os.path.join(self.dest_path, '_assets', 'graphs'), exist_ok=True)
-        os.makedirs(os.path.join(self.dest_path, '_assets', 'data'), exist_ok=True)
+        # os.makedirs(os.path.join(self.dest_path, '_assets', 'data'), exist_ok=True)
         shutil.copytree('_assets/', os.path.join(self.dest_path, '_assets'), dirs_exist_ok=True)
         
         # generate files
@@ -483,6 +486,7 @@ class Document:
             self.add_title_to_references,
             self.get_abbreviation_dict,
             self.replace_abbreviations,
+            self.graphs_filter
         ])
         
         self.chunk()
