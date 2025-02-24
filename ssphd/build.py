@@ -42,20 +42,17 @@ class Document:
         self.out_latex_path     = os.path.join(self.root_path, 'out/'+base_name, self.config.get_path('output_latex'))
         
         # Use config paths
-        # self.assets_path    = os.path.join(self.package_path, self.config.get_path('assets'))
         self.templates_path     = os.path.join(self.package_path, self.config.get_path('templates'))
         self.css_path           = os.path.join(self.package_path, self.config.get_path('css'))
         self.fonts_path         = os.path.join(self.package_path, self.config.get_path('fonts'))
         self.js_path            = os.path.join(self.package_path, self.config.get_path('js'))
-        # self.pictures_path  = os.path.join(self.root_path, self.config.get_path('pictures'))
         self.refs_file          = refs_file
         self.csl_path           = os.path.join(self.package_path, self.config.get_path('csl'))
         self.meta_path          = os.path.join(self.package_path, self.config.get_path('meta'))
         
-        # split level
+        # split/toc levels
         self.split_level        = int(split_level)
         self.toc_level          = int(toc_level)
-
 
         self.ast = pypandoc.convert_file(
                 self.source_file,
@@ -330,9 +327,7 @@ class Document:
 
         with open('-/sitemap.json', 'r', encoding='utf-8') as f:
             sitemap = json.load(f)
-        
-        # shutil.rmtree('-/')
-        
+
         self.structure = transform_sitemap(sitemap)
         
         self.structure["-index"] = {
@@ -541,12 +536,12 @@ def main():
     parser.add_argument("--latex", "-L", help="enables LaTeX output", action="store_true", default=False)
     args = parser.parse_args()
 
-    try:
-        doc = Document(args.markdown_source, args.config, args.split_level, args.toc_level, args.refs)
-        if not(args.html or args.latex):
-            print("Please give an output format. Example: --html.")
-            sys.exit(2)
-        else:
+    if not(args.html or args.latex):
+        print("Please give an output format. Example: --html.")
+        sys.exit(2)
+    else:
+        try:
+            doc = Document(args.markdown_source, args.config, args.split_level, args.toc_level, args.refs)
             if(args.html):
                 print("Converting to HTML...")
                 doc.to_html()
@@ -554,12 +549,12 @@ def main():
                 print("Converting to LaTeX...")
                 doc.to_latex()
             sys.exit(0)
-    except (FileNotFoundError, ValueError, PermissionError) as e:
-        print(f"Error: {e}")
-        sys.exit(1)
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-        sys.exit(1)
+        except (FileNotFoundError, ValueError, PermissionError) as e:
+            print(f"Error: {e}")
+            sys.exit(1)
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+            sys.exit(1)
 
 
 if __name__=='__main__':
