@@ -38,16 +38,19 @@ class Document:
         base_name = os.path.splitext(os.path.basename(self.source_file))[0]
         
         # Create output paths using config and base name
-        self.dest_path      = os.path.join(self.root_path, 'output/'+base_name, self.config.get_path('output_html'))
-        self.latex_path     = os.path.join(self.root_path, 'output/'+base_name, self.config.get_path('output_latex'))
+        self.out_html_path      = os.path.join(self.root_path, 'output/'+base_name, self.config.get_path('output_html'))
+        self.out_latex_path     = os.path.join(self.root_path, 'output/'+base_name, self.config.get_path('output_latex'))
         
         # Use config paths
-        self.assets_path    = os.path.join(self.root_path, self.config.get_path('assets'))
-        self.templates_path = os.path.join(self.root_path, self.config.get_path('templates'))
-        self.css_path       = os.path.join(self.root_path, self.config.get_path('css'))
-        self.pictures_path  = os.path.join(self.root_path, self.config.get_path('pictures'))
-        self.refs_path      = os.path.join(self.root_path, self.config.get_path('refs'))
-        self.meta_path      = os.path.join(self.root_path, self.config.get_path('meta'))
+        # self.assets_path    = os.path.join(self.package_path, self.config.get_path('assets'))
+        self.templates_path     = os.path.join(self.package_path, self.config.get_path('templates'))
+        self.css_path           = os.path.join(self.package_path, self.config.get_path('css'))
+        self.fonts_path         = os.path.join(self.package_path, self.config.get_path('fonts'))
+        self.js_path            = os.path.join(self.package_path, self.config.get_path('js'))
+        # self.pictures_path  = os.path.join(self.root_path, self.config.get_path('pictures'))
+        self.refs_path          = os.path.join(self.root_path, self.config.get_path('refs'))
+        self.csl_path           = os.path.join(self.package_path, self.config.get_path('csl'))
+        self.meta_path          = os.path.join(self.package_path, self.config.get_path('meta'))
 
         self.ast = pypandoc.convert_file(
                 self.source_file,
@@ -137,7 +140,7 @@ class Document:
 
         self.search_documents = []
         
-        search_template = self.config.get_template_path('template-search-section.html')
+        search_template = os.path.join(self.templates_path, 'template-search-section.html')
         pypandoc.convert_text(
             self.ast,
             format='json',
@@ -175,7 +178,7 @@ class Document:
                 
                 self.search_documents.append(document)
                 
-        with open(f'{self.dest_path}/_assets/documents.json', 'w', encoding='utf-8') as f:
+        with open(f'{self.out_html_path}/_assets/documents.json', 'w', encoding='utf-8') as f:
             json.dump(self.search_documents, f, indent=4)
                 
         shutil.rmtree('-/')
@@ -185,9 +188,8 @@ class Document:
         if key == 'Image':
             [ident, stuff, keyvals], caption, [filename, typef] = value
             
-            print(filename)
-            
             if filename.split('.')[-1] == 'csv':
+                
                 # parsing the data
                 with open(filename, newline='', encoding='utf-8') as f:
                     reader = csv.reader(f)
@@ -206,19 +208,17 @@ class Document:
                 self.graph_count += 1
                 
                 # Ensure the graphs directory exists
-                data_dir = os.path.join(self.root_path, '_assets', 'data')
+                data_dir = os.path.join(self.root_path, 'tmp', 'data')
                 os.makedirs(data_dir, exist_ok=True)
-                print(data_dir)
-                
+
                 # # Copy CSV file to assets
                 shutil.copy2(filename, data_dir)
-                # print(filename, data_dir)
                 
                 # Create graph script with proper relative paths
                 graph_script = f"""
                     var {graph_id} = generateGraph(id="{graph_id}", 
                         data="/_assets/data/{os.path.basename(filename)}", 
-                        xdata="{xcolumn}", 
+                        xdata="{xcolumn}",
                         ydata="{ycolumns}", 
                         xlabel="{kwargs['xlabel']}", 
                         ylabel="{kwargs['ylabel']}", 
@@ -239,6 +239,12 @@ class Document:
                     """)
                 ]
 
+    def assets_paths_filter(self, key, value, _fmt, _meta):
+        if key == 'Image':
+            [ident, stuff, keyvals], caption, [filename, typef] = value
+            newfilename = 'assets/'+filename
+            return pf.Image([ident, stuff, keyvals], caption, [newfilename, typef])
+
     def chunk(self, splitLevel=2, tocLevel=3):
         
         def transform_sitemap(input_json):
@@ -254,13 +260,13 @@ class Document:
                 
                 if level == 1:
                     path = section_id
-                    dr = os.path.join(self.dest_path, section_id)
+                    dr = os.path.join(self.out_html_path, section_id)
                     parent_id = "-index"
                     if not os.path.exists(dr):
                         os.makedirs(dr)
                 elif level <= splitLevel:
                     path = transformed[parent_id].get("path") + '/' + section_id
-                    dr = os.path.join(self.dest_path, transformed[parent_id].get("path"), section_id)
+                    dr = os.path.join(self.out_html_path, transformed[parent_id].get("path"), section_id)
                     if not os.path.exists(dr):
                         os.makedirs(dr)
                 else:
@@ -282,22 +288,23 @@ class Document:
                         transformed[section_id]["children"].append(child_id)
                         process_section(subsection, section_id)
 
-            for section in track(input_json["subsections"]):
+            for section in track(input_json["subsections"], description = 'Extracting structure'):
                 process_section(section, None)
             # Process the root section and its subsections
             
             return transformed
         
-        # Remove old root_path variable and use self.dest_path instead
-        if os.path.exists(self.dest_path):
-            shutil.rmtree(self.dest_path)
-        os.makedirs(self.dest_path)
-        os.makedirs(os.path.join(self.dest_path, '_assets', 'graphs'), exist_ok=True)
-        # os.makedirs(os.path.join(self.dest_path, '_assets', 'data'), exist_ok=True)
-        shutil.copytree('_assets/', os.path.join(self.dest_path, '_assets'), dirs_exist_ok=True)
+        # Remove old root_path variable and use self.out_html_path instead
+        if os.path.exists(self.out_html_path):
+            shutil.rmtree(self.out_html_path)
+        os.makedirs(self.out_html_path)
+        # os.makedirs(os.path.join(self.out_html_path, '_assets', 'graphs'), exist_ok=True)
+        shutil.copytree(self.css_path, os.path.join(self.out_html_path, '_assets', 'css'))
+        shutil.copytree(self.js_path, os.path.join(self.out_html_path, '_assets', 'js'))
+        shutil.copytree(self.fonts_path, os.path.join(self.out_html_path, '_assets', 'fonts'))
         
         # generate files
-        template_name = self.config.get_template_path('template-section.html')
+        template_name = os.path.join(self.templates_path, 'template-section.html')
         pypandoc.convert_text(
             self.ast,
             format='json',
@@ -332,8 +339,10 @@ class Document:
             "children": [key for key in self.structure if self.structure[key]["level"] == 1]
         }
 
-
-        for file in track(os.listdir('-/')):
+        for file in track(os.listdir('-/'), description='Building output tree'):
+            
+            if os.path.isdir(file):  # Only process directories
+                shutil.copytree(file, os.path.join(self.out_html_path, '_assets', file), dirs_exist_ok=True)  # Copy subfolder
             
             #converting index.html
             if file.endswith('.html'):
@@ -359,15 +368,19 @@ class Document:
                     soup = self.post_process(soup, titles, paths)
                 
                 if file == 'index.html':
-                    with open(os.path.join(self.dest_path, 'index.html'), 'w', encoding='utf-8') as f:
+                    with open(os.path.join(self.out_html_path, 'index.html'), 'w', encoding='utf-8') as f:
                         f.write(str(soup))
                 else:
-                    output_path = os.path.join(self.dest_path, self.structure[file[:-5]]["path"], 'index.html')
+                    output_path = os.path.join(self.out_html_path, self.structure[file[:-5]]["path"], 'index.html')
                     os.makedirs(os.path.dirname(output_path), exist_ok=True)
                     with open(output_path, 'w', encoding='utf-8') as f:
                         f.write(str(soup))
 
         shutil.rmtree('-/')
+        
+        if os.path.exists(os.path.join(self.root_path, 'tmp', 'data')):
+            shutil.copytree(os.path.join(self.root_path, 'tmp', 'data'), os.path.join(self.out_html_path, '_assets', 'data'))
+            shutil.rmtree('tmp')
         
     def post_process(self, soup, titles, paths):
          # breadcrumbs
@@ -430,6 +443,14 @@ class Document:
             table.insert_before(wrapper)
             
             wrapper.append(table)
+            
+        # link images
+        for image in soup.find_all('img'):
+            if image.has_attr('src'):
+                pth = image['src']
+                if pth.startswith('./'):
+                    pth = pth[2:]
+                image['src'] = os.path.join('_assets', pth)
                 
         return soup
     
@@ -437,13 +458,13 @@ class Document:
         pass
 
     def to_latex(self):
-        if not os.path.exists(self.latex_path):
-            os.mkdir(self.latex_path)
+        if not os.path.exists(self.out_latex_path):
+            os.mkdir(self.out_latex_path)
         pypandoc.convert_text(
             self.ast,
             format = 'json',
             to = 'latex',
-            outputfile = self.latex_path + 'main.tex',
+            outputfile = self.out_latex_path + 'main.tex',
             extra_args = [
                 "--metadata-file=_assets/meta/meta.yaml",
                 "--standalone",
@@ -466,15 +487,13 @@ class Document:
         dico = json.loads(self.ast_html)
         meta_before = dico["meta"]
 
-        self.pipe(
-            [
-                "--metadata-file=_assets/meta/meta.yaml",
-                "--csl=_assets/refs/for-the-web.csl",
-                "--filter=pandoc-crossref",
-                "--bibliography=_assets/refs/refs.json",
-                "--citeproc",
-            ]
-        )
+        self.pipe([
+            f"--metadata-file={self.meta_path}/meta.yaml",
+            f"--csl={self.csl_path}/for-the-web.csl",
+            "--filter=pandoc-crossref",
+            f"--bibliography={self.refs_path}/refs.json",
+            "--citeproc",
+        ])
 
         # append doc meta to metadata file
         dico = json.loads(self.ast_html)
@@ -486,11 +505,10 @@ class Document:
             self.add_title_to_references,
             self.get_abbreviation_dict,
             self.replace_abbreviations,
-            self.graphs_filter
+            self.graphs_filter,
         ])
         
-        self.chunk()
-        
+        self.chunk() 
         self.generate_search_index()
 
 

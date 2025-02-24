@@ -7,19 +7,20 @@ import shutil
 
 @dataclass
 class Paths:
-    assets: str = "_assets"
-    templates: str = "_assets/templates"
-    css: str = "_assets/css"
-    pictures: str = "_assets/pics"
-    refs: str = "_assets/refs"
-    meta: str = "_assets/meta"
+    templates: str = "ssphd/assets/templates"
+    css: str = "assets/css"
+    js: str = "assets/js"
+    fonts: str = "assets/fonts"
+    refs: str = 'refs'
+    csl: str = "assets/csl"
+    meta: str = "assets/meta"
     output_html: str = "html"
     output_latex: str = "latex"
 
 class Config:
     def __init__(self, config_file=None):
         self.package_path = pkg_resources.resource_filename('ssphd', '')
-        self.default_templates_path = os.path.join(self.package_path, 'templates')
+        self.default_templates_path = os.path.join(self.package_path, 'assets/templates')
         self.default_config_path = os.path.join(self.package_path, 'default.config.yaml')
         self.pandoc_data_dir = os.path.expanduser('~/.pandoc/templates')
         
@@ -70,6 +71,8 @@ class Config:
     def get_template_path(self, template_name):
         """Look for template in user directory first, then package templates"""
         user_template = os.path.join(self.get_path('templates'), template_name)
+        print('yo')
+        print(user_template)
         if os.path.exists(user_template):
             return user_template
         return template_name  # Return just the name for pandoc's template resolution
