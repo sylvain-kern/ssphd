@@ -4,6 +4,7 @@ paths:
   css: "assets/css"
   fonts: "assets/fonts"
   refs: "refs"
+  csl: "assets/csl"
   meta: "assets/meta"
   output_html: "html"
   output_latex: "latex"
