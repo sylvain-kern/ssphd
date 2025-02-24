@@ -7,7 +7,7 @@ import shutil
 
 @dataclass
 class Paths:
-    templates: str = "ssphd/assets/templates"
+    templates: str = "assets/templates"
     css: str = "assets/css"
     js: str = "assets/js"
     fonts: str = "assets/fonts"

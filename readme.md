@@ -9,6 +9,7 @@ Learn more about Single-Source Publishing (SSP) [here](https://coko.foundation/a
 | Limited functionality | Full functionality |
 | --------------------- | ------------------ |
 | `html`                |                    |
+| `latex`               |                    |
 
 ## Getting started
 

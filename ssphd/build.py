@@ -18,18 +18,18 @@ from urllib.parse import urlparse
 from .config import Config
 
 
-ABOUT = "The ultimate document processor."
+ABOUT = "A singls-source manuscript"
 
 
 class Document:
 
-    def __init__(self, source, config_file=None):
+    def __init__(self, source, config_file=None, split_level=2, toc_level=3):
         self.config = Config(config_file)
         # Use config's validation method
         self.config.validate_file(source)
         
-        self.package_path = pkg_resources.resource_filename('ssphd', '')
-        self.filters_path = os.path.join(self.package_path, 'filters')
+        self.package_path   = pkg_resources.resource_filename('ssphd', '')
+        self.filters_path   = os.path.join(self.package_path, 'filters')
 
         self.source_file    = os.path.abspath(source)
         self.root_path      = os.path.dirname(os.path.abspath(self.source_file))
@@ -38,8 +38,8 @@ class Document:
         base_name = os.path.splitext(os.path.basename(self.source_file))[0]
         
         # Create output paths using config and base name
-        self.out_html_path      = os.path.join(self.root_path, 'output/'+base_name, self.config.get_path('output_html'))
-        self.out_latex_path     = os.path.join(self.root_path, 'output/'+base_name, self.config.get_path('output_latex'))
+        self.out_html_path      = os.path.join(self.root_path, 'out/'+base_name, self.config.get_path('output_html'))
+        self.out_latex_path     = os.path.join(self.root_path, 'out/'+base_name, self.config.get_path('output_latex'))
         
         # Use config paths
         # self.assets_path    = os.path.join(self.package_path, self.config.get_path('assets'))
@@ -51,6 +51,11 @@ class Document:
         self.refs_path          = os.path.join(self.root_path, self.config.get_path('refs'))
         self.csl_path           = os.path.join(self.package_path, self.config.get_path('csl'))
         self.meta_path          = os.path.join(self.package_path, self.config.get_path('meta'))
+        
+        # split level
+        self.split_level        = int(split_level)
+        self.toc_level          = int(toc_level)
+
 
         self.ast = pypandoc.convert_file(
                 self.source_file,
@@ -245,7 +250,7 @@ class Document:
             newfilename = 'assets/'+filename
             return pf.Image([ident, stuff, keyvals], caption, [newfilename, typef])
 
-    def chunk(self, splitLevel=2, tocLevel=3):
+    def chunk(self):
         
         def transform_sitemap(input_json):
             # Remove the chunking-test check - it was a development artifact
@@ -264,7 +269,7 @@ class Document:
                     parent_id = "-index"
                     if not os.path.exists(dr):
                         os.makedirs(dr)
-                elif level <= splitLevel:
+                elif level <= self.split_level:
                     path = transformed[parent_id].get("path") + '/' + section_id
                     dr = os.path.join(self.out_html_path, transformed[parent_id].get("path"), section_id)
                     if not os.path.exists(dr):
@@ -311,8 +316,8 @@ class Document:
             to='chunkedhtml',
             extra_args=[
                 '--toc',
-                f'--toc-depth={tocLevel}',
-                f'--split-level={splitLevel}',
+                f'--toc-depth={self.toc_level}',
+                f'--split-level={self.split_level}',
                 '--chunk-template=%i.html',
                 '--number-sections',
                 '--section-divs',
@@ -466,10 +471,10 @@ class Document:
             to = 'latex',
             outputfile = self.out_latex_path + 'main.tex',
             extra_args = [
-                "--metadata-file=_assets/meta/meta.yaml",
+                f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
                 "--standalone",
                 "--filter=pandoc-crossref",
-                "--bibliography=_assets/refs/refs.json",
+                f"--bibliography={os.path.join(self.refs_path, 'refs.json')}",
                 "--citeproc",
                 "--number-sections",
             ]
@@ -488,7 +493,7 @@ class Document:
         meta_before = dico["meta"]
 
         self.pipe([
-            f"--metadata-file={self.meta_path}/meta.yaml",
+            f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
             f"--csl={self.csl_path}/for-the-web.csl",
             "--filter=pandoc-crossref",
             f"--bibliography={self.refs_path}/refs.json",
@@ -513,16 +518,32 @@ class Document:
 
 
 def main():
+    
+    def file_path(path):
+        if os.path.isfile(path):
+            return path
+        else:
+            raise argparse.ArgumentTypeError(f"readable_dir:{path} is not a valid path")
 
     parser = argparse.ArgumentParser(description=ABOUT)
-    parser.add_argument("markdown_source", help="Path to a Markdown source file.")
-    parser.add_argument("--config", "-c", help="Path to config YAML file")
-
+    parser.add_argument("markdown_source", help="path to a Markdown source file")
+    parser.add_argument("--config", "-c", help="path to config YAML file", type=file_path)
+    parser.add_argument("--split-level", "-s", help="depth of split for HTML output", default=2, type=int)
+    parser.add_argument("--toc-level", "-t", help="depth of TOC", default=3, type=int)
+    parser.add_argument("--refs", "-r", help="references JSON file", type=file_path)
+    parser.add_argument("--html", "-H", help="enables HTML output", action="store_true", default=False)
+    parser.add_argument("--latex", "-L", help="enables LaTeX output", action="store_true", default=False)
     args = parser.parse_args()
 
     try:
-        doc = Document(args.markdown_source, args.config)
-        doc.to_html()
+        doc = Document(args.markdown_source, args.config, args.split_level, args.toc_level)
+        if(args.html):
+            doc.to_html()
+        if(args.latex):
+            doc.to_latex()
+        else:
+            print("Please give an output format. Example: --html.")
+        sys.exit(0)
     except (FileNotFoundError, ValueError, PermissionError) as e:
         print(f"Error: {e}")
         sys.exit(1)

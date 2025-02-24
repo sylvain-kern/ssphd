@@ -27,5 +27,4 @@ sectionsDepth: 3
 
 references-section-title: True
 link-citations: True
-bibliography: "_assets/refs/refs.json"
 notes-after-punctuation: True

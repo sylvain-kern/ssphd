@@ -1,4 +1,4 @@
 .vscode/
 *.egg-info/
 ssphd/__pycache__/
-output/
+out/
