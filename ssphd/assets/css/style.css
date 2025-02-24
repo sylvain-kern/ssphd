@@ -55,6 +55,21 @@
 
 :root[color-mode="dark"] {
     /* COLORS */
+    /* graysccale */
+    --color-background: #0d1117;
+    --color-lightergray: #02070f;
+    --color-lightgray: #141f30;
+    --color-midgray: #141f30;
+    --color-darkgray: #2e2c3d;
+    --color-darkergray: #a6a6c5;
+    --color-text: #d5d8e5;
+
+    /* highlights */
+    --color-main: #396eff;
+    --color-main-light: #051e65;
+    --color-main-lightest: #0e1123;
+
+    
 
 }
 
