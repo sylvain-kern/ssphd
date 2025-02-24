@@ -465,19 +465,21 @@ class Document:
     def to_latex(self):
         if not os.path.exists(self.out_latex_path):
             os.mkdir(self.out_latex_path)
+        args = [
+                f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
+                "--standalone",
+                "--filter=pandoc-crossref",
+                "--number-sections",
+            ]
+        if (self.refs_file):
+            args.append(f"--bibliography={self.refs_file}")
+            args.append("--citeproc")
         pypandoc.convert_text(
             self.ast,
             format = 'json',
             to = 'latex',
             outputfile = self.out_latex_path + 'main.tex',
-            extra_args = [
-                f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
-                "--standalone",
-                "--filter=pandoc-crossref",
-                f"--bibliography={self.refs_file}",
-                "--citeproc",
-                "--number-sections",
-            ]
+            extra_args = args
         )
 
     def to_html(self):
@@ -496,10 +498,14 @@ class Document:
             f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
             f"--csl={self.csl_path}/for-the-web.csl",
             "--filter=pandoc-crossref",
-            f"--bibliography={self.refs_file}",
-            "--citeproc",
         ])
-
+        
+        if (self.refs_file):
+            self.pipe([
+                f"--bibliography={self.refs_file}",
+                "--citeproc",
+            ])
+        
         # append doc meta to metadata file
         dico = json.loads(self.ast_html)
         self.meta = dico["meta"] | meta_before
@@ -513,7 +519,7 @@ class Document:
             self.graphs_filter,
         ])
         
-        self.chunk() 
+        self.chunk()
         self.generate_search_index()
 
 
