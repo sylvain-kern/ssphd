@@ -18,12 +18,12 @@ from urllib.parse import urlparse
 from .config import Config
 
 
-ABOUT = "A singls-source manuscript"
+ABOUT = "A single-source manuscript"
 
 
 class Document:
 
-    def __init__(self, source, config_file=None, split_level=2, toc_level=3):
+    def __init__(self, source, config_file=None, split_level=2, toc_level=3, refs_file=None):
         self.config = Config(config_file)
         # Use config's validation method
         self.config.validate_file(source)
@@ -48,7 +48,7 @@ class Document:
         self.fonts_path         = os.path.join(self.package_path, self.config.get_path('fonts'))
         self.js_path            = os.path.join(self.package_path, self.config.get_path('js'))
         # self.pictures_path  = os.path.join(self.root_path, self.config.get_path('pictures'))
-        self.refs_path          = os.path.join(self.root_path, self.config.get_path('refs'))
+        self.refs_file          = refs_file
         self.csl_path           = os.path.join(self.package_path, self.config.get_path('csl'))
         self.meta_path          = os.path.join(self.package_path, self.config.get_path('meta'))
         
@@ -183,7 +183,7 @@ class Document:
                 
                 self.search_documents.append(document)
                 
-        with open(f'{self.out_html_path}/_assets/documents.json', 'w', encoding='utf-8') as f:
+        with open(f"{os.path.join(self.out_html_path, '_assets', 'documents.json')}", 'w', encoding='utf-8') as f:
             json.dump(self.search_documents, f, indent=4)
                 
         shutil.rmtree('-/')
@@ -474,7 +474,7 @@ class Document:
                 f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
                 "--standalone",
                 "--filter=pandoc-crossref",
-                f"--bibliography={os.path.join(self.refs_path, 'refs.json')}",
+                f"--bibliography={self.refs_file}",
                 "--citeproc",
                 "--number-sections",
             ]
@@ -496,7 +496,7 @@ class Document:
             f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
             f"--csl={self.csl_path}/for-the-web.csl",
             "--filter=pandoc-crossref",
-            f"--bibliography={self.refs_path}/refs.json",
+            f"--bibliography={self.refs_file}",
             "--citeproc",
         ])
 
@@ -536,14 +536,18 @@ def main():
     args = parser.parse_args()
 
     try:
-        doc = Document(args.markdown_source, args.config, args.split_level, args.toc_level)
-        if(args.html):
-            doc.to_html()
-        if(args.latex):
-            doc.to_latex()
-        else:
+        doc = Document(args.markdown_source, args.config, args.split_level, args.toc_level, args.refs)
+        if not(args.html or args.latex):
             print("Please give an output format. Example: --html.")
-        sys.exit(0)
+            sys.exit(2)
+        else:
+            if(args.html):
+                print("Converting to HTML...")
+                doc.to_html()
+            if(args.latex):
+                print("Converting to LaTeX...")
+                doc.to_latex()
+            sys.exit(0)
     except (FileNotFoundError, ValueError, PermissionError) as e:
         print(f"Error: {e}")
         sys.exit(1)
