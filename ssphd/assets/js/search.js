@@ -20,43 +20,18 @@ function* zip(arrays) {
     }
 }
 
+var selectedIndex = -1;
+
 function clearResults() {
     list.innerHTML = ''
+    list.scrollIntoView()
+    selectedIndex = -1
 };
 
-function ctrl_k(e) {
-    if (e.ctrlKey && e.which == 75) {
-        if (focused) {
-            searchField.blur();
-            focused = false;
-        } else {
-            e.preventDefault();
-            searchField.focus();
-            searchField.select();
-            focused = true;
-        };
-    } else if (e.key == "Escape") {
-        searchField.blur();
-        resultsContainer.classList.add('inactive');
-        focused = false;
-    };
-};
-
-document.addEventListener("click", function(event) {
-    if (event.target.closest(".searchbar-container")) return
-    searchField.blur();
-    resultsContainer.classList.add('inactive');
-    focused = false;
-})
-document.addEventListener('keydown', ctrl_k, false);
-searchField.addEventListener('focus', function (e) {
-    resultsContainer.classList.remove('inactive');
-})
 
 document.addEventListener("DOMContentLoaded", function () {
     const input = document.querySelector(".searchbar input");
     const resultsList = document.getElementById("list");
-    let selectedIndex = -1;
 
     input.addEventListener("keydown", function (event) {
         const results = resultsList.querySelectorAll(".result-item");
@@ -83,6 +58,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    document.addEventListener("click", function(event) {
+        if (event.target.closest(".searchbar-container")) return
+        searchField.blur();
+        resultsContainer.classList.add('inactive');
+        focused = false;
+    })
+    document.addEventListener('keydown', ctrl_k, false);
+    searchField.addEventListener('focus', function (e) {
+        resultsContainer.classList.remove('inactive');
+    })
+    
+
     function updateSelection(results) {
         results.forEach((item, index) => {
             if (index === selectedIndex) {
@@ -93,6 +80,25 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    function ctrl_k(e) {
+        if (e.ctrlKey && e.which == 75) {
+            if (focused) {
+                searchField.blur();
+                focused = false;
+            } else {
+                e.preventDefault();
+                searchField.focus();
+                searchField.select();
+                focused = true;
+                selectedIndex = -1
+            };
+        } else if (e.key == "Escape") {
+            searchField.blur();
+            resultsContainer.classList.add('inactive');
+            focused = false;
+        };
+    };
 });
 
 
