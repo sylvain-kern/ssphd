@@ -13,6 +13,8 @@
 @import url(/_assets/fonts/inconsolata/inconsolata.css);
 
 :root[color-mode="light"] {
+    color-scheme: light;
+
     /* COLORS */
     /* light */
 
@@ -58,6 +60,7 @@
 }
 
 :root[color-mode="dark"] {
+    color-scheme: dark;
     /* COLORS */
     /* grayscale */
     --color-background: #0d1117;
