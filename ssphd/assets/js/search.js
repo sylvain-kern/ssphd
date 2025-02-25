@@ -44,12 +44,56 @@ function ctrl_k(e) {
 
 document.addEventListener("click", function(event) {
     if (event.target.closest(".searchbar-container")) return
+    searchField.blur();
     resultsContainer.classList.add('inactive');
+    focused = false;
 })
 document.addEventListener('keydown', ctrl_k, false);
 searchField.addEventListener('focus', function (e) {
     resultsContainer.classList.remove('inactive');
 })
+
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.querySelector(".searchbar input");
+    const resultsList = document.getElementById("list");
+    let selectedIndex = -1;
+
+    input.addEventListener("keydown", function (event) {
+        const results = resultsList.querySelectorAll(".result-item");
+        if (results.length === 0) return;
+
+        if (event.key === "ArrowDown") {
+            event.preventDefault();
+            if (selectedIndex < results.length - 1) {
+                selectedIndex++;
+                updateSelection(results);
+            }
+        } else if (event.key === "ArrowUp") {
+            event.preventDefault();
+            if (selectedIndex > 0) {
+                selectedIndex--;
+                updateSelection(results);
+            }
+        } else if (event.key === "Enter" && selectedIndex !== -1) {
+            event.preventDefault();
+            const selectedItem = results[selectedIndex].querySelector("a");
+            if (selectedItem) {
+                window.location.href = selectedItem.href; // Follow the link
+            }
+        }
+    });
+
+    function updateSelection(results) {
+        results.forEach((item, index) => {
+            if (index === selectedIndex) {
+                item.classList.add("selected");
+                item.scrollIntoView({ block: "nearest", behavior: "smooth" }); // Ensure visibility
+            } else {
+                item.classList.remove("selected");
+            }
+        });
+    }
+});
 
 
 function displayResultFull (field, item, rest, fieldsPositions) {

@@ -31,12 +31,12 @@
     --color-main-lightest: #e5ebf6;
 
     /* plotting - qualitative */
-    --color-qualitiative-blue: #077cc0;
-    --color-qualitiative-red: #c92c3c;
-    --color-qualitiative-yellow: #f5ab00;
-    --color-qualitiative-green: #00ad6b;
-    --color-qualitiative-purple: #8010D1;
-    --color-qualitiative-orange: #e46521;
+    --color-qualitative-blue: #077cc0;
+    --color-qualitative-red: #c92c3c;
+    --color-qualitative-yellow: #f5ab00;
+    --color-qualitative-green: #00ad6b;
+    --color-qualitative-purple: #8010D1;
+    --color-qualitative-orange: #e46521;
 
     /* plotting - sequential */
     --color-sequential-01: #0069b1;
@@ -51,26 +51,31 @@
     --color-sequential-10: #d2e5b3;
     --color-sequential-11: #e9f2b3;
     --color-sequential-12: #ffffb3;
+
+    /* shadows */
+    --shadow-small: 0px 0px 5px var(--color-midgray);
+    --shadow-sidebar: -30px 0px 50px var(--color-darkergray);
 }
 
 :root[color-mode="dark"] {
     /* COLORS */
-    /* graysccale */
+    /* grayscale */
     --color-background: #0d1117;
-    --color-lightergray: #02070f;
+    --color-lightergray: #010409;
     --color-lightgray: #141f30;
-    --color-midgray: #141f30;
-    --color-darkgray: #2e2c3d;
+    --color-midgray: #222d3d;
+    --color-darkgray: #4c4862;
     --color-darkergray: #a6a6c5;
     --color-text: #d5d8e5;
 
     /* highlights */
     --color-main: #396eff;
     --color-main-light: #051e65;
-    --color-main-lightest: #0e1123;
+    --color-main-lightest: #030d1d;
 
-    
-
+    /* shadows */
+    --shadow-small: 0px 0px 0px transparent;
+    --shadow-sidebar: 0px 0px 0px transparent;
 }
 
 :root {
@@ -153,6 +158,9 @@
     /* HERO GRID */
     --hero-width: min(95%, 1000px);
     --hero-grid: repeat(4, 1fr);
+
+    /* BLUR */
+    --background-blur: color-mix(in srgb, var(--color-background) 70%, transparent);
 }
 
 /* NOTE SYMBOLS */
@@ -293,7 +301,7 @@ main {
 .searchbar input:focus {
     background-color: var(--color-background);
     border: 2px solid var(--color-main);
-    box-shadow: 0px 0px 5px var(--color-midgray);
+    box-shadow: var(--shadow-small);
     color: var(--color-text);
 }
 
@@ -351,7 +359,7 @@ kbd {
     padding-top: calc(2*var(--space-xs) + var(--space-ml));
     font-size: var(--font-size-s);
     z-index: 0;
-    box-shadow: 0px 0px 5px var(--color-midgray);
+    box-shadow: var(--shadow-small);
     overflow-y: hidden;
 }
 
@@ -378,11 +386,11 @@ kbd {
     border-bottom: none;
 }
 
-.search-results-list li a:hover {
+.search-results-list li a:hover, .search-results-list li.selected {
     background-color: var(--color-lightergray);
 }
 
-.search-results-list li a:hover .search-result-title {
+.search-results-list li a:hover .search-result-title, .search-results-list li.selected .search-result-title {
     color: var(--color-main);
 }
 
@@ -599,8 +607,8 @@ footer {
     gap: var(--space-xs);
 }
 
-.light-dark-switch, .burger {
-    font-size: var(--font-size-ms);
+#light-dark-switch, .burger {
+    font-size: var(--font-size-m);
 }
 
 .buttons-top > * {
@@ -608,7 +616,8 @@ footer {
     border-radius: 50ch;
     display: flex;
     padding: 2px;
-    background-color: var(--color-background);
+    background-color: var(--background-blur);
+    backdrop-filter: blur(8px);
 }
 
 .buttons-top .breadcrumbs {
@@ -1015,7 +1024,7 @@ pre.numberLines > code > span {
 }
 
 .lang-copy .copy {
-    padding: 0px var(--space-s);
+    padding: 0px var(--space-xs);
     border-top-right-radius: var(--border-radius-xs);
     border-bottom-right-radius: var(--border-radius-xs);
     color: var(--color-darkgray);
@@ -1026,7 +1035,7 @@ pre.numberLines > code > span {
 }
 
 .lang-copy .copy .bx-check {
-    color: var(--color-qualitiative-green);
+    color: var(--color-qualitative-green);
 }
 
 
@@ -1091,12 +1100,6 @@ figcaption {
     line-height: var(--note-line-height);
     font-size: var(--font-size-s);
     text-align: left;
-}
-
-.sidenote a,
-figcaption a,
-caption a {
-    color: var(--color-darkergray);
 }
 
 input.margin-toggle {
@@ -1485,7 +1488,7 @@ hr::before {
     .sidebar {
         transform: translateX(-110%);
         transition: .4s cubic-bezier(0.05, 0.7, 0.1, 1.0);
-        box-shadow: -30px 0px 50px var(--color-darkergray);
+        box-shadow: var(--shadow-sidebar);
         z-index: 1;
         /* height: calc(100vh - var(--space-l)); */
         height: 100vh;
@@ -1657,6 +1660,13 @@ hr::before {
         margin-left: calc(0px - var(--content-margin-left));
         width: 100vw !important;
         max-width: none;
+        border-left: none;
+        border-right: none;
+    }
+
+    pre {
+        padding-left: var(--content-margin-left);
+        padding-right: var(--content-margin-right);
     }
 
     section > div > .table-wrapper, section > .table-wrapper {
