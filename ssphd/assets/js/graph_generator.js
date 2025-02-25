@@ -27,6 +27,29 @@ function legendFormatter(data) {
   return html;
 }
 
+function kmb (x) {
+  if (x >= 1e9) {
+    // For billions
+    return (x / 1e9).toFixed(2).replace(/\.00$/, '') + 'G';
+  } else if (x >= 1e6) {
+    // For millions
+    return (x / 1e6).toFixed(2).replace(/\.00$/, '') + 'M';
+  } else if (x >= 1e3) {
+    // For thousands
+    return (x / 1e3).toFixed(2).replace(/\.00$/, '') + 'K';
+  } else if (x < 1 && x >= 1e-3) {
+    // For milli (m)
+    return (x * 1e3).toFixed(2).replace(/\.00$/, '') + 'm';
+  } else if (x < 1e-3 && x >= 1e-6) {
+    // For micro (µ)
+    return (x * 1e6).toFixed(2).replace(/\.00$/, '') + 'µ';
+  } else if (x < 1e-6 && x >= 1e-9) {
+    // For nano (n)
+    return (x * 1e9).toFixed(2).replace(/\.00$/, '') + 'n';
+  }
+  return x; // Return the number without formatting if it's near 1
+}
+
 function generateGraph(id, data, xdata='', ydata='', xlabel, ylabel, legendPosition='graph') {
 
     // getting the colors
@@ -42,17 +65,18 @@ function generateGraph(id, data, xdata='', ydata='', xlabel, ylabel, legendPosit
     };
     let default_options = {
         colors: [
-          style.getPropertyValue('--color-qualitiative-blue'),
-          style.getPropertyValue('--color-qualitiative-red'),
-          style.getPropertyValue('--color-qualitiative-yellow'),
-          style.getPropertyValue('--color-qualitiative-green'),
-          style.getPropertyValue('--color-qualitiative-purple'),
-          style.getPropertyValue('--color-qualitiative-orange'),
+          style.getPropertyValue('--color-qualitative-blue'),
+          style.getPropertyValue('--color-qualitative-red'),
+          style.getPropertyValue('--color-qualitative-yellow'),
+          style.getPropertyValue('--color-qualitative-green'),
+          style.getPropertyValue('--color-qualitative-purple'),
+          style.getPropertyValue('--color-qualitative-orange'),
         ],
         /* legend: 'always', */
         animatedZooms: true,
         labelsSeparateLines: true,
         legendFormatter: legendFormatter,
+        strokeWidth: 1.5,
         // highlightSeriesOpts: {
         //   strokeWidth: 2,
         //   strokeBorderColor: style.getPropertyValue("--color-background"),
@@ -61,19 +85,23 @@ function generateGraph(id, data, xdata='', ydata='', xlabel, ylabel, legendPosit
         // },
         highlightSeriesBackgroundAlpha: 1,
         highlightCircleSize: 2,
+        xRangePad: 15,
+        yRangePad: 15,
         //highlightCircleBorderWidth: 1,
-        labelsKMB: true,
         legend: 'always',
+        // labelsKMB: true,
         axes: {
           x: {
             drawAxis: true,
-            axisLineColor: style.getPropertyValue('--color-text'),
+            axisLineColor: style.getPropertyValue('--color-darkergray'),
             axisLineWidth: 0.5,
-          },
+            axisLabelFormatter: kmb
+          },  
           y: {
             drawAxis: true,
-            axisLineColor: style.getPropertyValue('--color-text'),
-            axisLineWidth: 0.5
+            axisLineColor: style.getPropertyValue('--color-darkergray'),
+            axisLineWidth: 0.5,
+            axisLabelFormatter: kmb
           }
         },
         gridLineColor: style.getPropertyValue('--color-darkgray'),

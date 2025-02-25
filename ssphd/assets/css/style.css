@@ -61,6 +61,7 @@
 
 :root[color-mode="dark"] {
     color-scheme: dark;
+
     /* COLORS */
     /* grayscale */
     --color-background: #0d1117;
@@ -75,6 +76,14 @@
     --color-main: #396eff;
     --color-main-light: #051e65;
     --color-main-lightest: #030d1d;
+
+    /* plotting - qualitative */
+    --color-qualitative-blue: #13A3F6;
+    --color-qualitative-red: #EF5262;
+    --color-qualitative-yellow: #FFBC1F;
+    --color-qualitative-green: #00F597;
+    --color-qualitative-purple: #B654FC;
+    --color-qualitative-orange: #FE8848;
 
     /* shadows */
     --shadow-small: 0px 0px 0px transparent;
@@ -375,6 +384,7 @@ kbd {
     overflow-x: hidden;
     max-height: calc(100vh - 1.8*var(--space-xh));
     border-bottom: 1px solid var(--color-midgray);
+    color: var(--color-darkergray);
 }
 
 .search-results-list li a {
@@ -391,10 +401,7 @@ kbd {
 
 .search-results-list li a:hover, .search-results-list li.selected {
     background-color: var(--color-lightergray);
-}
-
-.search-results-list li a:hover .search-result-title, .search-results-list li.selected .search-result-title {
-    color: var(--color-main);
+    color: var(--color-text);
 }
 
 .search-result-path {
@@ -452,7 +459,6 @@ kbd {
     color: var(--color-darkergray);
     align-items: center;
     padding: var(--space-xs) var(--space-s);
-    padding-bottom: 0px;
     user-select: none;
     position: sticky;
     bottom: 0px;
@@ -472,7 +478,6 @@ kbd {
 
 .search-helper > span {
     margin-right: 1em;
-    margin-bottom: var(--space-xs);
     display: inline-block;
     display: flex;
     flex-direction: row;

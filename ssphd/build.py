@@ -184,6 +184,22 @@ class Document:
             json.dump(self.search_documents, f, indent=4)
                 
         shutil.rmtree('-/')
+        
+    
+    def rearrange_columns(self, input_csv, output_csv, columns_order):
+        # Open the input CSV file for reading
+        with open(input_csv, mode='r', newline='') as infile:
+            reader = csv.DictReader(infile)
+
+            # Open the output CSV file for writing
+            with open(output_csv, mode='w', newline='') as outfile:
+                writer = csv.DictWriter(outfile, fieldnames=columns_order)
+                writer.writeheader()  # Write the header with the new column order
+
+                # Write the rows with the columns rearranged
+                for row in reader:
+                    reordered_row = {col: row[col] for col in columns_order}
+                    writer.writerow(reordered_row)
 
     # GRAPHS
     def graphs_filter(self, key, value, format, meta):
@@ -199,12 +215,16 @@ class Document:
                 xcolumn = columns[0]
                 ycolumns = ', '.join(columns[1:])
                 kwargs = {}
-                kwargs['xlabel'] = xcolumn
-                kwargs['ylabel'] = columns[2]
+                kwargs['x'] = xcolumn
+                kwargs['y'] = ycolumns
                 kwargs['legendPosition'] = 'graph'
                 for keyval in keyvals:
                     kwargs[keyval[0]] = keyval[1]
-                
+                if "xlabel" not in kwargs:
+                    kwargs['xlabel'] = kwargs['x']
+                if "ylabel" not in kwargs:
+                    kwargs['ylabel'] = kwargs['y'].split(', ')[0]
+
                 # formatting the graph
                 graph_id = f"dygraph_{self.graph_count}"
                 self.graph_count += 1
@@ -213,13 +233,18 @@ class Document:
                 data_dir = os.path.join(self.root_path, 'tmp', 'data')
                 os.makedirs(data_dir, exist_ok=True)
 
+                print(kwargs['x'])
+                print(kwargs['xlabel'])
+                print(kwargs['y'])
+                print(kwargs['ylabel'])
+                print()
                 # # Copy CSV file to assets
-                shutil.copy2(filename, data_dir)
+                self.rearrange_columns(filename, os.path.join(data_dir, f'{os.path.basename(filename)[:-4]}-graph_{self.graph_count}.csv'), [kwargs['x']] + kwargs['y'].split(', '))
                 
                 # Create graph script with proper relative paths
-                graph_script = f"""
+                graph_script = f""" 
                     var {graph_id} = generateGraph(id="{graph_id}", 
-                        data="/_assets/data/{os.path.basename(filename)}", 
+                        data="/_assets/data/{os.path.basename(filename)[:-4]}-graph_{self.graph_count}.csv", 
                         xdata="{xcolumn}",
                         ydata="{ycolumns}", 
                         xlabel="{kwargs['xlabel']}", 
@@ -227,6 +252,8 @@ class Document:
                         legendPosition="{kwargs['legendPosition']}"
                     );
                 """
+                
+                graph_script = 'document.addEventListener("DOMContentLoaded", (event) => {' + graph_script + '});'
                 
                 # Save script file
                 # graph_file = os.path.join(graphs_dir, f'graph{self.graph_count}.js')
