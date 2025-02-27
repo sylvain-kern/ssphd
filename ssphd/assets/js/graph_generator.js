@@ -50,7 +50,7 @@ function kmb (x) {
   return x; // Return the number without formatting if it's near 1
 }
 
-function generateGraph(id, data, xdata='', ydata='', xlabel, ylabel, legendPosition='graph') {
+function generateGraph(id, data, xlabel, ylabel, legendPosition='graph', kmblabels=true) {
 
     // getting the colors
     var style = getComputedStyle(document.documentElement)
@@ -64,51 +64,53 @@ function generateGraph(id, data, xdata='', ydata='', xlabel, ylabel, legendPosit
       legendId = '';
     };
     let default_options = {
-        colors: [
-          style.getPropertyValue('--color-qualitative-blue'),
-          style.getPropertyValue('--color-qualitative-red'),
-          style.getPropertyValue('--color-qualitative-yellow'),
-          style.getPropertyValue('--color-qualitative-green'),
-          style.getPropertyValue('--color-qualitative-purple'),
-          style.getPropertyValue('--color-qualitative-orange'),
-        ],
-        /* legend: 'always', */
-        animatedZooms: true,
-        labelsSeparateLines: true,
-        legendFormatter: legendFormatter,
-        strokeWidth: 1.5,
-        // highlightSeriesOpts: {
-        //   strokeWidth: 2,
-        //   strokeBorderColor: style.getPropertyValue("--color-background"),
-        //   strokeBorderWidth: 1.5,
-        //   highlightCircleSize: 3
-        // },
-        highlightSeriesBackgroundAlpha: 1,
-        highlightCircleSize: 2,
-        xRangePad: 15,
-        yRangePad: 15,
-        //highlightCircleBorderWidth: 1,
-        legend: 'always',
-        // labelsKMB: true,
-        axes: {
-          x: {
-            drawAxis: true,
-            axisLineColor: style.getPropertyValue('--color-darkergray'),
-            axisLineWidth: 0.5,
-            axisLabelFormatter: kmb
-          },  
-          y: {
-            drawAxis: true,
-            axisLineColor: style.getPropertyValue('--color-darkergray'),
-            axisLineWidth: 0.5,
-            axisLabelFormatter: kmb
-          }
-        },
-        gridLineColor: style.getPropertyValue('--color-darkgray'),
-        gridLinePattern: [5, 5],
-        gridLineWidth: 0.5,
-        labelsDiv: legendId,
-      };
+      colors: [
+        style.getPropertyValue('--color-qualitative-blue'),
+        style.getPropertyValue('--color-qualitative-red'),
+        style.getPropertyValue('--color-qualitative-yellow'),
+        style.getPropertyValue('--color-qualitative-green'),
+        style.getPropertyValue('--color-qualitative-purple'),
+        style.getPropertyValue('--color-qualitative-orange'),
+      ],
+      /* legend: 'always', */
+      animatedZooms: true,
+      labelsSeparateLines: true,
+      legendFormatter: legendFormatter,
+      strokeWidth: 1.5,
+      // highlightSeriesOpts: {
+      //   strokeWidth: 2,
+      //   strokeBorderColor: style.getPropertyValue("--color-background"),
+      //   strokeBorderWidth: 1.5,
+      //   highlightCircleSize: 3
+      // },
+      highlightSeriesBackgroundAlpha: 1,
+      highlightCircleSize: 2,
+      xRangePad: 15,
+      yRangePad: 15,
+      //highlightCircleBorderWidth: 1,
+      legend: 'always',
+      // labelsKMB: true,
+      axes: {
+        x: {
+          drawAxis: true,
+          axisLineColor: style.getPropertyValue('--color-darkergray'),
+          axisLineWidth: 0.5,
+        },  
+        y: {
+          drawAxis: true,
+          axisLineColor: style.getPropertyValue('--color-darkergray'),
+          axisLineWidth: 0.5,
+        }
+      },
+      gridLineColor: style.getPropertyValue('--color-darkgray'),
+      gridLinePattern: [5, 5],
+      gridLineWidth: 0.5,
+      labelsDiv: legendId,
+    };
+    if (kmblabels) {
+      default_options.axes.x.axisLabelFormatter = kmb
+      default_options.axes.y.axisLabelFormatter = kmb
+    }
     let graph = new Dygraph(
         document.getElementById(id),
         data,

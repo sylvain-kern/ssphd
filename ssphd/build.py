@@ -218,6 +218,7 @@ class Document:
                 kwargs['x'] = xcolumn
                 kwargs['y'] = ycolumns
                 kwargs['legendPosition'] = 'graph'
+                kwargs['kmb'] = 'true'
                 for keyval in keyvals:
                     kwargs[keyval[0]] = keyval[1]
                 if "xlabel" not in kwargs:
@@ -232,12 +233,7 @@ class Document:
                 # Ensure the graphs directory exists
                 data_dir = os.path.join(self.root_path, 'tmp', 'data')
                 os.makedirs(data_dir, exist_ok=True)
-
-                print(kwargs['x'])
-                print(kwargs['xlabel'])
-                print(kwargs['y'])
-                print(kwargs['ylabel'])
-                print()
+                
                 # # Copy CSV file to assets
                 self.rearrange_columns(filename, os.path.join(data_dir, f'{os.path.basename(filename)[:-4]}-graph_{self.graph_count}.csv'), [kwargs['x']] + kwargs['y'].split(', '))
                 
@@ -245,11 +241,10 @@ class Document:
                 graph_script = f""" 
                     var {graph_id} = generateGraph(id="{graph_id}", 
                         data="/_assets/data/{os.path.basename(filename)[:-4]}-graph_{self.graph_count}.csv", 
-                        xdata="{xcolumn}",
-                        ydata="{ycolumns}", 
                         xlabel="{kwargs['xlabel']}", 
                         ylabel="{kwargs['ylabel']}", 
-                        legendPosition="{kwargs['legendPosition']}"
+                        legendPosition="{kwargs['legendPosition']}",
+                        kmblabels={kwargs["kmb"]}
                     );
                 """
                 

@@ -30,7 +30,7 @@
   line-height: var(--base-line-height);
   text-align: left;
   overflow: hidden;
-  color: var(--color-text);
+  color: var(--color-darkergray);
   font-weight: 500;
   font-size: var(--font-size-xs);
 }
@@ -38,7 +38,6 @@
 .x-data-line,
 .y-data-line {
   display: flex;
-  /* border: 1px solid blue; */
   align-items: baseline;
   margin-left: var(--space-m);
 }
@@ -115,6 +114,8 @@
   z-index: 1;
   line-height: 1;
   overflow: hidden;
+  color: var(--color-darkergray);
+  font-weight: 500;
 }
 
 .dygraph-axis-label-x {
@@ -134,6 +135,7 @@
 
 .dygraph-xlabel {
   text-align: center;
+  color: var(--color-darkergray);
   font-size: var(--font-size-s);
   font-weight: 500;
 }
@@ -148,6 +150,7 @@
   -o-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   font-size: var(--font-size-s);
+  color: var(--color-darkergray);
   font-weight: 500;
 }
 
@@ -161,5 +164,6 @@
   -o-transform: rotate(-90deg);
   -ms-transform: rotate(-90deg);
   font-size: var(--font-size-s);
+  color: var(--color-darkergray);
   font-weight: 500;
 }

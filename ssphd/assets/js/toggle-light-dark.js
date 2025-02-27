@@ -17,13 +17,11 @@ function applyPreferredColorScheme() {
 }
 
 // toggle
-
 function toggleMode() {
     const currentMode = htmltag.getAttribute("color-mode");
-
     const newMode = currentMode === "light" ? "dark" : "light";
-
     setMode(newMode);
+    location.reload();
 }
 
 function setMode(mode) {
@@ -43,9 +41,7 @@ function setMode(mode) {
 }
 
 // apply preferred theme 
-
 applyPreferredColorScheme();
 
 // eventlistener
-
 toggleButton.addEventListener("click", toggleMode);
