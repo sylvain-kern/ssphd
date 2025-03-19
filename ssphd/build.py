@@ -35,11 +35,11 @@ class Document:
         self.root_path      = os.path.dirname(os.path.abspath(self.source_file))
         
         # Get base name without extension
-        base_name = os.path.splitext(os.path.basename(self.source_file))[0]
+        self.base_name = os.path.splitext(os.path.basename(self.source_file))[0]
         
         # Create output paths using config and base name
-        self.out_html_path      = os.path.join(self.root_path, 'out/'+base_name, self.config.get_path('output_html'))
-        self.out_latex_path     = os.path.join(self.root_path, 'out/'+base_name, self.config.get_path('output_latex'))
+        self.out_html_path      = os.path.join(self.root_path, 'out/'+self.base_name, self.config.get_path('output_html'))
+        self.out_latex_path     = os.path.join(self.root_path, 'out/'+self.base_name, self.config.get_path('output_latex'))
         
         # Use config paths
         self.templates_path     = os.path.join(self.package_path, self.config.get_path('templates'))
@@ -486,7 +486,9 @@ class Document:
                 f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
                 "--standalone",
                 "--filter=pandoc-crossref",
+                "--top-level-division=chapter",
                 "--number-sections",
+                f"--template={os.path.join(self.templates_path, 'template-la.tex')}"
             ]
         if (self.refs_file):
             args.append(f"--bibliography={self.refs_file}")
@@ -495,7 +497,7 @@ class Document:
             self.ast,
             format = 'json',
             to = 'latex',
-            outputfile = self.out_latex_path + 'main.tex',
+            outputfile = os.path.join(self.out_latex_path, f'{self.base_name}.tex'),
             extra_args = args
         )
 
@@ -524,7 +526,6 @@ class Document:
             ])
         
         # append doc meta to metadata file
-        dico = json.loads(self.ast_html)
         self.meta = dico["meta"] | meta_before
         dico["meta"] = self.meta
         self.ast_html = json.dumps(dico)
