@@ -201,6 +201,18 @@ class Document:
                     reordered_row = {col: row[col] for col in columns_order}
                     writer.writerow(reordered_row)
 
+    # SVG
+    def inline_svg_filter(self, key, value, format, meta):
+        if key == 'Image':
+            [ident, stuff, keyvals], caption, [filename, typef] = value
+            if filename.split('.')[-1] == 'svg':
+                if os.path.exists(filename):
+                    # Read the SVG file content
+                    with open(filename, "r", encoding="utf-8") as f:
+                        svg_content = f.read()
+                    return pf.RawInline("html", svg_content)
+        return None
+
     # GRAPHS
     def graphs_filter(self, key, value, format, meta):
         if key == 'Image':
@@ -487,6 +499,7 @@ class Document:
                 "--standalone",
                 "--filter=pandoc-crossref",
                 "--top-level-division=chapter",
+                "--toc",
                 "--number-sections",
                 f"--template={os.path.join(self.templates_path, 'template-la.tex')}"
             ]
@@ -535,6 +548,7 @@ class Document:
             self.get_abbreviation_dict,
             self.replace_abbreviations,
             self.graphs_filter,
+            self.inline_svg_filter
         ])
         
         self.chunk()
