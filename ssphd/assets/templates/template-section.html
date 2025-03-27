@@ -155,22 +155,97 @@ $endif$
     <main class="hero">
         <header>
             <h1>$title$</h1>
-            $author$
-            $date$
+            <div class="author">$author$</div>
+            <div class="date">$date$</div>
         </header>
         $if(abstract)$
-        <div class="abstract">
-            <div class="abstract-title">
-                $abstract-title$
+        <div class="abstract-search">
+            <div class="abstract">
+                <h2 class="abstract-title">
+                    $abstract-title$
+                </h2>
+                <div class="abstract-content">
+                    $abstract$
+                </div>
             </div>
-            <div class="abstract-content">
-                $abstract$
+            <div class="search-cta">
+                <div class="search-container">
+                    <div class="searchbar-container">
+                        <div class="searchbar">
+                            <input type="text" placeholder="Search">
+                            <span class="ctrl-k">
+                                <kbd class="ctrl">Ctrl</kbd>
+                                +
+                                <kbd class="k">K</kbd>
+                            </span>
+                        </div>
+                        <div class="results-container">
+                            <ul id="list" class="search-results-list"></ul>
+                            <div class="search-helper">
+                                <span>
+                                    <kbd class="up">↑</kbd>
+                                    <kbd class="down">↓</kbd>
+                                    <span>navigate</span>
+                                </span>
+                                <span>
+                                    <kbd class="enter">↩</kbd>
+                                    <span>select</span>
+                                </span>
+                                <span>
+                                    <kbd class="esc">Esc</kbd>
+                                    <span>close</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        $else$
+        <div class="just-search">
+            <div class="search-container">
+                <div class="searchbar-container">
+                    <div class="searchbar">
+                        <input type="text" placeholder="Search">
+                        <span class="ctrl-k">
+                            <kbd class="ctrl">Ctrl</kbd>
+                            +
+                            <kbd class="k">K</kbd>
+                        </span>
+                    </div>
+                    <div class="results-container">
+                        <ul id="list" class="search-results-list"></ul>
+                        <div class="search-helper">
+                            <span>
+                                <kbd class="up">↑</kbd>
+                                <kbd class="down">↓</kbd>
+                                <span>navigate</span>
+                            </span>
+                            <span>
+                                <kbd class="enter">↩</kbd>
+                                <span>select</span>
+                            </span>
+                            <span>
+                                <kbd class="esc">Esc</kbd>
+                                <span>close</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         $endif$
-        <nav>
-            $table-of-contents$
-        </nav>
+        <div class="contents">
+            <h2>$if(toc-title)$
+                $toc-title$
+                $else$
+                Contents
+                $endif$
+            </h2>
+            <nav>
+                $table-of-contents$
+            </nav>
+        </div>
     </main>
     $endif$
 
