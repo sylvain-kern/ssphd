@@ -207,6 +207,12 @@ class Document:
             [ident, stuff, keyvals], caption, [filename, typef] = value
             if filename.split('.')[-1] == 'svg':
                 if os.path.exists(filename):
+                    if(filename.startswith('./')):
+                        filename = filename[2:]
+                    # Copy the SVG image into the assets folder for download
+                    os.makedirs(os.path.join(self.out_html_path, '_assets', *os.path.split(filename)[:-1]), exist_ok=True)
+                    out_svg_path = os.path.join(self.out_html_path, '_assets', filename)
+                    shutil.copyfile(filename, out_svg_path)
                     # Read the SVG file content
                     with open(filename, "r", encoding="utf-8") as f:
                         svg_content = f.read()
@@ -331,13 +337,13 @@ class Document:
             return transformed
         
         # Remove old root_path variable and use self.out_html_path instead
-        if os.path.exists(self.out_html_path):
-            shutil.rmtree(self.out_html_path)
-        os.makedirs(self.out_html_path)
+        # if os.path.exists(self.out_html_path):
+        #     shutil.rmtree(self.out_html_path)
+        os.makedirs(self.out_html_path, exist_ok=True)
         # os.makedirs(os.path.join(self.out_html_path, '_assets', 'graphs'), exist_ok=True)
-        shutil.copytree(self.css_path, os.path.join(self.out_html_path, '_assets', 'css'))
-        shutil.copytree(self.js_path, os.path.join(self.out_html_path, '_assets', 'js'))
-        shutil.copytree(self.fonts_path, os.path.join(self.out_html_path, '_assets', 'fonts'))
+        shutil.copytree(self.css_path, os.path.join(self.out_html_path, '_assets', 'css'), dirs_exist_ok=True)
+        shutil.copytree(self.js_path, os.path.join(self.out_html_path, '_assets', 'js'), dirs_exist_ok=True)
+        shutil.copytree(self.fonts_path, os.path.join(self.out_html_path, '_assets', 'fonts'), dirs_exist_ok=True)
         
         # generate files
         template_name = os.path.join(self.templates_path, 'template-section.html')
