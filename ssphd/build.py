@@ -248,17 +248,20 @@ class Document:
                 graph_id = f"dygraph_{self.graph_count}"
                 self.graph_count += 1
                 
-                # Ensure the graphs directory exists
-                data_dir = os.path.join(self.root_path, 'tmp', 'data')
-                os.makedirs(data_dir, exist_ok=True)
+                if(filename.startswith('./')):
+                    filename = filename[2:]
+                
+                os.makedirs(os.path.join(self.out_html_path, '_assets', *os.path.split(filename)[:-1]), exist_ok=True)
+                out_data_path = os.path.join(self.out_html_path, '_assets', f'{filename[:-4]}-graph_{self.graph_count}.csv')
+                shutil.copyfile(filename, out_data_path)
                 
                 # # Copy CSV file to assets
-                self.rearrange_columns(filename, os.path.join(data_dir, f'{os.path.basename(filename)[:-4]}-graph_{self.graph_count}.csv'), [kwargs['x']] + kwargs['y'].split(', '))
+                self.rearrange_columns(filename, out_data_path, [kwargs['x']] + kwargs['y'].split(', '))
                 
                 # Create graph script with proper relative paths
                 graph_script = f""" 
                     var {graph_id} = generateGraph(id="{graph_id}", 
-                        data="/_assets/data/{os.path.basename(filename)[:-4]}-graph_{self.graph_count}.csv", 
+                        data="/_assets/{filename[:-4]}-graph_{self.graph_count}.csv", 
                         xlabel="{kwargs['xlabel']}", 
                         ylabel="{kwargs['ylabel']}", 
                         legendPosition="{kwargs['legendPosition']}",
@@ -331,7 +334,8 @@ class Document:
                         process_section(subsection, section_id)
 
             for section in track(input_json["subsections"], description = 'Extracting structure'):
-                process_section(section, None)
+                if section["section"]["level"] == "1":
+                    process_section(section, None)
             # Process the root section and its subsections
             
             return transformed
@@ -418,9 +422,9 @@ class Document:
 
         shutil.rmtree('-/')
         
-        if os.path.exists(os.path.join(self.root_path, 'tmp', 'data')):
-            shutil.copytree(os.path.join(self.root_path, 'tmp', 'data'), os.path.join(self.out_html_path, '_assets', 'data'))
-            shutil.rmtree('tmp')
+        # if os.path.exists(os.path.join(self.root_path, 'tmp', 'data')):
+        #     shutil.copytree(os.path.join(self.root_path, 'tmp', 'data'), os.path.join(self.out_html_path, '_assets', 'data'))
+        #     shutil.rmtree('tmp')
         
     def post_process(self, soup, titles, paths):
          # breadcrumbs
