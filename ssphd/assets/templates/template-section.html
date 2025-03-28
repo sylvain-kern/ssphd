@@ -123,7 +123,7 @@ $endif$
                     <i class='bx bx-download'></i>
                 </button>
             </div>
-          </div>
+        </div>
 
         $body$
 
@@ -153,6 +153,22 @@ $endif$
 
     $else$ $-- index.html
     <main class="hero">
+        <div class="buttons-top">
+            <div class="buttons-right">
+                <button id="light-dark-switch" type="button" title="Switch to dark mode" accesskey="d">
+                    <i class='bx bx-moon'></i>
+                </button>
+                <a href='$previous.url$' class="previous" title="Previous: $previous.title$" accesskey="p">
+                    <i class='bx bx-chevron-left' ></i>
+                </a>
+                <a href='$next.url$' class="next" title="Next: $next.title$" accesskey="d">
+                    <i class='bx bx-chevron-right'></i>
+                </button>
+                <a href="" class="dl" title="Download pdf" accesskey="s">
+                    <i class='bx bx-download'></i>
+                </button>
+            </div>
+        </div>
         <header>
             <h1>$title$</h1>
             <div class="author">$author$</div>

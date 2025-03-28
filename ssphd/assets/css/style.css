@@ -26,6 +26,7 @@
     --color-darkgray: #a6a6c5;
     --color-darkergray: #6f6f83;
     --color-text: #2e2e33;
+    --color-full-contrast: #000;
 
     /* highlights */
     --color-main: #1c58c6;
@@ -71,6 +72,7 @@
     --color-darkgray: #4c4862;
     --color-darkergray: #a6a6c5;
     --color-text: #d5d8e5;
+    --color-full-contrast: #fff;
 
     /* highlights */
     --color-main: #396eff;
@@ -169,8 +171,8 @@
     --buttons-thickness: var(--space-ml);
 
     /* HERO GRID */
-    --hero-width: min(95%, 1000px);
-    --hero-grid: repeat(4, 1fr);
+    --hero-width: calc(100vw - var(--sidebar-margin-left) - var(--content-margin-right));
+    --hero-grid: repeat(6, 1fr);
 
     /* BLUR */
     --background-blur: color-mix(in srgb, var(--color-background) 70%, transparent);
@@ -215,10 +217,25 @@ body {
     min-height: 100vh;
 }
 
+/* HERO-SPECIFIC */
+
 .hero {
-    margin: auto;
+    margin-left: var(--sidebar-margin-left);
+    margin-right: var(--content-margin-right);
     margin-top: var(--content-margin-top);
     width: var(--hero-width);
+    padding-top: 0px;
+}
+
+.hero .buttons-top {
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+.hero header {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-m);
 }
 
 .hero h1,
@@ -231,44 +248,27 @@ body {
     margin: 0;
     padding: 0;
     font-size-adjust: none;
+    line-height: calc(0.8*var(--title-line-height));
 }
 
 .hero h1 {
     font-size: var(--font-size-hero-title);
-    font-family: var(--serif);
+    font-size-adjust: var(--scale-inter-to-source-serif);
     font-style: normal;
     font-weight: 700;
+    margin-bottom: var(--space-xh);
+    width: calc(66.66%  - var(--space-m)/2);
 }
 
 .hero h2 {
     font-size: var(--font-size-l);
     font-weight: bold;
+    margin-bottom: var(--space-m);
 
 }
 
-
-.hero nav {
-    font-size: var(--font-size-ms);
-    font-family: var(--sans);
-    font-size-adjust: var(--scale-inter-to-source-serif);
-    width: 100vw;
-    border-top: 1px solid var(--color-midgray);
-    border-bottom: 1px solid var(--color-midgray);
-    background-color: var(--color-lightergray);
-    margin-left: calc(0px - 0.5*(100vw - var(--hero-width)));
-    padding: var(--space-m) calc((0.5*(100vw - var(--hero-width))));
-    margin-top: var(--space-l);
-    margin-bottom: var(--space-l);
-}
-
-.hero nav > ul {
-    display: grid;
-    grid-gap: var(--space-m);
-    grid-template-columns: var(--hero-grid);
-}
-
-.hero nav > ul > li > ul > li > ul {
-    display: none;
+.hero > * {
+    margin-bottom: var(--space-xl);
 }
 
 .hero .abstract-search {
@@ -295,6 +295,41 @@ body {
 .hero .abstract-content p {
     break-inside: avoid;
 }
+
+
+.hero .contents {
+    padding-top: var(--space-m);
+    padding-bottom: var(--space-m);
+    border-top: 1px solid var(--color-lightgray);
+    border-bottom: 1px solid var(--color-lightgray);
+    background-color: var(--color-lightergray);
+    margin-left: calc(0px - var(--sidebar-margin-left));
+    padding-left: var(--sidebar-margin-left);
+    padding-right: var(--content-margin-right);
+    width: calc(100vw - var(--scrollbar-width));
+}
+
+.hero nav {
+    font-size: var(--font-size-ms);
+    font-family: var(--sans);
+    font-size-adjust: var(--scale-inter-to-source-serif);
+}
+
+.hero nav > ul {
+    display: grid;
+    grid-gap: var(--space-m);
+    grid-template-columns: var(--hero-grid);
+}
+
+.hero nav > ul > li {
+    margin-bottom: var(--space-m);
+}
+
+.hero nav > ul > li > ul > li > ul {
+    display: none;
+}
+
+/* SECTION */
 
 .sidebar {
     position: fixed;
@@ -370,14 +405,11 @@ main {
     color: var(--color-text);
 }
 
-header {
+.header-container header {
     border-bottom: 1px solid var(--color-midgray);
     width: 100%;
     display: flex;
     align-items: center;
-}
-
-header {
     height: var(--space-l);
 }
 
@@ -657,7 +689,7 @@ footer {
     z-index: 2;
 }
 
-.buttons-top .buttons-right {
+.buttons-right {
     margin-left: auto;
     position: fixed;
     top: var(--content-margin-top);
@@ -688,7 +720,7 @@ footer {
     overflow-y: auto;
 }
 
-.buttons-top .buttons-right > *, .buttons-top .burger > * {
+.buttons-right > *, .buttons-top .burger > * {
     height: calc(var(--buttons-thickness) - 6px);
     width: calc(var(--buttons-thickness) - 6px);
 }
@@ -1485,6 +1517,13 @@ hr::before {
 
 /* MEDIA QUERIES */
 
+
+@media (max-width: 1950px) {
+    :root {
+        --hero-grid: repeat(6, 1fr);
+    }
+}
+
 /* asymptotic behavior: content centered & width fixed */
 @media (max-width: 1750px) {
     :root {
@@ -1494,6 +1533,7 @@ hr::before {
         --note-sep: var(--space-h);
         /* --sidebar-width: 320px; */
         --section-width: calc(40vw);
+        --hero-grid: repeat(5, 1fr);
     }
 }
 
@@ -1515,7 +1555,7 @@ hr::before {
         --section-width: calc(45vw);
     }
 
-    .buttons-top .buttons-right {
+    .buttons-right {
         right: calc(var(--content-margin-right) - 1.25*var(--space-ml));
     }
 }
@@ -1523,8 +1563,8 @@ hr::before {
 @media (max-width: 1200px) {
     :root {
         --sidebar-width: 250px;
-
         --base-font-size: 16px;
+        --hero-grid: repeat(4, 1fr);
     }
 }
 
@@ -1539,6 +1579,7 @@ hr::before {
         --sidebar-margin-left: var(--content-margin-left);
         --sidebar-margin-right: var(--content-margin-right);
         --sidebar-width: 400px;
+        --hero-grid: repeat(3, 1fr);
     }
 
     main {
@@ -1585,22 +1626,19 @@ hr::before {
         top: var(--content-margin-top);
     }
 
-    .buttons-top .buttons-right {
+    .buttons-right {
         position: relative;
         flex-direction: row;
         right: 0px;
         top: 0px;
         border: 1px solid var(--color-lightgray);
         gap: 0px;
+        width: auto;
+        height: var(--buttons-thickness);
     }
 
     .sidenote::before {
         margin-left: calc(0px - var(--space-m) - var(--space-xxs));
-    }
-
-    .buttons-top .buttons-right {
-        width: auto;
-        height: var(--buttons-thickness);
     }
 
     .burger {
@@ -1614,7 +1652,6 @@ hr::before {
         --content-margin-left: var(--space-m);
         --content-margin-right: var(--space-m);
         --note-sep: var(--space-m);
-        --hero-grid: repeat(3, 1fr);
     }
 
     .bottom {
@@ -1712,10 +1749,6 @@ hr::before {
         --content-margin-right: var(--space-m);
     }
 
-    .hero nav ul {
-        display: block;
-    }
-
     section > pre,
     section > div.sourceCode > pre,
     section > figure > img:not(.margin),
@@ -1768,6 +1801,11 @@ hr::before {
 @media (max-width: 450px) {
     :root {
         --sidebar-width: 100vw;
+        --hero-grid: repeat(1, 1fr);
+    }
+
+    .hero nav > ul > li {
+        margin-bottom: 0;
     }
 }
 
