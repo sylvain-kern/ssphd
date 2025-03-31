@@ -443,10 +443,13 @@ main {
     font-size: var(--font-size-xs);
     display: flex;
     align-items: center;
-    right: 80px;
-    position: relative;
     width: 0px;
+    float: right;
+    clear: both;
+    margin-left: calc(0px - 80px);
+    position: relative;
     user-select: none;
+    
 }
 
 kbd {
