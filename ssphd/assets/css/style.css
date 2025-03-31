@@ -737,6 +737,11 @@ footer {
     backdrop-filter: blur(8px);
 }
 
+.buttons-right {
+    background-color: transparent;
+    border: none;
+}
+
 .buttons-top .breadcrumbs {
     height: var(--buttons-thickness);
     overflow-y: auto;
@@ -767,6 +772,10 @@ footer {
 .buttons-top a:hover, .buttons-top button:hover {
     background-color: var(--color-lightergray);
     color: var(--color-main);
+}
+
+.burger > *, .buttons-right > * {
+    padding: 0px;
 }
 
 .burger {
