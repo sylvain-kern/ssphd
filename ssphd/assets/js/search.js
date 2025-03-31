@@ -24,7 +24,6 @@ var selectedIndex = -1;
 
 function clearResults() {
     list.innerHTML = ''
-    list.scrollIntoView()
     selectedIndex = -1
 };
 
