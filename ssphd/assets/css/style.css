@@ -237,6 +237,7 @@ body {
     display: flex;
     flex-direction: row;
     gap: var(--space-m);
+    min-height: calc(1.5*var(--space-xh));
 }
 
 .hero h1,
@@ -257,7 +258,6 @@ body {
     font-size-adjust: var(--scale-inter-to-source-serif);
     font-style: normal;
     font-weight: 700;
-    margin-bottom: var(--space-xh);
     width: calc(66.66%  - var(--space-m)/2);
 }
 
@@ -596,7 +596,7 @@ kbd {
 /* nav */
 
 .sidebar nav {
-    margin-top: calc(3*var(--space-l));
+    margin-top: calc(2*var(--space-l) + var(--space-m));
     margin-bottom: var(--space-l);
     width: calc(var(--sidebar-width) - var(--sidebar-margin-left) - var(--sidebar-margin-right));
     font-size: var(--font-size-s);
@@ -734,12 +734,11 @@ footer {
     display: flex;
     padding: 2px;
     background-color: var(--background-blur);
-    backdrop-filter: blur(8px);
 }
 
 .buttons-right {
-    background-color: transparent;
     border: none;
+    background-color: transparent;
 }
 
 .buttons-top .breadcrumbs {
@@ -761,7 +760,7 @@ footer {
     border-radius: 50ch;
     padding: var(--space-xs);
     justify-content: space-around;
-    color: var(--color-darkergray);
+    color: var(--color-darkgray);
 }
 
 .buttons-top .separator {
@@ -824,6 +823,7 @@ main > section,
     font-size: var(--font-size-ms);
     font-variant-numeric: tabular-nums;
     font-weight: 500;
+    max-width: calc(50% - var(--space-s)/2)
 }
 
 .prevnext .pager:hover {
@@ -887,16 +887,6 @@ h6 {
     line-height: var(--title-line-height);
     display: flex;
     letter-spacing: -0.06rem;
-}
-
-h1 > *,
-h2 > *,
-h3 > *,
-h4 > *,
-h5 > *,
-h6 > * {
-    flex-grow: 0;
-    flex-shrink: 0;
 }
 
 .header-section-number {
@@ -1597,6 +1587,10 @@ hr::before {
         --hero-grid: repeat(5, 1fr);
     }
     
+    .hero h1 {
+        width: calc(60%  - var(--space-m)/2);;
+    }
+
     .hero .abstract-search .abstract {
         width: calc(80%  - var(--space-m)/2);
     }
@@ -1621,6 +1615,13 @@ hr::before {
         --hero-grid: repeat(3, 1fr);
     }
 
+    .hero h1 {
+        width: 100%;
+    }
+
+    .hero header {
+        flex-direction: column;
+    }
 
     .hero .abstract-search .abstract {
         width: calc(66.66%  - var(--space-m)/2);
@@ -1678,6 +1679,10 @@ hr::before {
         top: var(--content-margin-top);
     }
 
+    .buttons-top > * {
+        backdrop-filter: blur(8px);
+    }
+
     .buttons-right {
         position: relative;
         flex-direction: row;
@@ -1687,6 +1692,7 @@ hr::before {
         gap: 0px;
         width: auto;
         height: var(--buttons-thickness);
+        background-color: var(--background-blur);
     }
 
     .sidenote::before {
