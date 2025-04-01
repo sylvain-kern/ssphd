@@ -464,9 +464,29 @@ class Document:
                     link['class'].append('external')
                 else:
                     link['class'] = ['external']
-                            
+    
         # header anchors
         for heading in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
+        
+            existing_secnum_span = heading.find("span", class_="header-section-number")
+
+            # Extract section number from the existing span if present
+            secnum = existing_secnum_span.text.strip() if existing_secnum_span else None
+
+            # Create a new span for the title
+            title_span = soup.new_tag("span", **{"class": "header-section-title"})
+
+            # Move all children of the header into title_span, except the section number span
+            for child in list(heading.contents):
+                if child is not existing_secnum_span:  # Skip section number span
+                    title_span.append(child.extract())
+
+            # Clear existing contents and add structured spans
+            heading.clear()
+            if existing_secnum_span:
+                heading.append(existing_secnum_span)
+            heading.append(title_span)
+        
             parent = heading.find_parent()
             
             if parent and parent.has_attr('id'):
