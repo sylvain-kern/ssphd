@@ -351,6 +351,10 @@ class Document:
         
         # generate files
         template_name = os.path.join(self.templates_path, 'template-section.html')
+        
+        # check if temp folder already exists
+        shutil.rmtree('-/', ignore_errors=True)
+        
         pypandoc.convert_text(
             self.ast,
             format='json',

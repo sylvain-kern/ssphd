@@ -889,6 +889,15 @@ h6 {
     letter-spacing: -0.06rem;
 }
 
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+    letter-spacing: 0rem;
+}
+
 .header-section-number {
     font-variant-numeric: tabular-nums;
     margin-right: .5em;
@@ -1864,6 +1873,7 @@ hr::before {
 
     .pager.prev, .pager.next {
         width: var(--section-width);
+        max-width: 100%;
     }
 }
 
