@@ -3,4 +3,4 @@ pandocfilters
 rich
 bs4
 lunr
-setuptools
+plotly

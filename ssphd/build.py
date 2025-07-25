@@ -7,13 +7,18 @@ import re
 import csv
 import json
 import pkg_resources
+import pickle
+import mpld3
+import plotly
 
-import pandocfilters as pf
+import plotly.tools as tls
+import pandocfilters as pf  
 
-from lunr import lunr
 from bs4 import BeautifulSoup
 from rich.progress import track
 from urllib.parse import urlparse
+from matplotlib.colors import to_hex
+from matplotlib.pyplot import switch_backend
 
 from .config import Config
 
@@ -62,6 +67,8 @@ class Document:
             )
 
         self.graph_count = 0
+        
+        # switch_backend('agg')
 
     ## FILTERS
 
@@ -220,76 +227,172 @@ class Document:
         return None
 
     # GRAPHS
+    
+    # Plotly
+    # def graphs_filter(self, key, value, format, meta):
+    #     if key == 'Image':
+    #         [ident, stuff, keyvals], caption, [filename, typef] = value
+            
+    #         if filename.endswith('.pkl'):
+    #             with open(filename, 'rb') as f:
+    #                 fig = pickle.load(f)
+                
+    #             all_labels = []
+    #             all_colors = []
+                
+    #             lines_to_remove = []
+    #             scatters_to_add = []
+
+    #             # for ax in fig.get_axes():
+    #             #     for line in ax.get_lines():
+    #             #         marker = line.get_marker()
+    
+    #             #         # Skip 'None' markers (e.g. 'None', '', or ' ')
+    #             #         if marker not in [None, 'None', '', ' ']:
+    #             #             # Extract line data
+    #             #             xdata = line.get_xdata()
+    #             #             ydata = line.get_ydata()
+
+    #             #             # Optional: Copy style from the line
+    #             #             color = line.get_color()
+    #             #             label = line.get_label()
+    #             #             size = line.get_markersize()
+
+    #             #             # Create scatter
+    #             #             # scatter = ax.scatter(xdata, ydata, color=color, label=label, s=size**2)
+
+    #             #             # Mark line for removal
+    #             #             lines_to_remove.append(line)
+                            
+    #             #         all_labels.append(line.get_label())
+    #             #         all_colors.append(to_hex(line.get_color()))
+                        
+    #             # for line in lines_to_remove:
+    #             #     line.remove()
+                        
+    #             plotly_fig = tls.mpl_to_plotly(fig)
+                
+    #             plotly_fig.update_layout(
+    #                 # showlegend=False,
+    #                 template="none",  # Start from scratch (no theme)
+    #                 xaxis=dict(
+    #                     showline=True,
+    #                     linecolor="black",
+    #                     linewidth=.5,
+    #                     gridcolor='rgba(0, 0, 0, 0.05)',
+    #                     mirror=True,  # Show axis line on both bottom and top
+    #                 ),
+    #                 yaxis=dict(
+    #                     showline=True,
+    #                     linecolor="black",
+    #                     linewidth=.5,
+    #                     gridcolor='rgba(0, 0, 0, 0.05)',
+    #                     mirror=True,  # Show axis line on both left and right
+    #                 ),
+    #                 paper_bgcolor='rgba(0,0,0,0)',
+    #                 plot_bgcolor='rgba(0,0,0,0)'
+    #             )
+                
+    #             plotly_fig.update_traces(line=dict(width=1.5))
+    #             div = plotly.offline.plot(plotly_fig, include_plotlyjs=False, output_type='div', config= {'displayModeBar': False})
+    #             return pf.RawInline("html", div)
+    
+    # MplD3
     def graphs_filter(self, key, value, format, meta):
         if key == 'Image':
             [ident, stuff, keyvals], caption, [filename, typef] = value
             
-            if filename.split('.')[-1] == 'csv':
-                
-                # parsing the data
-                with open(filename, newline='', encoding='utf-8') as f:
-                    reader = csv.reader(f)
-                    columns = next(reader)
-                xcolumn = columns[0]
-                ycolumns = ', '.join(columns[1:])
-                kwargs = {}
-                kwargs['x'] = xcolumn
-                kwargs['y'] = ycolumns
-                kwargs['legendPosition'] = 'graph'
-                kwargs['kmb'] = 'true'
-                for keyval in keyvals:
-                    kwargs[keyval[0]] = keyval[1]
-                if "xlabel" not in kwargs:
-                    kwargs['xlabel'] = kwargs['x']
-                if "ylabel" not in kwargs:
-                    kwargs['ylabel'] = kwargs['y'].split(', ')[0]
-
-                # formatting the graph
-                graph_id = f"dygraph_{self.graph_count}"
+            if filename.endswith('.pkl'):
+                with open(filename, 'rb') as f:
+                    jsn = json.dumps(mpld3.fig_to_dict(pickle.load(f)))
+                    
+                graph_id = f"graph_{self.graph_count}"
                 self.graph_count += 1
-                
-                if(filename.startswith('./')):
-                    filename = filename[2:]
-                
-                os.makedirs(os.path.join(self.out_html_path, '_assets', *os.path.split(filename)[:-1]), exist_ok=True)
-                out_data_path = os.path.join(self.out_html_path, '_assets', f'{filename[:-4]}-graph_{self.graph_count}.csv')
-                shutil.copyfile(filename, out_data_path)
-                
-                # # Copy CSV file to assets
-                self.rearrange_columns(filename, out_data_path, [kwargs['x']] + kwargs['y'].split(', '))
-                
-                # Create graph script with proper relative paths
-                graph_script = f""" 
-                    var {graph_id} = generateGraph(id="{graph_id}", 
-                        data="/_assets/{filename[:-4]}-graph_{self.graph_count}.csv", 
-                        xlabel="{kwargs['xlabel']}", 
-                        ylabel="{kwargs['ylabel']}", 
-                        legendPosition="{kwargs['legendPosition']}",
-                        kmblabels={kwargs["kmb"]}
-                    );
+                graph_script = f"""
+                var json_{graph_id} = {jsn};
+                mpld3.draw_figure("{graph_id}", json_{graph_id});
                 """
-                
-                graph_script = 'document.addEventListener("DOMContentLoaded", (event) => {' + graph_script + '});'
-                
-                # Save script file
-                # graph_file = os.path.join(graphs_dir, f'graph{self.graph_count}.js')
-                # with open(graph_file, 'w', encoding='utf-8') as f:
-                #     f.write(graph_script)
-                
-                # Use relative path in script tag
+
                 return [
                     pf.RawInline("html", f"""
-                        <div class='graph-container' id={graph_id} legendPosition={kwargs['legendPosition']}></div>
+                        <div class='graph-container' id={graph_id}></div>
                         <script>{graph_script}</script>
                     """)
                 ]
+                
+    # # Dygraphs
+    # def graphs_filter(self, key, value, format, meta):
+    #     if key == 'Image':
+    #         [ident, stuff, keyvals], caption, [filename, typef] = value
+            
+    #         if filename.split('.')[-1] == 'csv':
+                
+    #             # parsing the data
+    #             with open(filename, newline='', encoding='utf-8') as f:
+    #                 reader = csv.reader(f)
+    #                 columns = next(reader)
+    #             xcolumn = columns[0]
+    #             ycolumns = ', '.join(columns[1:])
+    #             kwargs = {}
+    #             kwargs['x'] = xcolumn
+    #             kwargs['y'] = ycolumns
+    #             kwargs['kmb'] = 'true'
+    #             kwargs['legendPosition'] = 'caption'
+    #             kwargs['scales'] = 'linlin'
+    #             for keyval in keyvals:
+    #                 kwargs[keyval[0]] = keyval[1]
+    #             if "xlabel" not in kwargs:
+    #                 kwargs['xlabel'] = kwargs['x']
+    #             if "ylabel" not in kwargs:
+    #                 kwargs['ylabel'] = kwargs['y'].split(', ')[0]
+
+    #             # formatting the graph  
+    #             graph_id = f"dygraph_{self.graph_count}"
+    #             self.graph_count += 1
+                
+    #             if(filename.startswith('./')):
+    #                 filename = filename[2:]
+                
+    #             os.makedirs(os.path.join(self.out_html_path, '_assets', *os.path.split(filename)[:-1]), exist_ok=True)
+    #             out_data_path = os.path.join(self.out_html_path, '_assets', f'{filename[:-4]}-graph_{self.graph_count}.csv')
+    #             shutil.copyfile(filename, out_data_path)
+                
+    #             # # Copy CSV file to assets
+    #             self.rearrange_columns(filename, out_data_path, [kwargs['x']] + kwargs['y'].split(', '))
+                
+    #             # Create graph script with proper relative paths
+    #             graph_script = f""" 
+    #                 var {graph_id} = generateGraph(id="{graph_id}", 
+    #                     data="/_assets/{filename[:-4]}-graph_{self.graph_count}.csv", 
+    #                     xlabel="{kwargs['xlabel']}", 
+    #                     ylabel="{kwargs['ylabel']}", 
+    #                     legendPosition="{kwargs['legendPosition']}",
+    #                     kmb="{kwargs['kmb']}",
+    #                     scales="{kwargs['scales']}"
+    #                 );
+    #             """
+                
+    #             graph_script = 'document.addEventListener("DOMContentLoaded", (event) => {' + graph_script + '});'
+                
+    #             # Save script file
+    #             # graph_file = os.path.join(graphs_dir, f'graph{self.graph_count}.js')
+    #             # with open(graph_file, 'w', encoding='utf-8') as f:
+    #             #     f.write(graph_script)
+                
+    #             # Use relative path in script tag
+    #             return [
+    #                 pf.RawInline("html", f"""
+    #                     <div class='graph-container' id={graph_id} legendPosition={kwargs['legendPosition']}></div>
+    #                     <script>{graph_script}</script>
+    #                 """)
+    #             ]
 
     def assets_paths_filter(self, key, value, _fmt, _meta):
         if key == 'Image':
             [ident, stuff, keyvals], caption, [filename, typef] = value
             newfilename = 'assets/'+filename
             return pf.Image([ident, stuff, keyvals], caption, [newfilename, typef])
-
+        
     def chunk(self):
         
         def transform_sitemap(input_json):
@@ -453,7 +556,7 @@ class Document:
                     if section_id == anchor[1:]:
                         newhref = self.structure[section_id]["path"]
                     else:
-                        newhref = self.structure[section_id]["path"] + anchor
+                        newhref = self.structure[section_id]["path"] + '/' + anchor
                 else:
                     newhref = self.structure[section_id]["path"]
                 link["href"] = newhref
@@ -519,7 +622,6 @@ class Document:
                 if pth.startswith('./'):
                     pth = pth[2:]
                 image['src'] = os.path.join('_assets', pth)
-                
         return soup
     
     def generate_404(self):
@@ -562,15 +664,17 @@ class Document:
 
         self.pipe([
             f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
-            f"--csl={self.csl_path}/for-the-web.csl",
+            f"--csl={os.path.join(self.csl_path, 'for-the-web.csl')}",
             "--filter=pandoc-crossref",
         ])
         
         if (self.refs_file):
             self.pipe([
                 f"--bibliography={self.refs_file}",
-                "--citeproc",
+                "--citeproc"
             ])
+            self.filter([self.hyperlink_title_filter]) # transforms all references titles to hyperlinks
+        
         
         # append doc meta to metadata file
         self.meta = dico["meta"] | meta_before

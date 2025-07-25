@@ -27,7 +27,7 @@ function legendFormatter(data) {
   return html;
 }
 
-function kmb (x) {
+function kmblabels (x) {
   if (x >= 1e9) {
     // For billions
     return (x / 1e9).toFixed(2).replace(/\.00$/, '') + 'G';
@@ -50,7 +50,7 @@ function kmb (x) {
   return x; // Return the number without formatting if it's near 1
 }
 
-function generateGraph(id, data, xlabel, ylabel, legendPosition='graph', kmblabels=true) {
+function generateGraph(id, data, xlabel, ylabel, legendPosition='graph', kmb=true, scales='linlin') {
 
     // getting the colors
     var style = getComputedStyle(document.documentElement)
@@ -107,9 +107,17 @@ function generateGraph(id, data, xlabel, ylabel, legendPosition='graph', kmblabe
       gridLineWidth: 0.5,
       labelsDiv: legendId,
     };
-    if (kmblabels) {
-      default_options.axes.x.axisLabelFormatter = kmb
-      default_options.axes.y.axisLabelFormatter = kmb
+    if (kmb) {
+      default_options.axes.x.axisLabelFormatter = kmblabels;
+      default_options.axes.y.axisLabelFormatter = kmblabels;
+    }
+    if (scales == 'loglog') {
+      default_options.axes.x.logscale = true;
+      default_options.axes.y.logscale = true;
+    } else if (scales == 'linlog') {
+      default_options.axes.y.logscale = true;
+    } else if (scales == 'loglin'){
+      default_options.axes.x.logscale = true;
     }
     let graph = new Dygraph(
         document.getElementById(id),

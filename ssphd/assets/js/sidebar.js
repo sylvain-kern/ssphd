@@ -36,4 +36,41 @@ menuItems.forEach(
   }
 )
 
-collapseMenu()
+console.log('yo');
+
+// expand/hide buttons
+const sublists = document.querySelectorAll('nav > ul > li > ul > li > ul');
+
+console.log(sublists)
+
+sublists.forEach(sublist => {
+  const parentheader = sublist.parentElement.querySelector('a');
+  console.log(parentheader);
+  const expandbtn = document.createElement('button');
+  expandbtn.classList.add('expand');
+  const buttonicon = document.createElement('i');
+  buttonicon.classList.add('bx');
+  buttonicon.classList.add('bx-chevron-right');
+  expandbtn.appendChild(buttonicon);
+  parentheader.appendChild(expandbtn);
+
+  buttonicon.setAttribute("aria-expanded", "false");
+  buttonicon.style.cursor = "pointer";
+
+  // Hide sublist initially (optional)
+  sublist.style.display = "none";
+
+  buttonicon.addEventListener("click", () => {
+    const isExpanded = sublist.style.display === "block";
+    sublist.style.display = isExpanded ? "none" : "block";
+    buttonicon.setAttribute("aria-expanded", String(!isExpanded));
+
+    // Update icon class
+    buttonicon.classList.toggle("bx-chevron-right", isExpanded);
+    buttonicon.classList.toggle("bx-chevron-down", !isExpanded);
+    event.stopPropagation();
+    event.preventDefault();
+  });
+});
+
+collapseMenu();
