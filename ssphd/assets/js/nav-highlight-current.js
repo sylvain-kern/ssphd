@@ -29,7 +29,7 @@ window.addEventListener('scroll', (event) => {
 
     for (var j = 0; j < document.links.length; j++) {
 
-        if (document.links[j].href === window.location.origin+window.location.pathname+'#'+currenth3) {
+        if (document.links[j].href === window.location.origin+window.location.pathname+'#'+currenth3 || document.links[j].href === window.location.origin+window.location.pathname+'/#'+currenth3) {
             currenth3_index = j;
             break;
         }
@@ -42,7 +42,7 @@ let current_index = 0;
 
 for (var i = 0; i < document.links.length; i++) {
 
-    if (document.links[i].href+'/' === window.location.origin+window.location.pathname) {
+    if (document.links[i].href === window.location.origin+window.location.pathname || document.links[i].href === window.location.origin+window.location.pathname+'/') {
         current_index = i;
         break;
     }

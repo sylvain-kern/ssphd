@@ -36,16 +36,11 @@ menuItems.forEach(
   }
 )
 
-console.log('yo');
-
 // expand/hide buttons
 const sublists = document.querySelectorAll('nav > ul > li > ul > li > ul');
 
-console.log(sublists)
-
 sublists.forEach(sublist => {
   const parentheader = sublist.parentElement.querySelector('a');
-  console.log(parentheader);
   const expandbtn = document.createElement('button');
   expandbtn.classList.add('expand');
   const buttonicon = document.createElement('i');
