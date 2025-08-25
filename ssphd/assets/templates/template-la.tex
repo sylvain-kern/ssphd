@@ -38,8 +38,22 @@ $endif$
 \renewcommand{\thefootnote}{\footnotesize\bfseries\intertabular\arabic{footnote}}
 
 \makesavenoteenv{longtable}
+\AtBeginEnvironment{longtable}{
+  \sffamily\small\setstretch{.8}
+}
+\renewcommand{\arraystretch}{1.8}
 
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[scaled=0.80]{inter}
+\usepackage[osf]{libertinus}
+\usepackage{libertinust1math}
+\usepackage[scaled=0.9]{inconsolata}
+\renewcommand\sffamily\intertabular
 \usepackage{graphicx}
+\usepackage{sidenotes}
+\setkeys{Gin}{width=\linewidth}
+\setkeys{Gin}{keepaspectratio=true}
 
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -79,10 +93,6 @@ $endif$
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
 
-$if(svg)$
-\usepackage{svg}
-$endif$
-
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -95,6 +105,27 @@ $endif$
 \usepackage[
 	hypcap=false				% hypcap=true spits an error
 ]{caption}	
+
+% svg
+\usepackage{svg}
+\setsvg{inkscapelatex=false}
+
+%   pandoc crossref subfigures
+\newenvironment{pandoccrossrefsubfigures}
+{
+  \begin{figure}
+}
+{
+  \end{figure}
+}
+
+\newenvironment{pandoccrossrefsubfigures*}
+{
+  \begin{figure*}
+}
+{
+  \end{figure*}
+}
 
 % 	caption formatting
 \DeclareCaptionLabelFormat{lc}{\MakeLowercase{#1}~#2}
@@ -157,6 +188,9 @@ $endif$
 	singlelinecheck=off,
 }
 \usepackage{subcaption}
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+
 
 \usepackage{booktabs}
 \usepackage{array}
@@ -208,6 +242,12 @@ $endif$
   pdfcreator={LaTeX via pandoc}
 }
 
+% bibliography
+$if(bibfile)$
+\usepackage[backend=biber,authordate-trad]{biblatex-chicago}
+\addbibresource{$bibfile$}
+$endif$
+
 \newlength{\ssphdmargin}
 \newlength{\ssphdmarginparsep}
 \newlength{\ssphdmarginparwidth}
@@ -224,14 +264,6 @@ $endif$
 \setlength{\marginparsep}{\ssphdmarginparsep}
 
 \setlength{\oddsidemargin}{0mm}
-
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[scaled=0.80]{inter}
-\usepackage[osf]{libertinus}
-\usepackage{libertinust1math}
-\usepackage[scaled=0.9]{inconsolata}
-\renewcommand\sffamily\intertabular
 
 \usepackage[
   % showframe

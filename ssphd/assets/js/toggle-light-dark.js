@@ -28,12 +28,12 @@ function setMode(mode) {
     if (mode == "light") {
         toggleButton.querySelector('i').classList.remove("bx-sun");
         toggleButton.querySelector('i').classList.add("bx-moon");
-        toggleButton.setAttribute("title", "Passer en mode sombre");
+        toggleButton.setAttribute("title", "Toggle dark mode");
         localStorage.setItem("color-mode", "light");
     } else {
         toggleButton.querySelector('i').classList.remove("bx-moon");
         toggleButton.querySelector('i').classList.add("bx-sun");
-        toggleButton.setAttribute("title", "Passer en mode clair");
+        toggleButton.setAttribute("title", "Toggle light mode");
         localStorage.setItem("color-mode", "dark");
     }
 

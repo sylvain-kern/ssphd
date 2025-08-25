@@ -9,9 +9,10 @@ import json
 import pkg_resources
 import pickle
 import mpld3
-import plotly
+import xml.etree.ElementTree as et
+# import plotly
 
-import plotly.tools as tls
+# import plotly.tools as tls
 import pandocfilters as pf  
 
 from bs4 import BeautifulSoup
@@ -24,6 +25,17 @@ from .config import Config
 
 
 ABOUT = "A single-source manuscript"
+# SVG namespace for parsing
+SVG_NS = {"svg": "http://www.w3.org/2000/svg"}
+
+# Mapping from colors to CSS variables
+COLOR_REPLACEMENTS = {
+    "#000000": "var(--color-darkergray)",
+    "#00000000": "var(--color-darkergray)",
+    "#000": "var(--color-darkergray)",
+    "rgb(0,0,0)": "var(--color-darkergray)",
+    "rgb(0%,0%,0%)": "var(--color-darkergray)"
+}
 
 
 class Document:
@@ -166,11 +178,28 @@ class Document:
             if file.endswith('.html') and file != 'index.html':
                 with open(f'-/{file}', 'r', encoding='utf-8') as f:
                     section = f.read() 
-                content = ' '.join(pypandoc.convert_text(
-                    section,
-                    format='html',
-                    to='plain',
-                ).split('\n')[2:-1])
+                    
+                # Convert HTML to plain text
+                content = pypandoc.convert_text(section, format='html', to='plain')
+
+                # Remove lines that are likely image references (Markdown-style)
+                content = re.sub(r'!\[.*?\]\(.*?\)', '', content)
+                
+                # Remove table-like lines (pipes, pluses, colons, and dashes)
+                content = '\n'.join(
+                    line for line in content.split('\n')
+                    if not re.match(r'^\s*[\|+: -]{3,}\s*$', line)
+                )
+
+                # Remove separators like *** or ---
+                content = '\n'.join(
+                    line for line in content.split('\n') 
+                    if not re.match(r'^\s*([-*]){3,}\s*$', line)
+                )
+
+                # Collapse extra whitespace
+                content = ' '.join(content.split())    
+                
                 section_id = file.split('/')[-1][:-5]
                 title = self.structure[section_id]["title"]
                 number = self.structure[section_id]["number"]
@@ -208,22 +237,118 @@ class Document:
                     reordered_row = {col: row[col] for col in columns_order}
                     writer.writerow(reordered_row)
 
+
+    def set_default_black(self, el):
+        # Elements that are usually stroked (lines, outlines)
+        tag = el.tag.split("}")[-1]  # strip namespace if present
+        if tag == "text":
+            style = el.get("style", "")
+            if "fill" not in style and "fill" not in el.attrib:
+                el.set("fill", "#000000")
+
+    def replace_color(self, el):
+        """Replace fill/stroke colors and inline styles if they match COLOR_REPLACEMENTS."""
+        # Normalize and replace direct attributes
+        for attr in ("fill", "stroke"):
+            if attr in el.attrib:
+                val = el.attrib[attr].strip().lower()
+                if val in COLOR_REPLACEMENTS:
+                    el.attrib[attr] = COLOR_REPLACEMENTS[val]
+
+        # Replace colors in inline style
+        if "style" in el.attrib:
+            style = el.attrib["style"]
+
+            def repl(m):
+                prop, val = m.groups()
+                val_norm = val.strip().lower()
+                new_val = COLOR_REPLACEMENTS.get(val_norm, val)
+                return f"{prop}:{new_val}"
+
+            # Match fill:... or stroke:... ignoring spaces
+            style = re.sub(r"(fill|stroke)\s*:\s*([^;]+)", repl, style)
+            el.attrib["style"] = style
+
+    def modify_svg_colors(self, svg_path):
+        """Read SVG, replace colors, return modified SVG as string without ns0:svg junk."""
+        try:
+            # Parse
+            tree = et.parse(svg_path)
+            root = tree.getroot()
+
+            # Strip all namespace prefixes
+            for elem in root.iter():
+                if '}' in elem.tag:
+                    elem.tag = elem.tag.split('}', 1)[1]  # remove namespace
+                # Also clean attributes with namespaces
+                for attr in list(elem.attrib):
+                    if '}' in attr:
+                        new_attr = attr.split('}', 1)[1]
+                        elem.attrib[new_attr] = elem.attrib.pop(attr)
+
+            # Replace colors
+            for el in root.iter():
+                # fill/stroke to black what's left blank
+                self.set_default_black(el)
+                self.replace_color(el)
+
+            # Serialize back to string with plain <svg>
+            return et.tostring(root, encoding="unicode", method="xml")
+        except Exception as e:
+            print(f"Error processing SVG {svg_path}: {e}")
+            with open(svg_path, "r", encoding="utf-8") as f:
+                return f.read()
+
+            
     # SVG
     def inline_svg_filter(self, key, value, format, meta):
         if key == 'Image':
-            [ident, stuff, keyvals], caption, [filename, typef] = value
-            if filename.split('.')[-1] == 'svg':
-                if os.path.exists(filename):
-                    if(filename.startswith('./')):
-                        filename = filename[2:]
-                    # Copy the SVG image into the assets folder for download
-                    os.makedirs(os.path.join(self.out_html_path, '_assets', *os.path.split(filename)[:-1]), exist_ok=True)
-                    out_svg_path = os.path.join(self.out_html_path, '_assets', filename)
-                    shutil.copyfile(filename, out_svg_path)
-                    # Read the SVG file content
-                    with open(filename, "r", encoding="utf-8") as f:
-                        svg_content = f.read()
-                    return pf.RawInline("html", svg_content)
+            # Safe unpacking
+            attr = value[0]             # [id, classes, keyvals]
+            caption = value[1] if len(value) > 1 else []
+            target = value[2] if len(value) > 2 else ["", ""]  # [filename, type]
+            filename, typef = target
+            stuff = attr  # for compatibility with your previous code
+
+            # Only process SVG files
+            if filename.lower().endswith('.svg') and os.path.exists(filename):
+                if filename.startswith('./'):
+                    filename = filename[2:]
+
+                # Extract classes from Pandoc attributes
+                classes = stuff.get('classes', []) if isinstance(stuff, dict) else stuff[1]  # depends on pf version
+                add_classes = [cls for cls in ('margin', 'wide') if cls in classes]
+
+                # Ensure output folder exists
+                out_dir = os.path.join(self.out_html_path, '_assets', *os.path.split(filename)[:-1])
+                os.makedirs(out_dir, exist_ok=True)
+
+                # Copy original file to _assets
+                out_svg_path = os.path.join(self.out_html_path, '_assets', filename)
+                shutil.copyfile(filename, out_svg_path)
+
+                # Modify the _assets copy in place
+                modified_content = self.modify_svg_colors(out_svg_path)
+
+                # Inject classes into <svg> tag
+                if add_classes:
+                    # If <svg> already has a class attribute, append
+                    if 'class="' in modified_content:
+                        def add_to_svg_class(match):
+                            existing = match.group(1) or ''
+                            existing_classes = existing.split()
+                            for cls in add_classes:
+                                if cls not in existing_classes:
+                                    existing_classes.append(cls)
+                            return f'class="{" ".join(existing_classes)}"'
+                        modified_content = re.sub(r'class="([^"]*)"', add_to_svg_class, modified_content, count=1)
+                    else:
+                        # Insert new class attribute
+                        modified_content = re.sub(r'<svg\b', f'<svg class="{" ".join(add_classes)}"', modified_content, count=1)
+
+                print(f'Successfully processed SVG: {filename}')
+                return pf.RawInline("html", modified_content)
+
         return None
 
     # GRAPHS
@@ -318,8 +443,9 @@ class Document:
                         <div class='graph-container' id={graph_id}></div>
                         <script>{graph_script}</script>
                     """)
-                ]
+                ]       
                 
+        
     # # Dygraphs
     # def graphs_filter(self, key, value, format, meta):
     #     if key == 'Image':
@@ -393,6 +519,125 @@ class Document:
             newfilename = 'assets/'+filename
             return pf.Image([ident, stuff, keyvals], caption, [newfilename, typef])
         
+    def image_filter_latex(self, key, value, fmt, meta):
+        if key == "Image":
+            [[ident, classes, kvs], alt, [src, title]] = value
+
+
+            # Copy image to output folder
+            target_path = os.path.join(self.out_latex_path, src)
+            os.makedirs(os.path.dirname(target_path), exist_ok=True)
+            shutil.copy2(src, target_path)
+            
+        
+    def custom_figure(self, key, value, format, meta):
+        if key == 'Figure':    
+            # print()
+            # print(key)
+            # print(value)
+
+            identifier = value[0][0]
+            caption_block = value[1][1]  # the inlines of the caption
+            img_block = value[2][0]['c'][0]  # the Image itself
+            img_attr, img_caption, (src, title) = img_block['c']
+            classes = img_attr[1]
+            
+            
+            # print(img_caption)
+            
+            # print(classes)
+            
+            image = pf.Plain([pf.Image(img_attr, img_caption, (src, title))])
+            
+            def caption(type):
+                return pf.Plain([pf.RawInline('latex', f'\\{type}{{')] + img_caption + [pf.RawInline('latex', f'\label{{{identifier}}}}}')])
+
+            # Decide LaTeX environment
+            if 'wide' in classes:
+                env = 'figure*'
+                img = image, caption('caption')
+
+            elif 'margin' in classes:
+                env = 'marginfigure'
+                img = image, caption('caption')
+
+            else:
+                env = 'figure'
+                img = caption('sidecaption'), image
+            
+            return [
+                pf.RawBlock('latex', f'\\begin{{{env}}}'),
+                *img,
+                pf.RawBlock('latex', f'\\end{{{env}}}'),
+            ]
+                    
+
+    def subfigures_filter_latex(self, key, value, fmt, meta):
+        if key == "Div":
+            [[ident, classes, kvs], contents] = value
+            if "subfigures" in classes:
+                print('---')
+                print(key)
+                print(value)
+                print()
+                print()
+                new_contents = []
+                for block in contents:
+                    if block["t"] in ("Para", "Plain"):
+                        inlines = block["c"]
+                        images = [c for c in inlines if c["t"] == "Image"]
+                        n = len(images)
+                        if n > 0:
+                            new_inlines = []
+                            for j, img in enumerate(images):
+                                attr, alt, target = img["c"]
+
+                                kvs_dict = dict(attr[2])
+                                if "width" not in kvs_dict:
+                                    # reduce a bit for gaps
+                                    kvs_dict["width"] = f"{(100 - (n-1)*2)/n:.0f}%"
+                                attr[2] = list(kvs_dict.items())
+                                img["c"] = [attr, alt, target]
+
+                                new_inlines.append(img)
+                                if j < n - 1:
+                                    # add small horizontal space between images
+                                    new_inlines.append(
+                                        pf.RawInline("latex", "\\hfill")
+                                    )
+
+                            block["c"] = new_inlines
+                            new_contents.append(block)
+                            # add vertical space after this row
+                            new_contents.append(
+                                pf.RawBlock("latex", "\\medskip")
+                            )
+                        else:
+                            new_contents.append(block)
+                    else:
+                        new_contents.append(block)
+
+                return pf.Div([ident, classes, kvs], new_contents)
+
+    def table_filter_latex(self, key, value, fmt, meta):
+        if key == 'Div':
+            try:
+                if value[1][0]['t'] == 'Table':
+                    [[ident, classes, kvs], contents] = value
+                    if 'wide' in classes:
+                        return ([
+                            pf.RawBlock('latex', '\\begin{fullwidth}'),
+                            pf.Div([ident, classes, kvs], contents),
+                            pf.RawBlock('latex', '\\end{fullwidth}')
+                        ])
+                    elif 'margin' in classes:
+                        return ([
+                            pf.RawBlock('latex', '\\begin{marginpar}'),
+                            pf.Div([ident, classes, kvs], contents),
+                            pf.RawBlock('latex', '\\end{marginpar}')
+                        ])
+            except Exception: return None
+            
     def chunk(self):
         
         def transform_sitemap(input_json):
@@ -515,8 +760,7 @@ class Document:
                     paths.append(self.structure[iid]["path"])
                 with open(f'-/{file}', 'r', encoding='utf-8') as f:
                     soup = BeautifulSoup(f, 'html.parser')
-                    
-                    soup = self.post_process(soup, titles, paths)
+                    soup = self.post_process_html(soup, titles, paths)
                 
                 if file == 'index.html':
                     with open(os.path.join(self.out_html_path, 'index.html'), 'w', encoding='utf-8') as f:
@@ -533,7 +777,7 @@ class Document:
         #     shutil.copytree(os.path.join(self.root_path, 'tmp', 'data'), os.path.join(self.out_html_path, '_assets', 'data'))
         #     shutil.rmtree('tmp')
         
-    def post_process(self, soup, titles, paths):
+    def post_process_html(self, soup, titles, paths):
          # breadcrumbs
         breadcrumbs = soup.find('div', class_='breadcrumbs')
         if breadcrumbs:
@@ -607,8 +851,19 @@ class Document:
         
         # wrap tables in wrappers
         for table in soup.find_all('table'):
-            if table.find_parent('figure'):
-                continue  # Skip tables inside <figure>
+            
+            # tweak for subifigures
+            subfigures = table.find_parent('figure')
+            if subfigures:
+                del table.attrs["style"]
+                # get the element right after the table
+                if "wide" in subfigures.get("class", []):
+                    next_elem = table.find_next_sibling()
+                    # if it's a figcaption, move it before the table
+                    if next_elem and next_elem.name == "figcaption":
+                        subfigures.insert(subfigures.contents.index(table), next_elem.extract())
+                continue
+
 
             wrapper = soup.new_tag('div', **{'class': 'table-wrapper'})
             table.insert_before(wrapper)
@@ -622,34 +877,85 @@ class Document:
                 if pth.startswith('./'):
                     pth = pth[2:]
                 image['src'] = os.path.join('_assets', pth)
+                
+        # undo svg dimensions
+        for svg in soup.find_all('svg'):
+            svg.attrs.pop('height', None)
+            svg.attrs.pop('width', None)
+        
         return soup
     
     def generate_404(self):
         pass
 
+
+    def generate_bib_file(self, json_path):
+        
+        print(f"found CSL JSON: {json_path}")
+        
+        """
+        Convert a CSL-JSON file to a BibTeX file using Pandoc.
+        Returns the path to the generated .bib file.
+        """
+        # Build output path: mirror subfolders inside self.out_latex_path
+        rel_path = os.path.relpath(json_path, self.root_path)
+        bib_path = os.path.join(self.out_latex_path, os.path.splitext(rel_path)[0] + ".bib")
+
+        # Make sure parent directories exist
+        os.makedirs(os.path.dirname(bib_path), exist_ok=True)
+
+        # Convert using Pandoc
+        pypandoc.convert_file(json_path, 'biblatex', outputfile=bib_path, format='csljson')
+        print(f"Generated bib file: {bib_path}")
+        
+        return bib_path.replace('\\', '/')
+
+
+    def references_section_latex(self, key, value, format_, meta):
+        if key == "Div" and "refs" in value[0][0]:
+            return pf.RawBlock("latex", r"\printbibliography[title={References}]")
+
     def to_latex(self):
         if not os.path.exists(self.out_latex_path):
             os.mkdir(self.out_latex_path)
-        args = [
-                f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
-                "--standalone",
-                "--filter=pandoc-crossref",
-                "--top-level-division=chapter",
-                "--toc",
-                "--number-sections",
-                f"--template={os.path.join(self.templates_path, 'template-la.tex')}"
-            ]
-        if (self.refs_file):
-            args.append(f"--bibliography={self.refs_file}")
-            args.append("--citeproc")
-        pypandoc.convert_text(
-            self.ast,
-            format = 'json',
-            to = 'latex',
-            outputfile = os.path.join(self.out_latex_path, f'{self.base_name}.tex'),
-            extra_args = args
-        )
 
+        args = [
+            f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
+            "--standalone",
+            "--filter=pandoc-crossref",
+            "--top-level-division=chapter",
+            "--toc",
+            "--number-sections",
+            f"--template={os.path.join(self.templates_path, 'template-la.tex')}",
+        ]
+
+        if self.refs_file:
+            print(self.refs_file)
+            args.append("--biblatex")
+            args.append(f"--metadata=bibfile:{self.generate_bib_file(self.refs_file)}")
+
+
+        with open("./test.json", "w") as f:
+            f.write(self.ast)
+        
+        # Apply the Python filter to the AST
+        self.ast_latex = self.filter([
+            self.image_filter_latex,
+            self.custom_figure,
+            self.subfigures_filter_latex,
+            self.table_filter_latex,
+            self.references_section_latex
+        ],self.ast)
+
+        # Convert the filtered AST, not the original
+        pypandoc.convert_text(
+            self.ast_latex,
+            format="json",
+            to="latex",
+            outputfile=os.path.join(self.out_latex_path, f"{self.base_name}.tex"),
+            extra_args=args,
+        )
+        
     def to_html(self):
 
         self.ast_html = self.ast
@@ -664,16 +970,16 @@ class Document:
 
         self.pipe([
             f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
-            f"--csl={os.path.join(self.csl_path, 'for-the-web.csl')}",
             "--filter=pandoc-crossref",
         ])
         
         if (self.refs_file):
             self.pipe([
                 f"--bibliography={self.refs_file}",
+                f"--csl={os.path.join(self.csl_path, 'for-the-web.csl')}",
                 "--citeproc"
             ])
-            self.filter([self.hyperlink_title_filter]) # transforms all references titles to hyperlinks
+            # self.filter([self.hyperlink_title_filter]) # transforms all references titles to hyperlinks
         
         
         # append doc meta to metadata file
@@ -686,7 +992,7 @@ class Document:
             self.get_abbreviation_dict,
             self.replace_abbreviations,
             self.graphs_filter,
-            self.inline_svg_filter
+            self.inline_svg_filter,
         ])
         
         self.chunk()

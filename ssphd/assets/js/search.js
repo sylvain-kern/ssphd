@@ -66,6 +66,11 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('keydown', ctrl_k, false);
     searchField.addEventListener('focus', function (e) {
         resultsContainer.classList.remove('inactive');
+        clearResults();
+        const msgItem = document.createElement('li');
+        msgItem.classList.add('search-info');
+        msgItem.textContent = "Start typing…";
+        resultsList.appendChild(msgItem);
     })
     
 
@@ -186,84 +191,103 @@ getJson('./_assets/documents.json').then(docs => {
         clearResults();
 
         let query = e.target.value + '~1 ' + e.target.value + '*';
-        results = idx.search(query.replace(/\s+$/, ''));
 
-        var results_full = results.map(function (item) {
-            return docs.filter(function (query, index, arr) {
-                return query.link == item.ref;
-            })[0];
-        });
+        if (e.target.value === "") {
+            clearResults();
+            const msgItem = document.createElement('li');
+            msgItem.classList.add('search-info')
+            msgItem.textContent = "Start typing…";
+            list.appendChild(msgItem);
+        } else {
 
-        for (const [result, result_full] of zip([results, results_full])) {
+            results = idx.search(query.replace(/\s+$/, ''));
 
-            function get_field(field) {
-                switch (field) {
-                    case 'title': return resultTitle;
-                    case 'content': return resultContent;
-                };
-            };
-            function get_result_full(field) {
-                switch (field) {
-                    case 'title': return result_full.title;
-                    case 'content': return result_full.content;
-                };
-            };
-
-            // creating a li element for each result item
-            const resultItem = document.createElement('li');
-
-            const resultLink = document.createElement('a');
-
-            resultLink.href = result_full['link'];
-
-            // adding a class to each item of the results
-            resultItem.classList.add('result-item');
-
-            resultTitle = document.createElement('div');
-            resultTitle.classList.add('search-result-title');
-
-            if (result_full.number != null) {
-                numberSpan = document.createElement('span');
-                numberSpan.classList.add('search-result-number')
-                numberSpan.appendChild(document.createTextNode(result_full.number))
-                resultTitle.append(numberSpan)
+            if (results.length === 0) {
+                clearResults();
+                const msgItem = document.createElement('li');
+                msgItem.classList.add('search-info')
+                msgItem.textContent = "No matches found for “" + e.target.value + "”.";
+                list.appendChild(msgItem);
             }
-            resultContent = document.createElement('div');
-            resultContent.classList.add('search-result-content');
 
-            var matchedTerms = []
-            var matchedFields = []
-            var matchedPositions = []
-            Object.keys(result.matchData.metadata).forEach(term => {
-                matchedTerms.push(term);
-                Object.keys(result.matchData.metadata[term]).forEach(field => {
-                    matchedFields.push(field)
-                    matchedPositions.push(result.matchData.metadata[term][field].position);
-                });
+            var results_full = results.map(function (item) {
+                return docs.filter(function (query, index, arr) {
+                    return query.link == item.ref;
+                })[0];
             });
 
-            resultItemLayout = ['title', 'content'];
 
-            var fieldsPositions = new Object;
+            for (const [result, result_full] of zip([results, results_full])) {
 
-            matchedFields.map(function (e, i) {
-                fieldsPositions[e] = matchedPositions[i];
-            });
-
-            resultItemLayout.forEach(item => {
-
-                var field = get_field(item);
-                var rest = get_result_full(item);
-
-                if (matchedFields.includes(item)) {
-                    displayResult(field, item, rest , fieldsPositions);
-                } else {
-                    displayResultDefault(field, rest);
+                function get_field(field) {
+                    switch (field) {
+                        case 'title': return resultTitle;
+                        case 'content': return resultContent;
+                    };
                 };
-                resultLink.appendChild(field);
-            });
-            resultItem.appendChild(resultLink)
-            list.appendChild(resultItem);
+                function get_result_full(field) {
+                    switch (field) {
+                        case 'title': return result_full.title;
+                        case 'content': return result_full.content;
+                    };
+                };
+
+                // creating a li element for each result item
+                const resultItem = document.createElement('li');
+
+                const resultLink = document.createElement('a');
+
+                resultLink.href = result_full['link'];
+
+                // adding a class to each item of the results
+                resultItem.classList.add('result-item');
+
+                resultTitle = document.createElement('div');
+                resultTitle.classList.add('search-result-title');
+
+                if (result_full.number != null) {
+                    numberSpan = document.createElement('span');
+                    numberSpan.classList.add('search-result-number')
+                    numberSpan.appendChild(document.createTextNode(result_full.number))
+                    resultTitle.append(numberSpan)
+                }
+                resultContent = document.createElement('div');
+                resultContent.classList.add('search-result-content');
+
+                var matchedTerms = []
+                var matchedFields = []
+                var matchedPositions = []
+                Object.keys(result.matchData.metadata).forEach(term => {
+                    matchedTerms.push(term);
+                    Object.keys(result.matchData.metadata[term]).forEach(field => {
+                        matchedFields.push(field)
+                        matchedPositions.push(result.matchData.metadata[term][field].position);
+                    });
+                });
+
+                resultItemLayout = ['title', 'content'];
+
+                var fieldsPositions = new Object;
+
+                matchedFields.map(function (e, i) {
+                    fieldsPositions[e] = matchedPositions[i];
+                });
+
+                resultItemLayout.forEach(item => {
+
+                    var field = get_field(item);
+                    var rest = get_result_full(item);
+
+                    if (matchedFields.includes(item)) {
+                        displayResult(field, item, rest , fieldsPositions);
+                    } else {
+                        displayResultDefault(field, rest);
+                    };
+                    resultLink.appendChild(field);
+                });
+                resultItem.appendChild(resultLink)
+                list.appendChild(resultItem);
+            };
         };
     });
 });
