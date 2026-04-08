@@ -40,9 +40,17 @@ window.addEventListener('scroll', (event) => {
 
 let current_index = 0;
 
-for (var i = 0; i < document.links.length; i++) {
+// Get the current page URL without hash
+const currentPageUrl = window.location.origin + window.location.pathname;
+const currentPageUrlWithSlash = currentPageUrl.endsWith('/') ? currentPageUrl : currentPageUrl + '/';
+const currentPageUrlWithoutSlash = currentPageUrl.endsWith('/') ? currentPageUrl.slice(0, -1) : currentPageUrl;
 
-    if (document.links[i].href === window.location.origin+window.location.pathname || document.links[i].href === window.location.origin+window.location.pathname+'/') {
+for (var i = 0; i < document.links.length; i++) {
+    // Get link URL without hash
+    const linkUrl = new URL(document.links[i].href);
+    const linkPageUrl = linkUrl.origin + linkUrl.pathname;
+    
+    if (linkPageUrl === currentPageUrlWithoutSlash || linkPageUrl === currentPageUrlWithSlash) {
         current_index = i;
         break;
     }

@@ -6,16 +6,46 @@ $if(colorlinks)$
 $endif$
 %
 \documentclass[
-  % a4paper,
-  b5paper
+  a4paper,
+  % b5paper,
+  fleqn,
 ]{book}
 
 \usepackage{setspace}
 \usepackage{ragged2e}
 \usepackage{etoolbox}
 
+\usepackage[
+  hidelinks
+]{hyperref}
+
+% URL line breaking configuration - allow breaks after common URL characters
+\makeatletter
+\def\UrlBreaks{\do\/\do\-\do\.\do\=\do\_\do\?\do\&\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9}
+\def\UrlBigBreaks{\do\:\do\@}
+\def\UrlNoBreaks{\do\(\do\[\do\{} % Don't break after opening brackets
+% Add stretchability and reduce penalties
+\g@addto@macro\UrlSpecials{\do\%{\Url@percent}\do\_{\Url@underscore}}
+\def\Url@percent{\mathchar"8025\relax}
+\def\Url@underscore{\mathchar"8016\relax}
+\def\UrlLeft#1\UrlRight{\UrlFont{#1}}
+\makeatother
+\urlstyle{same}
+% Reduce penalties for URL breaking
+\def\UrlBreakPenalty{0}
+\def\UrlBigBreakPenalty{0}
+
 \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+% \usepackage[all]{nowidow}
+\clubpenalty=9996
+\widowpenalty=9999
+\brokenpenalty=4991
+\predisplaypenalty=10000
+\postdisplaypenalty=1549
+\displaywidowpenalty=1602
+
+
 $if(verbatim-in-note)$
 $endif$
 $if(highlighting-macros)$
@@ -28,28 +58,43 @@ $endif$
   multiple,
   perpage,
   flushmargin,
+  symbol*,
   side,
   ragged,
+  marginal
 ]{footmisc}
+
+\setfnsymbol{wiley}
+\setlength{\skip\footins}{1em}
+
+
 \usepackage{marginfit}
 \makeatletter
-\patchcmd{\@footnotetext}{\footnotesize}{\small\interproportional\setstretch{0.9}}{}{}
+\renewcommand\@makefntext[1]{%
+  \noindent\footnotesize\raggedright\setstretch{1.2}%
+  \sffamily\hspace*{-1em}\makebox[1em][r]{\textsuperscript{\@thefnmark}}#1%
+}
+\renewcommand\@makefnmark{\textsuperscript{\sffamily\@thefnmark}}
 \makeatother
-\renewcommand{\thefootnote}{\footnotesize\bfseries\intertabular\arabic{footnote}}
 
 \makesavenoteenv{longtable}
 \AtBeginEnvironment{longtable}{
-  \sffamily\small\setstretch{.8}
+  \sffamily\small\setstretch{1}
 }
 \renewcommand{\arraystretch}{1.8}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[scaled=0.80]{inter}
-\usepackage[osf]{libertinus}
-\usepackage{libertinust1math}
-\usepackage[scaled=0.9]{inconsolata}
-\renewcommand\sffamily\intertabular
+% \usepackage[scaled=0.85]{inter}
+% \usepackage[osf]{libertinus}
+% \usepackage{libertinust1math}
+\usepackage[
+  DefaultFeatures={Ligatures=Common},
+  RM={StylisticSet=3},
+  SS={StylisticSet=3},
+  TT={Scale=MatchLowercase},
+]{plex-otf}
+% \renewcommand\sffamily\intertabular
 \usepackage{graphicx}
 \usepackage{sidenotes}
 \setkeys{Gin}{width=\linewidth}
@@ -102,6 +147,14 @@ $else$
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 $endif$
 
+% Load hvfloat before caption packages to avoid conflicts
+\usepackage{hvfloat}
+% Configure hvfloat defaults
+\hvFloatSet{%
+  capFormat=hang,
+  capbesidewidth=0.4
+}
+
 \usepackage[
 	hypcap=false				% hypcap=true spits an error
 ]{caption}	
@@ -113,13 +166,27 @@ $endif$
 %   pandoc crossref subfigures
 \newenvironment{pandoccrossrefsubfigures}
 {
-  \begin{figure}
+  \begin{figure*}
+  \setlength{\textwidth}{\linewidth}
+  \let\oldsubfloat\subfloat
+  \renewcommand{\subfloat}[2][]{\oldsubfloat[##1]{##2}\hfill\ignorespaces}
 }
 {
-  \end{figure}
+  \end{figure*}
 }
 
 \newenvironment{pandoccrossrefsubfigures*}
+{
+  \begin{figure*}
+  \setlength{\textwidth}{\linewidth}
+  \let\oldsubfloat\subfloat
+  \renewcommand{\subfloat}[2][]{\oldsubfloat[##1]{##2}\hfill\ignorespaces}
+}
+{
+  \end{figure*}
+}
+
+\newenvironment{plainfigure}
 {
   \begin{figure*}
 }
@@ -128,47 +195,52 @@ $endif$
 }
 
 % 	caption formatting
+\usepackage{wrapfig}
 \DeclareCaptionLabelFormat{lc}{\MakeLowercase{#1}~#2}
 \DeclareCaptionLabelSeparator{mysep}{.\quad}
-\DeclareCaptionLabelSeparator{mysepside}{.\\}
+\DeclareCaptionLabelSeparator{mysepside}{.\newline}
 \captionsetup{
 	labelfont = {bf},
 	%labelformat = lc,
 	labelsep = mysep,
 	justification=RaggedRight,
-	font={sf, footnotesize, stretch=1},
-	singlelinecheck=on,
+	font={sf, footnotesize, stretch=1.2},
+	singlelinecheck=off,
 }
 \captionsetup[table]{
 	labelfont = {bf},
 	%labelformat = lc,
 	labelsep = mysepside,
 	justification=RaggedRight,
-	font={sf, footnotesize, stretch=1},
+	font={sf, footnotesize, stretch=1.2},
 	singlelinecheck=off,
+}
+\captionsetup[wrapfigure]{
+  labelsep = mysepside,
+  format = plain
 }
 \DeclareCaptionStyle{sidecaption}{
   labelfont = {bf},
 	%labelformat = lc,
 	labelsep = mysepside,
 	justification=RaggedRight,
-	font={sf, footnotesize, stretch=1},
+	font={sf, footnotesize, stretch=1.2},
 	singlelinecheck=off,
 }
-\DeclareCaptionStyle{marginfigure}{
+\captionsetup[plainfigure]{
   labelfont = {bf},
 	%labelformat = lc,
 	labelsep = mysepside,
 	justification=RaggedRight,
-	font={sf, footnotesize, stretch=1},
+	font={sf, footnotesize, stretch=1.2},
 	singlelinecheck=off,
 }
 \DeclareCaptionStyle{widefigure}{
   labelfont = {bf},
 	%labelformat = lc,
-	labelsep = mysep,
+	labelsep = mysepside,
 	justification=RaggedRight,
-	font={sf, footnotesize, stretch=1},
+	font={sf, footnotesize, stretch=1.2},
 	singlelinecheck=off,
 }
 \DeclareCaptionStyle{margintable}{
@@ -176,7 +248,7 @@ $endif$
 	%labelformat = lc,
 	labelsep = mysep,
 	justification=RaggedRight,
-	font={sf, footnotesize, stretch=1},
+	font={sf, footnotesize, stretch=1.2},
 	singlelinecheck=off,
 }
 \DeclareCaptionStyle{widetable}{
@@ -184,13 +256,20 @@ $endif$
 	%labelformat = lc,
 	labelsep = mysep,
 	justification=RaggedRight,
-	font={sf, footnotesize, stretch=1},
+	font={sf, footnotesize, stretch=1.2},
 	singlelinecheck=off,
 }
 \usepackage{subcaption}
+\captionsetup[subfigure]{
+  subrefformat=simple,
+  labelformat=simple,
+  format=hang,
+  % justification=RaggedRight,
+  singlelinecheck=on
+}
+\renewcommand\thesubfigure{(\alph{subfigure})}
 \numberwithin{figure}{chapter}
 \numberwithin{table}{chapter}
-
 
 \usepackage{booktabs}
 \usepackage{array}
@@ -202,6 +281,7 @@ $endif$
 \AtBeginEnvironment{tabular}{\small}
 \AtBeginEnvironment{tabularx}{\small}
 \usepackage{multirow}
+\usepackage{multicol}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -209,7 +289,12 @@ $endif$
 % \patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
 % \makeatother
 
+\usepackage{enumitem}
+\setlist{nosep}
+
 \usepackage{bookmark}
+\usepackage{lipsum}
+
 
 \hypersetup{
 $if(title-meta)$
@@ -244,47 +329,185 @@ $endif$
 
 % bibliography
 $if(bibfile)$
-\usepackage[backend=biber,authordate-trad]{biblatex-chicago}
+\usepackage[
+	% doi=false,
+	isbn=false,
+	url=false,
+	autocite=inline,
+	backend=biber,
+	citestyle=numeric-comp,
+	style=nature,
+	sorting=none,
+	bibencoding=utf8,
+  maxbibnames=999,
+]{biblatex}
 \addbibresource{$bibfile$}
+
+\AtEveryBibitem{%
+  \clearfield{note}%
+  \clearfield{addendum}%
+}
+
+\renewcommand*{\bibfont}{\footnotesize\sffamily}
+\setlength{\biblabelsep}{0.3em}
+\setlength{\bibitemsep}{0pt}
+% \DeclareFieldFormat{labelnumber}{\textbf{#1}}
+
+% Softer penalties for URL breaking in bibliography
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburlnumpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+
+% Custom name format for family name only
+\DeclareNameFormat{familyonly}{%
+  \namepartfamily
+  \ifthenelse{\value{listcount}<\value{liststop}}
+    {\space\&\space}
+    {}%
+}
+
+\renewbibmacro*{name:andothers}{%
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }
+    {\space\mkbibemph{et~al.}}
+    {}%
+}
+
+\DeclareCiteCommand{\acite}
+  {(}
+  {\bibhyperref{%
+     \ifnumgreater{\value{author}}{2}
+       {\printnames[familyonly][1-1]{author}\space\mkbibemph{et~al.}~\printfield{year}}
+       {\printnames[familyonly][1-2]{author}~\printfield{year}}%
+     \ifnumgreater{\value{citetotal}}{1}
+       {\textsuperscript{\bfseries\sffamily\thefield{labelnumber}}}
+       {}%
+   }}
+  {\addcomma\space}
+  {)\ifnumequal{\value{citetotal}}{1}
+     {\textsuperscript{\bfseries\sffamily\thefield{labelnumber}}}
+     {}}
+
+\DeclareCiteCommand{\tcite}
+  {}
+  {\bibhyperref{%
+     \ifnumgreater{\value{author}}{2}
+       {\printnames[familyonly][1-1]{author}\space\mkbibemph{et~al.}~(\printfield{year})}
+       {\printnames[familyonly][1-2]{author}~(\printfield{year})}%
+     \ifnumgreater{\value{citetotal}}{1}
+       {\textsuperscript{\bfseries\sffamily\thefield{labelnumber}}}
+       {}%
+   }}
+  {\addcomma\space}
+  {\ifnumequal{\value{citetotal}}{1}
+     {\textsuperscript{\bfseries\sffamily\thefield{labelnumber}}}
+     {}}  
+
+\let\autocite\acite
+\let\textcite\tcite
+
+
 $endif$
+
+
+\newcount\ssphdcolumns
+\ssphdcolumns=6
+
+\newcount\ssphdmargincolumns
+\ssphdmargincolumns=1
+
+\newcount\ssphdwrapfigcolumns
+\ssphdwrapfigcolumns=2
+
+\newcount\ssphdplainfigcolumns
+\ssphdplainfigcolumns=4
 
 \newlength{\ssphdmargin}
 \newlength{\ssphdmarginparsep}
 \newlength{\ssphdmarginparwidth}
 \newlength{\ssphdblockwidth}
 \newlength{\ssphdcolumnwidth}
+\newlength{\ssphdtextwidth}
 
-\setlength{\ssphdmargin}{1.5cm}
-\setlength{\headheight}{1.5cm}
+\setlength{\ssphdmargin}{20mm}
+\setlength{\headheight}{20mm}
 \setlength{\ssphdmarginparsep}{5mm}
+
+
 \setlength{\ssphdblockwidth}{\paperwidth - 2\ssphdmargin}
-\setlength{\ssphdcolumnwidth}{(\ssphdblockwidth - 2\ssphdmarginparsep)/3}
-\setlength{\textwidth}{2\ssphdcolumnwidth + \ssphdmarginparsep}
-\setlength{\marginparwidth}{\ssphdcolumnwidth}
+\setlength{\ssphdcolumnwidth}{\ssphdblockwidth / \the\ssphdcolumns - \ssphdmarginparsep + \ssphdmarginparsep / \the\ssphdcolumns}
+\setlength{\ssphdtextwidth}{\ssphdblockwidth - \the\ssphdmargincolumns\ssphdcolumnwidth - \the\ssphdmargincolumns\ssphdmarginparsep}
+\setlength{\ssphdmarginparwidth}{\the\ssphdmargincolumns\ssphdcolumnwidth + \the\ssphdmargincolumns\ssphdmarginparsep - \ssphdmarginparsep}
 \setlength{\marginparsep}{\ssphdmarginparsep}
 
+% for margin figures
+\newlength{\ssphdwrapfig}
+\setlength{\ssphdwrapfig}{\the\ssphdwrapfigcolumns\ssphdcolumnwidth + \the\ssphdwrapfigcolumns\ssphdmarginparsep - \ssphdmarginparsep}
+\setlength{\wrapoverhang}{0pt}
+\addtolength{\wrapoverhang}{\ssphdmarginparwidth}
+\addtolength{\wrapoverhang}{\ssphdmarginparsep}
+\setlength{\columnsep}{\ssphdmarginparsep}
+
+% for inline figure
+\newlength{\ssphdfigwidth}
+\newlength{\ssphdcapwidth}
+\setlength{\ssphdfigwidth}{\the\ssphdplainfigcolumns\ssphdcolumnwidth + \the\ssphdplainfigcolumns\ssphdmarginparsep - \ssphdmarginparsep}
+\setlength{\ssphdcapwidth}{\the\ssphdcolumns\ssphdcolumnwidth - \the\ssphdplainfigcolumns\ssphdcolumnwidth + \the\ssphdcolumns\ssphdmarginparsep - \the\ssphdplainfigcolumns\ssphdmarginparsep -  \ssphdmarginparsep}
+
 \setlength{\oddsidemargin}{0mm}
+
+\newlength{\ssphdfootrulewidth}
+\setlength{\ssphdfootrulewidth}{2\ssphdcolumnwidth + \ssphdmarginparsep}
+
+\setlength{\footnotesep}{\ssphdmarginparsep}
+\renewcommand{\footnoterule}{%
+  \kern -3pt
+  \hrule width \ssphdfootrulewidth  height 0.5pt
+  \kern 2pt
+}
 
 \usepackage[
   % showframe
 ]{geometry}
 
 \newgeometry{
-  textwidth=\textwidth,
+  textwidth=\ssphdtextwidth,
   hoffset=0mm,
   top=2\ssphdmargin,
   headsep=\ssphdmargin - \headheight,
   bottom=\ssphdmargin,
   left=\ssphdmargin,
-  marginparwidth=\marginparwidth,
+  marginparwidth=\ssphdmarginparwidth,
   marginparsep=\marginparsep,
 }
 \savegeometry{margins}
   
 \newgeometry{
-  textwidth = \ssphdblockwidth,
+  textwidth=\ssphdblockwidth,
+  hoffset=0mm,
+  top=2\ssphdmargin,
+  headsep=\ssphdmargin - \headheight,
+  bottom=\ssphdmargin,
+  left=\ssphdmargin,
+  marginparwidth=0pt,
+  marginparsep=0pt,
 }
 \savegeometry{wide}
+
+\newgeometry{
+  textwidth=\ssphdblockwidth,
+  hoffset=0mm,
+  top=\ssphdmargin,
+  headsep=0mm,
+  bottom=\ssphdmargin,
+  left=\ssphdmargin,
+  marginparwidth=0pt,
+  marginparsep=0pt,
+}
+\savegeometry{frontmatter}
 
 \usepackage{fancyhdr}
 
@@ -292,30 +515,30 @@ $endif$
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
-\fancyhead[O]{
-  \begin{minipage}[t][1.5cm][t]{2\ssphdcolumnwidth + 2\marginparsep}
+\fancyhead[LO]{
+  \begin{minipage}[t][\ssphdmargin][t]{\ssphdtextwidth + \ssphdmarginparsep}
     \begingroup
-    \small\sffamily\intertabular\intermedium\lsstyle
+    \footnotesize\sffamily\mdseries\lsstyle
     \rightmark
     \endgroup
   \end{minipage}%
-  \begin{minipage}[t][1.5cm][t]{\ssphdcolumnwidth}
+  \begin{minipage}[t][\ssphdmargin][t]{\marginparwidth}
     \begingroup
-    \small\sffamily\intertabular\intermedium\lsstyle
+    \footnotesize\sffamily\lsstyle
     \hfill\thepage
     \endgroup
   \end{minipage}
 }
-\fancyhead[E]{
-  \begin{minipage}[t][1.5cm][t]{\ssphdcolumnwidth + \marginparsep}
+\fancyhead[LE]{
+  \begin{minipage}[t][\ssphdmargin][t]{\ssphdmarginparwidth + \ssphdmarginparsep}
     \begingroup
-    \small\sffamily\intertabular\intermedium\lsstyle
+    \footnotesize\sffamily\lsstyle
     \thepage
     \endgroup
   \end{minipage}%
-  \begin{minipage}[t][1.5cm][t]{2\ssphdcolumnwidth + \marginparsep}
+  \begin{minipage}[t][\ssphdmargin][t]{\textwidth}
     \begingroup
-    \small\sffamily\intertabular\intermedium\lsstyle
+    \footnotesize\sffamily\lsstyle
     \leftmark
     \endgroup
   \end{minipage}
@@ -323,69 +546,96 @@ $endif$
 
 \fancypagestyle{plain}{
 \fancyhf{}
-\fancyhead[O]{
-  \begin{minipage}[t][1.5cm][t]{\ssphdcolumnwidth + \marginparsep}
+\fancyhead[LO]{
+  \begin{minipage}[t][1.5cm][t]{\ssphdblockwidth}
   \begingroup
-  \small\sffamily\intertabular\intermedium\lsstyle
+  \small\sffamily\lsstyle
   \hfill\thepage
   \endgroup
   \end{minipage}
 }
-\fancyhead[E]{
-  \begin{minipage}[t][1.5cm][t]{\ssphdcolumnwidth + \marginparsep}
+\fancyhead[LE]{
+  \begin{minipage}[t][1.5cm][t]{\ssphdblockwidth}
   \begingroup
-  \small\sffamily\intertabular\intermedium\lsstyle
+  \small\sffamily\lsstyle
   \thepage
   \endgroup
   \end{minipage}
 }}
 
-
 \usepackage{fullwidth}
 \usepackage{titlesec}
-
+\usepackage{titletoc}
 
 %	default numbering depth
 \setcounter{secnumdepth}{2}
 \renewcommand{\sectionmark}[1]{\MakeUppercase{\markright{\thesection\quad#1}}}
 \renewcommand{\chaptermark}[1]{\MakeUppercase{\markboth{\thechapter\quad#1}{}}}
 
+\usepackage{calc}
+% Define a fullwidth environment with horizontal offset
+\newlength{\fullwidthoffset}
+\setlength{\fullwidthoffset}{3em} % adjust to match your hanging number width
+
+\newenvironment{offsetfullwidth}
+  {\begin{fullwidth}\hfill\begin{minipage}[t]{\linewidth -3em}}
+  {\end{minipage}\end{fullwidth}}
+
 %	header formatting
-\titlespacing*{\part}{.2\linewidth}{.3\textheight}{0mm}
+
 \titlespacing*{\chapter}{0mm}{-28pt -\ssphdmargin}{\ssphdmargin}
-\titlespacing*{\subsection}{0mm}{\baselineskip}{0mm}
-\titleformat{\part}%[hang]
-	{\thispagestyle{empty}\huge\raggedleft\setstretch{0.9}}
-	{\Large\lsstyle\MakeUppercase{\partname}~~\thepart\normalfont}
-	{0em}
-	{\vskip 12pt \huge\lsstyle\sffamily\uppercase}
-% \let\oldpart\part
-% \renewcommand{\part}{
-% }
+\titlespacing*{\subsection}{0mm}{\baselineskip}{1mm}
+\titlespacing{\subsubsection}{\parindent}{0pt}{1ex}
 \titleformat{\chapter}[block]
-	{\begin{fullwidth}\thispagestyle{empty}\huge\bfseries\setstretch{0.9}}
-	{\sffamily\intertabular\huge\thechapter}
-	{1em}
-	{\interproportional}[\end{fullwidth}]
-\titleformat{\section}
-	{\Large\intermedium}
-	{\intertabular\thesection}
+  {\begin{offsetfullwidth}\thispagestyle{empty}\huge\bfseries\setstretch{.9}\sffamily}
+  {\hspace{-1.5em}\makebox[1.5em][l]{\sffamily\huge\thechapter}}
+  {0pt}
+  {\raggedright}[\end{offsetfullwidth}\noindent]
+\titleformat{name=\chapter,numberless}[block]
+  {\begin{fullwidth}\thispagestyle{empty}\huge\bfseries\setstretch{.9}\sffamily}
+  {\sffamily\huge}
+  {0pt}
+  {}[\end{fullwidth}]
+\titleformat{\section}[hang]
+	{\Large\sffamily\mdseries\setstretch{1}}
+	{\thesection}
 	{1em}
 	{\raggedright}
 \titleformat{\subsection}
-	{\bfseries\interproportional\setstretch{0.9}}
-	{\raggedright\intertabular\thesubsection}
+	{\bfseries\sffamily\setstretch{1}}
+	{\raggedright\thesubsection}
 	{1em}
-	{}
+	{\raggedright}
 \titleformat{\subsubsection}[runin]
-  {\interproportional}
-  {\raggedright\intertabular\thesubsection}
+  {\sffamily\itshape}
+  {\thesubsubsection}
   {1ex}
-  {}[~~\textbullet]
+  {}
+  [~\normalfont\textbullet]
 
 \loadgeometry{margins}
 
+\titlecontents{chapter}[2em]
+  {\sffamily\bfseries\setstretch{.9}\addvspace{2em}}
+  {\hspace{-2em}\makebox[2em][l]{\thecontentslabel}}
+  {}
+  {\hfill\contentspage}[]
+
+\titlecontents{section}[2em]
+  {\sffamily\setstretch{.9}\addvspace{1mm}}
+  {\hspace{-2em}\makebox[2em][l]{\thecontentslabel}}
+  {}
+  {\hfill\contentspage}[]
+
+\titlecontents{subsection}[5em]
+  {\sffamily\setstretch{.9}\addvspace{1mm}}
+  {\hspace{-3em}\makebox[3em][l]{\thecontentslabel}}
+  {}
+  {\hfill\contentspage}[]
+
+
 \usepackage{emptypage}
+\usepackage[strict]{changepage}
 
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
@@ -416,16 +666,213 @@ $if(logo)$
 $endif$
 $endif$
 
+%acronyms
+\usepackage[
+  acronym,
+  toc,
+  section=chapter,
+  nogroupskip,
+  nopostdot,
+]{glossaries}
+
+\newcolumntype{x}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{y}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\newglossarystyle{mygls}{
+  \setglossarystyle{long}
+  \renewcommand{\arraystretch}{1.5}
+  \setlength{\tabcolsep}{2pt}
+  \renewenvironment{theglossary}{%
+    \begin{longtable}{@{}x{0.15\linewidth} x{\dimexpr 0.7\linewidth - 7pt\relax} y{0.15\linewidth}@{}}%
+      \footnotesize
+  }{%
+    \end{longtable}%
+  }
+  \renewcommand*{\glossentry}[2]{%
+    \glsentryitem{##1}%
+    \glstarget{##1}{\glossentryname{##1}} &
+    \raggedright\glossentrydesc{##1} &
+    ##2\\%
+  }%
+}
+\setglossarystyle{mygls}
+
+\renewcommand*{\glsnamefont}[1]{\sffamily\footnotesize\bfseries\textls{#1}}
+
+\renewcommand*{\glossarypreamble}{\begin{multicols}{2}\sffamily\footnotesize}
+\renewcommand*{\glossarypostamble}{\end{multicols}}
+
+\input{./abbr.tex}
+
+\usepackage{grid-system}
+\usepackage{qrcode}
+
+\usepackage{lipsum}
+
+
+% MAKETITLE
+\makeatletter
+\newcommand\subtitle[1]{\renewcommand\@subtitle{#1}}
+\newcommand\@subtitle{}
+
+\newcommand\@titlepage{
+  \makeatletter
+  \begingroup
+  \setlength{\parindent}{0pt}
+  \thispagestyle{empty}
+
+    ~
+
+    \addvspace{.3\textheight}
+
+    \begin{minipage}{2\ssphdcolumnwidth + \ssphdmarginparsep}~%
+    \end{minipage}\hspace{\ssphdmarginparsep}%
+    \begin{minipage}[t]{\ssphdblockwidth - 2\ssphdcolumnwidth - 2\ssphdmarginparsep}%
+    \sffamily\Large\noindent\raggedright%
+    \@title
+    \end{minipage}
+
+
+    \clearpage
+    \endgroup
+
+
+  \makeatother
+}
+
+\renewcommand\maketitle{\@titlepage}
+\makeatother
+
 
 \begin{document}
 
 \setlength{\RaggedRightParindent}{1em}
-\RaggedRight
-\setstretch{1.2}
+\setlength{\parskip}{0pt}
+% \RaggedRight
+
+\loadgeometry{frontmatter}
 
 $if(title)$
 \maketitle
 $endif$
+
+%colophon
+$if(ssphd.print.colophon)$
+\newpage
+\thispagestyle{empty}
+\begingroup%
+\sffamily\setstretch{1.2}%
+
+~\vfill
+
+\begin{Row}[cellsep=\ssphdmarginparsep]%
+\begin{Cell}{2}
+  ~
+\end{Cell}
+\begin{Cell}{1}
+\footnotesize\raggedright%
+\setlength{\parindent}{0pt}%
+\setlength{\parskip}{.5\ssphdmarginparsep}%
+$ssphd.print.colophon$ \par~
+\end{Cell}
+\end{Row}
+
+\endgroup
+$endif$
+
+$if(dedication)$
+\cleardoublepage
+\thispagestyle{empty}
+\begingroup%
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\ssphdmarginparsep}
+~\vskip 0.33\textheight
+\begin{Row}[cellsep=\ssphdmarginparsep]%
+\begin{Cell}{2}
+  ~
+\end{Cell}
+  \begin{Cell}{1}
+  \noindent\raggedleft\itshape%
+$dedication$
+\end{Cell}
+\end{Row}
+
+\endgroup
+$endif$
+
+\cleardoublepage
+
+$if(ssphd)$
+\begingroup
+\setstretch{1.2}
+\thispagestyle{empty}
+\noindent
+\begin{minipage}[t]{2\ssphdcolumnwidth + \ssphdmarginparsep}
+    \noindent\raggedright\sffamily\textbf{$ssphd.print.disclaimer.title$}
+    \addvspace{3\ssphdmarginparsep}
+    \noindent\qrcode[hyperlink,height=\ssphdcolumnwidth]{$ssphd.web.url$}\
+    \addvspace{\ssphdmarginparsep}
+    \scriptsize\noindent%
+    \def\UrlFont{\sf}%
+    \url{$ssphd.web.url$}
+\end{minipage}\hspace{\ssphdmarginparsep}%
+\begin{minipage}[t]{\ssphdblockwidth - 3\ssphdcolumnwidth - 3\ssphdmarginparsep}
+  \begingroup
+    \raggedright%
+    \sffamily%
+    \normalsize%
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{\ssphdmarginparsep}%
+    $ssphd.print.disclaimer.content$
+  \endgroup
+\end{minipage}\hspace{\ssphdmarginparsep}%
+\begin{minipage}[t]{\ssphdcolumnwidth}
+    \hfill\sffamily\lsstyle\small\thepage
+    \vskip \ssphdmarginparsep
+\end{minipage}
+$endif$
+$if(acknowledgements)$
+\addvspace{3\ssphdmarginparsep}
+\noindent
+\begin{minipage}[t]{2\ssphdcolumnwidth + \ssphdmarginparsep}
+  \noindent\sffamily%
+  \textbf{$acknowledgements.title$}\\
+\end{minipage}\hspace{\ssphdmarginparsep}%
+\begin{minipage}[t]{\ssphdblockwidth - 2\ssphdcolumnwidth - 2\ssphdmarginparsep}
+    \raggedright%
+    \sffamily%
+    \normalsize%
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{\ssphdmarginparsep}%
+  $acknowledgements.content$
+\end{minipage}
+\endgroup
+$endif$
+
+$if(abstract)$
+\loadgeometry{margins}
+\begingroup
+\thispagestyle{plain}
+~\addvspace{-\ssphdmargin -16pt}
+\raggedright
+$for(abstract)$
+\noindent
+\begin{minipage}[t]{\ssphdcolumnwidth}
+  \noindent\sffamily%
+  \textbf{$abstract.title$}
+\end{minipage}\hspace{\ssphdmarginparsep}%
+\begin{minipage}[t]{\ssphdblockwidth - 2\ssphdcolumnwidth - 3\ssphdmarginparsep}
+  \noindent\sffamily%
+  $abstract.content$
+\end{minipage}\newline\addvspace{3\ssphdmarginparsep}
+$endfor$
+\endgroup
+$endif$
+
+\cleardoublepage
+
+\loadgeometry{margins}
+\setstretch{1.3}
 
 $if(toc)$
 \tableofcontents

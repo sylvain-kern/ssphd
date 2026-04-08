@@ -1311,15 +1311,9 @@
       <key variable="citation-number"/>
     </sort>
     <layout delimiter=", ">
-      <group delimiter=", " prefix="(" suffix=")">
-        <group delimiter=" ">
-          <text macro="author-intext"/>
-          <text macro="date-intext"/>
-        </group>
-        <group delimiter=" ">
-          <label variable="locator" form="short"/>
-          <text variable="locator"/>
-        </group>
+      <group delimiter=" " prefix="(" suffix=")">
+        <text macro="author-intext"/>
+        <text macro="date-intext"/>
       </group>
       <text variable="citation-number" vertical-align="sup"/>
     </layout>

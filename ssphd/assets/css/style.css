@@ -173,7 +173,8 @@
     --color-darkergray: #989db8;
     --color-darkgray: #5e617a;
     --color-midgray: #2e3147;
-    --color-lightgray: #202235;
+    /* --color-lightgray: #202235; */
+    --color-lightgray: #1f1f24;
     --color-background: #1f1f24;
     --color-lightergray: #131318;
 
@@ -245,7 +246,7 @@
     /* --font-size-humongous: 3rem; */
 
     /* LINE HEIGHTS */
-    --base-line-height: 160%;
+    --base-line-height: 165%;
     --note-line-height: 135%;
     --title-line-height: 135%;
     --table-line-height: 120%;
@@ -293,7 +294,7 @@
 /* NOTE SYMBOLS */
 @counter-style note-symbols {
     system: cyclic;
-    /* symbols: "\204E" "\2051" "\2042" "\2020" "\2021" "\2020\2020" "\2021\2021" "\00A7" "\00A7\00a7" "\007C\007C" "\00B6"; */
+    symbols: "\204E" "\2051" "\2042" "\2020" "\2021" "\2020\2020" "\2021\2021" "\00A7" "\00A7\00a7" "\007C\007C" "\00B6";
     suffix: "";
 }
 
@@ -329,6 +330,9 @@ body {
     min-height: 100vh;
 }
 
+a {
+    transition: color 0.25s, background-color 0.25s;
+}
 /* HERO-SPECIFIC */
 
 .hero {
@@ -522,6 +526,7 @@ main {
     font-size: var(--font-size-s);
     color: var(--color-darkergray);
     z-index: 1;
+    transition: border-color 0.25s;
 }
 
 .searchbar input:hover {
@@ -732,8 +737,8 @@ nav a {
     text-decoration: none;
     padding-top: var(--space-nav-top-bot);
     padding-bottom: var(--space-nav-top-bot);
-    display: inline-block;
     border-radius: var(--border-radius-s);
+    display: inline-block;
     margin-left: calc(0px - var(--space-s));
     margin-right: calc(0px - var(--space-s));
     padding: var(--space-xxs) var(--space-s);
@@ -793,6 +798,7 @@ nav ul > li > ul > li > ul > li > a {
     border-bottom-left-radius: 0;
     border-left: 1px solid var(--color-midgray);
     box-sizing: content-box;
+    transition: border-color 0.25s;
 }
 
 nav ul > li > ul > li > ul > li > a.current {
@@ -861,7 +867,7 @@ footer {
     top: var(--content-margin-top);
     right: calc(var(--content-margin-right) - 2*var(--space-ml));
     flex-direction: column;
-    padding: 2px;
+    padding: 4px;
     width: var(--buttons-thickness);
     border: none;
     font-size: var(--font-size-ms);
@@ -877,13 +883,15 @@ footer {
     /* border: 1px solid var(--color-lightgray); */
     border-radius: 50ch;
     display: flex;
-    padding: 1px;
+    padding: 4px;
     background-color: var(--color-lightergray);
     backdrop-filter: blur(8px);
 }
 
 .buttons-top .breadcrumbs {
     height: var(--buttons-thickness);
+    margin-left: -1.5em;
+    padding: 4px 1em;
     overflow-y: auto;
 }
 
@@ -972,7 +980,6 @@ main > section,
 .prevnext .pager:hover {
     /* border: 1px solid var(--color-main); */
     cursor: pointer;
-    background-color: var(--color-lightgray);
     color: var(--color-text);
 }
 
@@ -989,6 +996,7 @@ main > section,
     font-weight: bold;
     letter-spacing: .05rem;
     margin-bottom: var(--space-xxs);
+    transition: color 0.25s;
 }
 
 .prevnext .pager:hover .prefix {
@@ -1326,6 +1334,10 @@ pre.numberLines > code > span {
     margin-bottom: 1px;
 }
 
+.katex {
+    font-size: 1.1rem !important;
+}
+
 /* wide elements */
 
 .wide {
@@ -1440,9 +1452,16 @@ figure,
     font-variant-numeric: tabular-nums;
 }
 
-figure>img {
-    max-width: var(--title-width);
+figure>img{
     border-radius: var(--border-radius-xs);
+}
+
+figure>img.wide {
+    max-width: var(--title-width);
+}
+
+figure>img:not(.wide) {
+    max-width: var(--section-width);
 }
 
 figure>svg {
@@ -1552,6 +1571,7 @@ figcaption p {
     display: block;
     left: 0;
     margin-left: 0;
+    width: 100%;
 }
 
 /* tables */
@@ -1944,6 +1964,46 @@ hr::before {
     .burger {
         display: block;
     }
+
+    .buttons-top .breadcrumbs {
+        margin-left: 0;
+    }
+
+
+    .subfigures.wide table {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-m);
+        width: 100%;
+    }
+
+    .subfigures.wide tbody {
+        display: contents;
+    }
+
+    .subfigures.wide colgroup {
+        display: none;
+    }
+
+    .subfigures.wide tr {
+        display: contents;
+    }
+
+    .subfigures.wide td {
+        padding: 0;
+        display: block;
+    }
+
+    .subfigures.wide figure {
+        width: 100% !important;
+        margin: 0;
+    }
+
+    .subfigures.wide figure img {
+        width: 100%;
+        height: auto;
+    }
+
 }
 
 
@@ -2002,6 +2062,19 @@ hr::before {
 
     figure.subfigures > figcaption {
         margin-bottom: var(--space-m);
+    }
+
+    .subfigures.wide tbody {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .subfigures.wide figure {
+        margin-bottom: var(--space-ml);
+    }
+
+    .subfigures.wide img{
+        margin-bottom: 0;
     }
 
     .sidenote,
@@ -2066,7 +2139,8 @@ hr::before {
     section > pre,
     section > div.sourceCode > pre,
     section > figure > img:not(.margin),
-    section > figure > img.margin {
+    section > figure > img.margin,
+    .subfigures.wide figure > img {
         border-radius: 0px;
         margin-left: calc(0px - var(--content-margin-left));
         width: 100vw !important;

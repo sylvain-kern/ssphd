@@ -24,6 +24,7 @@ secPrefix:
   - "section"
   - "sections"
 sectionsDepth: 3
+secnumdepth: 3
 
 references-section-title: True
 link-citations: True

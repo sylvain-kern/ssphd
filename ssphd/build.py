@@ -9,6 +9,7 @@ import json
 import pkg_resources
 import pickle
 import mpld3
+import unicodedata
 import xml.etree.ElementTree as et
 # import plotly
 
@@ -30,11 +31,11 @@ SVG_NS = {"svg": "http://www.w3.org/2000/svg"}
 
 # Mapping from colors to CSS variables
 COLOR_REPLACEMENTS = {
-    "#000000": "var(--color-darkergray)",
-    "#00000000": "var(--color-darkergray)",
-    "#000": "var(--color-darkergray)",
-    "rgb(0,0,0)": "var(--color-darkergray)",
-    "rgb(0%,0%,0%)": "var(--color-darkergray)"
+    "#000000": "var(--color-text)",
+    "#00000000": "var(--color-text)",
+    "#000": "var(--color-text)",
+    "rgb(0,0,0)": "var(--color-text)",
+    "rgb(0%,0%,0%)": "var(--color-text)"
 }
 
 
@@ -101,8 +102,26 @@ class Document:
                 abbreviation, description = match.groups()
                 self.abbreviation_dict[abbreviation] = description
                 return []
+            
+    def write_abbreviations_file_latex(self):
+        def simplify(text):
+            # Normalize to NFD (decomposes accented characters)
+            text = unicodedata.normalize('NFD', text)
+            # Remove combining marks (accents)
+            text = ''.join(ch for ch in text if unicodedata.category(ch) != 'Mn')
+            # Convert to lowercase
+            text = text.lower()
+            # Keep only lowercase letters and digits
+            text = re.sub(r'[^a-z0-9]', '', text)
+            return text
+        
+        with open(os.path.join(self.out_latex_path, 'abbr.tex'), 'w', encoding="utf-8") as f:
+            f.write('\\makeglossaries\n')
+            for key, val in self.abbreviation_dict.items():
+                template = f'''\\newacronym{{{simplify(key)}}}{{{key}}}{{{val}}}\n'''
+                f.write(template)
 
-    def replace_abbreviations(self, key, value, format_, meta):
+    def replace_abbreviations_html(self, key, value, format_, meta):
         if key == 'Str':
             text = value
             abbr_start = text.find('+[')
@@ -125,7 +144,41 @@ class Document:
                         abbr_description = self.abbreviation_dict[abbr_text]
                         abbr_html = f'<abbr title="{abbr_description}" class="{clss}">{abbr_text}</abbr>{following_char}'
                         return pf.RawInline('html', abbr_html)
-                    
+                 
+    def replace_abbreviations_latex(self, key, value, format_, meta):
+        def simplify(text):
+            # Normalize to NFD (decomposes accented characters)
+            text = unicodedata.normalize('NFD', text)
+            # Remove combining marks (accents)
+            text = ''.join(ch for ch in text if unicodedata.category(ch) != 'Mn')
+            # Convert to lowercase
+            text = text.lower()
+            # Keep only lowercase letters and digits
+            text = re.sub(r'[^a-z0-9]', '', text)
+            return text
+        if key == 'Str':
+            text = value
+            abbr_start = text.find('+[')
+            if abbr_start >= 0:
+                abbr_end = text.find(']', abbr_start)
+                if (abbr_end > abbr_start + 2):
+                    # Search for the end of the abbreviation, including any non-space characters
+                    abbr_text = text[abbr_start + 2:abbr_end]
+                    following_char = text[-1]
+                    if following_char=="]":
+                        following_char = ""
+
+                    abbr_definition_start = abbr_end + 1
+                    abbr_definition = text[abbr_definition_start:]
+                    if abbr_text in self.abbreviation_dict:
+                        if abbr_text.isupper():
+                            clss = "acronym"
+                        else:
+                            clss = ""
+                        abbr_description = self.abbreviation_dict[abbr_text]
+                        abbr_latex = f'\\gls{{{simplify(abbr_text)}}}{following_char}'
+                        return pf.RawInline('latex', abbr_latex)
+                            
     ## OPERATIONS
 
     def copy(self, ast, opts):
@@ -317,7 +370,8 @@ class Document:
 
                 # Extract classes from Pandoc attributes
                 classes = stuff.get('classes', []) if isinstance(stuff, dict) else stuff[1]  # depends on pf version
-                add_classes = [cls for cls in ('margin', 'wide') if cls in classes]
+                # Treat wwide as wide for HTML
+                add_classes = [cls for cls in ('margin', 'wide') if cls in classes or (cls == 'wide' and 'wwide' in classes)]
 
                 # Ensure output folder exists
                 out_dir = os.path.join(self.out_html_path, '_assets', *os.path.split(filename)[:-1])
@@ -520,16 +574,19 @@ class Document:
             return pf.Image([ident, stuff, keyvals], caption, [newfilename, typef])
         
     def image_filter_latex(self, key, value, fmt, meta):
-        if key == "Image":
-            [[ident, classes, kvs], alt, [src, title]] = value
+        if key != "Image":
+            return
 
+        [[ident, classes, kvs], alt, [src, title]] = value
 
-            # Copy image to output folder
-            target_path = os.path.join(self.out_latex_path, src)
-            os.makedirs(os.path.dirname(target_path), exist_ok=True)
+        root, ext = os.path.splitext(src)
+
+        # Copy image to output folder (if it exists locally)
+        target_path = os.path.join(self.out_latex_path, src)
+        os.makedirs(os.path.dirname(target_path), exist_ok=True)
+        if os.path.exists(src):
             shutil.copy2(src, target_path)
-            
-        
+    
     def custom_figure(self, key, value, format, meta):
         if key == 'Figure':    
             # print()
@@ -550,23 +607,52 @@ class Document:
             image = pf.Plain([pf.Image(img_attr, img_caption, (src, title))])
             
             def caption(type):
-                return pf.Plain([pf.RawInline('latex', f'\\{type}{{')] + img_caption + [pf.RawInline('latex', f'\label{{{identifier}}}}}')])
+                return pf.Plain([pf.RawInline('latex', f'\\{type}{{')] + img_caption + [pf.RawInline('latex', f'\\label{{{identifier}}}}}')])
 
             # Decide LaTeX environment
-            if 'wide' in classes:
+            if 'wwide' in classes:
+                # Use hvfloat for wwide class - full page width figure with optimal placement
+                # hvFloat syntax: \hvFloat[options]{float-type}{object}[short-cap]{long-cap}{label}
+                # We'll use doublePage option for full width, with caption on right
+                
+                return [
+                    pf.RawBlock('latex', f'\\hvFloat[capWidth=w,capPos=right]{{figure}}{{\\includegraphics{{{src}}}}}[]{{'),
+                    pf.Plain(img_caption),
+                    pf.RawBlock('latex', f'}}{{{identifier}}}'),
+                ]
+            elif 'wide' in classes:
                 env = 'figure*'
+                opt = ''
                 img = image, caption('caption')
 
             elif 'margin' in classes:
-                env = 'marginfigure'
+                env = 'wrapfigure'
+                opt = '{O}{\\ssphdwrapfig}'
                 img = image, caption('caption')
-
             else:
                 env = 'figure'
-                img = caption('sidecaption'), image
-            
+                opt = ''
+                img = image, caption('caption')
+                return [
+                    pf.RawBlock('latex', '\\begin{figure*}'),
+                    pf.RawBlock('latex', '\\checkoddpage\\ifoddpage'),
+                    pf.RawBlock('latex', '\\begin{minipage}[t]{\\ssphdfigwidth}\\vspace{0pt}\\par'),
+                    image,
+                    pf.RawBlock('latex', '\\end{minipage}\\hfill\\begin{minipage}[t]{\\ssphdcapwidth}\\vspace{\\ssphdmarginparsep}\\par'),
+                    caption('caption'),
+                    pf.RawBlock('latex','\\end{minipage}'),
+                    pf.RawBlock('latex', '\\else'),
+                    pf.RawBlock('latex', '\\begin{minipage}[t]{\\ssphdcapwidth}\\vspace{\\ssphdmarginparsep}\\par'),
+                    caption('caption'),
+                    pf.RawBlock('latex', '\\end{minipage}\\hfill\\begin{minipage}[t]{\\ssphdfigwidth}\\vspace{0pt}\\par'),
+                    image,
+                    pf.RawBlock('latex','\\end{minipage}'),
+                    pf.RawBlock('latex', '\\fi'),
+                    pf.RawBlock('latex', '\\end{figure*}')
+                ]
+                         
             return [
-                pf.RawBlock('latex', f'\\begin{{{env}}}'),
+                pf.RawBlock('latex', f'\\begin{{{env}}}{opt}'),
                 *img,
                 pf.RawBlock('latex', f'\\end{{{env}}}'),
             ]
@@ -576,48 +662,74 @@ class Document:
         if key == "Div":
             [[ident, classes, kvs], contents] = value
             if "subfigures" in classes:
-                print('---')
-                print(key)
-                print(value)
-                print()
-                print()
-                new_contents = []
+                # print('---')
+                # print(key)
+                # print(value)
+                # print()
+                # print()
+                
+                # Extract caption from contents
+                caption_block = None
+                image_blocks = []
+                
                 for block in contents:
                     if block["t"] in ("Para", "Plain"):
                         inlines = block["c"]
                         images = [c for c in inlines if c["t"] == "Image"]
-                        n = len(images)
-                        if n > 0:
-                            new_inlines = []
-                            for j, img in enumerate(images):
-                                attr, alt, target = img["c"]
+                        # If this block has images, it's an image row
+                        if len(images) > 0:
+                            image_blocks.append(block)
+                        # Otherwise it might be a caption
+                        elif caption_block is None and len(inlines) > 0:
+                            caption_block = block
+                
+                # Process image blocks
+                new_contents = []
+                for block in image_blocks:
+                    inlines = block["c"]
+                    images = [c for c in inlines if c["t"] == "Image"]
+                    n = len(images)
+                    new_inlines = []
+                    for j, img in enumerate(images):
+                        attr, alt, target = img["c"]
 
-                                kvs_dict = dict(attr[2])
-                                if "width" not in kvs_dict:
-                                    # reduce a bit for gaps
-                                    kvs_dict["width"] = f"{(100 - (n-1)*2)/n:.0f}%"
-                                attr[2] = list(kvs_dict.items())
-                                img["c"] = [attr, alt, target]
+                        kvs_dict = dict(attr[2])
+                        if "width" not in kvs_dict:
+                            # reduce a bit for gaps
+                            kvs_dict["width"] = f"{(100 - (n-1)*2)/n:.0f}%"
+                        attr[2] = list(kvs_dict.items())
+                        img["c"] = [attr, alt, target]
 
-                                new_inlines.append(img)
-                                if j < n - 1:
-                                    # add small horizontal space between images
-                                    new_inlines.append(
-                                        pf.RawInline("latex", "\\hfill")
-                                    )
-
-                            block["c"] = new_inlines
-                            new_contents.append(block)
-                            # add vertical space after this row
-                            new_contents.append(
-                                pf.RawBlock("latex", "\\medskip")
+                        new_inlines.append(img)
+                        if j < n - 1:
+                            # add small horizontal space between images
+                            new_inlines.append(
+                                pf.RawInline("latex", "\\hfill")
                             )
-                        else:
-                            new_contents.append(block)
-                    else:
-                        new_contents.append(block)
 
-                return pf.Div([ident, classes, kvs], new_contents)
+                    block["c"] = new_inlines
+                    new_contents.append(block)
+                    # add vertical space after this row
+                    new_contents.append(
+                        pf.RawBlock("latex", "\\medskip")
+                    )
+                
+                # Build the figure* environment with caption at bottom
+                result = [pf.RawBlock('latex', '\\begin{figure*}[t]')]
+                result.extend(new_contents)
+                
+                # Add caption at the bottom if it exists
+                if caption_block:
+                    result.append(pf.RawBlock('latex', '\\caption{'))
+                    result.append(caption_block)
+                    result.append(pf.RawBlock('latex', f'\\label{{{ident}}}}}'))
+                elif ident:
+                    # If no caption but has an ID, still add label
+                    result.append(pf.RawBlock('latex', f'\\label{{{ident}}}'))
+                
+                result.append(pf.RawBlock('latex', '\\end{figure*}'))
+                
+                return result
 
     def table_filter_latex(self, key, value, fmt, meta):
         if key == 'Div':
@@ -637,6 +749,10 @@ class Document:
                             pf.RawBlock('latex', '\\end{marginpar}')
                         ])
             except Exception: return None
+            
+    def replace_hrule(self, key, value, fmt, meta):
+        if key == 'HorizontalRule':
+            return pf.RawBlock('latex', '\\begin{center}\\vskip 15mm\\large\\noindent\\textbf{*~~*~~*}\\vskip 15mm\\end{center}')
             
     def chunk(self):
         
@@ -735,6 +851,21 @@ class Document:
             "children": [key for key in self.structure if self.structure[key]["level"] == 1]
         }
 
+        # Build a map of figure/table IDs to their containing sections
+        self.id_to_section = {}
+        for file in os.listdir('-/'):
+            if file.endswith('.html'):
+                section_id = file.split('/')[-1][:-5]
+                if section_id == 'index':
+                    section_id = '-index'
+                with open(f'-/{file}', 'r', encoding='utf-8') as f:
+                    temp_soup = BeautifulSoup(f, 'html.parser')
+                    # Find all elements with IDs starting with fig: or tbl:
+                    for elem in temp_soup.find_all(id=True):
+                        elem_id = elem.get('id', '')
+                        if elem_id.startswith('fig:') or elem_id.startswith('tbl:'):
+                            self.id_to_section[elem_id] = section_id
+
         for file in track(os.listdir('-/'), description='Building output tree'):
             
             if os.path.isdir(file):  # Only process directories
@@ -786,12 +917,26 @@ class Document:
                 separator.string = '/'
                 item = soup.new_tag('a', href=path)
                 item.string = title                         
-                breadcrumbs.append(separator)
+                breadcrumbs.append(separator) 
                 breadcrumbs.append(item)
         
         # link replacement
         for link in soup.find_all("a", href=True):
+            # print(link["href"]);print()
             href = link["href"]
+            
+            # Handle bare anchor links (like #fig:test or #tbl:test)
+            if href.startswith('#'):
+                anchor_id = href[1:]  # Remove the #
+                if anchor_id in self.id_to_section:
+                    target_section = self.id_to_section[anchor_id]
+                    if target_section == '-index':
+                        newhref = '/' + href
+                    else:
+                        newhref = self.structure[target_section]["path"] + '/' + href
+                    link["href"] = newhref
+                continue
+            
             section_id = href.split('#')[0][:-5]
     
             if section_id in self.structure:
@@ -855,7 +1000,9 @@ class Document:
             # tweak for subifigures
             subfigures = table.find_parent('figure')
             if subfigures:
-                del table.attrs["style"]
+                try:
+                    del table.attrs["style"]
+                except Exception: pass
                 # get the element right after the table
                 if "wide" in subfigures.get("class", []):
                     next_elem = table.find_next_sibling()
@@ -874,6 +1021,8 @@ class Document:
         for image in soup.find_all('img'):
             if image.has_attr('src'):
                 pth = image['src']
+                # print("\nfigure\n")
+                # print(pth)
                 if pth.startswith('./'):
                     pth = pth[2:]
                 image['src'] = os.path.join('_assets', pth)
@@ -913,11 +1062,16 @@ class Document:
 
     def references_section_latex(self, key, value, format_, meta):
         if key == "Div" and "refs" in value[0][0]:
-            return pf.RawBlock("latex", r"\printbibliography[title={References}]")
+            return pf.RawBlock("latex", r"\loadgeometry{wide}\printbibheading[heading=bibintoc, title={References}]\begin{multicols}{2}\setstretch{1.2}\printbibliography[heading=none]\end{multicols}\loadgeometry{margins}")
+        
+    
+    def abbr_section_latex(self, key, value, format_, meta):
+        if key == "Div" and "abbr" in value[0][0]:
+            return pf.RawBlock("latex", r"\loadgeometry{wide}\printglossary[title={Index of acronyms}, type=\acronymtype]\loadgeometry{margins}")
 
     def to_latex(self):
         if not os.path.exists(self.out_latex_path):
-            os.mkdir(self.out_latex_path)
+            os.mkdir(self.out_latex_path)   
 
         args = [
             f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
@@ -935,17 +1089,26 @@ class Document:
             args.append(f"--metadata=bibfile:{self.generate_bib_file(self.refs_file)}")
 
 
-        with open("./test.json", "w") as f:
+        with open("./test.json", "w", encoding="utf-8") as f:
             f.write(self.ast)
+            
+        self.abbreviation_dict = {}
+
         
         # Apply the Python filter to the AST
         self.ast_latex = self.filter([
+            self.get_abbreviation_dict,
+            self.replace_abbreviations_latex,
             self.image_filter_latex,
             self.custom_figure,
             self.subfigures_filter_latex,
             self.table_filter_latex,
-            self.references_section_latex
+            self.references_section_latex,
+            self.abbr_section_latex,
+            self.replace_hrule
         ],self.ast)
+        
+        self.write_abbreviations_file_latex()
 
         # Convert the filtered AST, not the original
         pypandoc.convert_text(
@@ -955,6 +1118,16 @@ class Document:
             outputfile=os.path.join(self.out_latex_path, f"{self.base_name}.tex"),
             extra_args=args,
         )
+        
+        # bookbinding
+        with open(os.path.join(self.out_latex_path, f"{self.base_name}_signatures.tex"), 'w') as f:
+            f.write(f'''
+\\documentclass[b5paper]{{scrartcl}}
+\\usepackage{{pdfpages}}
+\\begin{{document}}
+\\includepdf[pages=-, signature=16, landscape]{{{self.base_name}.pdf}}
+\\end{{document}}
+            ''')
         
     def to_html(self):
 
@@ -982,6 +1155,8 @@ class Document:
             # self.filter([self.hyperlink_title_filter]) # transforms all references titles to hyperlinks
         
         
+        # Re-parse from updated AST after pandoc-crossref
+        dico = json.loads(self.ast)
         # append doc meta to metadata file
         self.meta = dico["meta"] | meta_before
         dico["meta"] = self.meta
@@ -990,7 +1165,7 @@ class Document:
         self.filter([
             self.add_title_to_references,
             self.get_abbreviation_dict,
-            self.replace_abbreviations,
+            self.replace_abbreviations_html,
             self.graphs_filter,
             self.inline_svg_filter,
         ])
