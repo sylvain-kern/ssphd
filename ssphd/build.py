@@ -7,8 +7,8 @@ import re
 import csv
 import json
 import pkg_resources
-import pickle
-import mpld3
+# import pickle
+# import mpld3
 import unicodedata
 import xml.etree.ElementTree as et
 # import plotly
@@ -477,27 +477,27 @@ class Document:
     #             return pf.RawInline("html", div)
     
     # MplD3
-    def graphs_filter(self, key, value, format, meta):
-        if key == 'Image':
-            [ident, stuff, keyvals], caption, [filename, typef] = value
+    # def graphs_filter(self, key, value, format, meta):
+    #     if key == 'Image':
+    #         [ident, stuff, keyvals], caption, [filename, typef] = value
             
-            if filename.endswith('.pkl'):
-                with open(filename, 'rb') as f:
-                    jsn = json.dumps(mpld3.fig_to_dict(pickle.load(f)))
+    #         if filename.endswith('.pkl'):
+    #             with open(filename, 'rb') as f:
+    #                 jsn = json.dumps(mpld3.fig_to_dict(pickle.load(f)))
                     
-                graph_id = f"graph_{self.graph_count}"
-                self.graph_count += 1
-                graph_script = f"""
-                var json_{graph_id} = {jsn};
-                mpld3.draw_figure("{graph_id}", json_{graph_id});
-                """
+    #             graph_id = f"graph_{self.graph_count}"
+    #             self.graph_count += 1
+    #             graph_script = f"""
+    #             var json_{graph_id} = {jsn};
+    #             mpld3.draw_figure("{graph_id}", json_{graph_id});
+    #             """
 
-                return [
-                    pf.RawInline("html", f"""
-                        <div class='graph-container' id={graph_id}></div>
-                        <script>{graph_script}</script>
-                    """)
-                ]       
+    #             return [
+    #                 pf.RawInline("html", f"""
+    #                     <div class='graph-container' id={graph_id}></div>
+    #                     <script>{graph_script}</script>
+    #                 """)
+    #             ]       
                 
         
     # # Dygraphs
