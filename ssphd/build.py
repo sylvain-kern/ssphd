@@ -1162,7 +1162,7 @@ class Document:
             self.add_title_to_references,
             self.get_abbreviation_dict,
             self.replace_abbreviations_html,
-            self.graphs_filter,
+            # self.graphs_filter,
             self.inline_svg_filter,
         ])
         
