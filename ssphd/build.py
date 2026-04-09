@@ -1087,10 +1087,6 @@ class Document:
             print(self.refs_file)
             args.append("--biblatex")
             args.append(f"--metadata=bibfile:{self.generate_bib_file(self.refs_file)}")
-
-
-        with open("./test.json", "w", encoding="utf-8") as f:
-            f.write(self.ast)
             
         self.abbreviation_dict = {}
 
