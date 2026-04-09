@@ -151,8 +151,7 @@ $endif$
 \usepackage{hvfloat}
 % Configure hvfloat defaults
 \hvFloatSet{%
-  capFormat=hang,
-  capbesidewidth=0.4
+  capFormat=hang
 }
 
 \usepackage[
@@ -274,6 +273,7 @@ $endif$
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{longtable,ltcaption}
+\usepackage{supertabular}
 % \usepackage{threeparttablex}
 % \BeforeBeginEnvironment{longtable}{\begin{ThreePartTable}}
 % \AfterEndEnvironment{longtable}{\end{ThreePartTable}}
@@ -679,20 +679,17 @@ $endif$
 \newcolumntype{y}[1]{>{\raggedleft\arraybackslash}p{#1}}
 
 \newglossarystyle{mygls}{
-  \setglossarystyle{long}
-  \renewcommand{\arraystretch}{1.5}
-  \setlength{\tabcolsep}{2pt}
+  \setglossarystyle{list}
   \renewenvironment{theglossary}{%
-    \begin{longtable}{@{}x{0.15\linewidth} x{\dimexpr 0.7\linewidth - 7pt\relax} y{0.15\linewidth}@{}}%
-      \footnotesize
+    \raggedright
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{0pt}
   }{%
-    \end{longtable}%
   }
   \renewcommand*{\glossentry}[2]{%
-    \glsentryitem{##1}%
-    \glstarget{##1}{\glossentryname{##1}} &
-    \raggedright\glossentrydesc{##1} &
-    ##2\\%
+    \noindent\textbf{\glstarget{##1}{\glossentryname{##1}}}\hfill{##2}\par
+    \glossentrydesc{##1}\par
+    \vskip 3mm
   }%
 }
 \setglossarystyle{mygls}
