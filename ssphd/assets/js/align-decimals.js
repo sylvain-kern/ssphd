@@ -17,7 +17,7 @@ class DecimalAligner {
    */
   isNumeric(value) {
     const cleanValue = value.trim().replace(/[,\s]/g, '');
-    return !isNaN(cleanValue) && !isNaN(parseFloat(cleanValue));
+    return !isNaN(cleanValue) && !isNaN(parseFloat(cleanValue)) && cleanValue !== '';
   }
 
   /**
@@ -80,12 +80,36 @@ class DecimalAligner {
       return false;
     }
     
-    // Align numeric cells
+    // First pass: create aligned cells
+    const alignedCells = [];
     cells.forEach(cell => {
       const text = cell.textContent.trim();
       if (text && this.isNumeric(text)) {
         cell.textContent = '';
-        cell.appendChild(this.createAlignedCell(text));
+        const alignedSpan = this.createAlignedCell(text);
+        cell.appendChild(alignedSpan);
+        alignedCells.push(cell);
+      }
+    });
+    
+    // Second pass: find max integer width
+    let maxIntegerWidth = 0;
+    alignedCells.forEach(cell => {
+      const integerSpan = cell.querySelector('.' + this.integerClass);
+      if (integerSpan) {
+        const width = integerSpan.offsetWidth;
+        if (width > maxIntegerWidth) {
+          maxIntegerWidth = width;
+        }
+      }
+    });
+    
+    // Third pass: set all integer parts to the same width
+    alignedCells.forEach(cell => {
+      const integerSpan = cell.querySelector('.' + this.integerClass);
+      if (integerSpan) {
+        integerSpan.style.minWidth = maxIntegerWidth + 'px';
+        integerSpan.style.width = maxIntegerWidth + 'px';
       }
     });
     
@@ -131,22 +155,17 @@ class DecimalAligner {
     style.textContent = `
       .${this.className} {
         display: inline-flex;
-        width: 100%;
-        justify-content: flex-end;
+        font-variant-numeric: tabular-nums;
       }
       
       .${this.integerClass} {
         text-align: right;
+        white-space: nowrap;
       }
       
       .${this.decimalClass} {
         text-align: left;
-        min-width: 0;
-      }
-      
-      td .${this.className},
-      th .${this.className} {
-        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
       }
     `;
     
