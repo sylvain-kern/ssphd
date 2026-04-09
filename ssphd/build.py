@@ -1069,7 +1069,7 @@ class Document:
 
     def to_latex(self):
         if not os.path.exists(self.out_latex_path):
-            os.mkdir(self.out_latex_path)   
+            os.makedirs(self.out_latex_path, exist_ok=True)   
 
         args = [
             f"--metadata-file={os.path.join(self.meta_path, 'meta.yaml')}",
