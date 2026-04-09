@@ -19,8 +19,6 @@ import pandocfilters as pf
 from bs4 import BeautifulSoup
 from rich.progress import track
 from urllib.parse import urlparse
-from matplotlib.colors import to_hex
-from matplotlib.pyplot import switch_backend
 
 from .config import Config
 
