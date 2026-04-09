@@ -618,19 +618,19 @@ $endif$
 \loadgeometry{margins}
 
 \titlecontents{chapter}[2em]
-  {\sffamily\bfseries\setstretch{.9}\addvspace{2em}}
+  {\sffamily\bfseries\setstretch{.9}\vskip 2em}
   {\hspace{-2em}\makebox[2em][l]{\thecontentslabel}}
   {}
   {\hfill\contentspage}[]
 
 \titlecontents{section}[2em]
-  {\sffamily\setstretch{.9}\addvspace{1mm}}
+  {\sffamily\setstretch{.9}\vskip 1mm}
   {\hspace{-2em}\makebox[2em][l]{\thecontentslabel}}
   {}
   {\hfill\contentspage}[]
 
 \titlecontents{subsection}[5em]
-  {\sffamily\setstretch{.9}\addvspace{1mm}}
+  {\sffamily\setstretch{.9}\vskip 1mm}
   {\hspace{-3em}\makebox[3em][l]{\thecontentslabel}}
   {}
   {\hfill\contentspage}[]
@@ -722,7 +722,7 @@ $endif$
 
     ~
 
-    \addvspace{.3\textheight}
+    \vskip .3\textheight
 
     \begin{minipage}{2\ssphdcolumnwidth + \ssphdmarginparsep}~%
     \end{minipage}\hspace{\ssphdmarginparsep}%
@@ -831,7 +831,7 @@ $if(ssphd)$
 \end{minipage}
 $endif$
 $if(acknowledgements)$
-\addvspace{3\ssphdmarginparsep}
+\vskip 3\ssphdmarginparsep
 \noindent
 \begin{minipage}[t]{2\ssphdcolumnwidth + \ssphdmarginparsep}
   \noindent\sffamily%
@@ -852,7 +852,7 @@ $if(abstract)$
 \loadgeometry{margins}
 \begingroup
 \thispagestyle{plain}
-~\addvspace{-\ssphdmargin -16pt}
+~\vskip\dimexpr -\ssphdmargin -16pt\relax
 \raggedright
 $for(abstract)$
 \noindent
@@ -863,7 +863,7 @@ $for(abstract)$
 \begin{minipage}[t]{\ssphdblockwidth - 2\ssphdcolumnwidth - 3\ssphdmarginparsep}
   \noindent\sffamily%
   $abstract.content$
-\end{minipage}\newline\addvspace{3\ssphdmarginparsep}
+\end{minipage}\newline\vskip 3\ssphdmarginparsep
 $endfor$
 \endgroup
 $endif$
