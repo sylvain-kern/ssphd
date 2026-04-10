@@ -1,9 +1,0 @@
-paths:
-  assets: "assets"
-  templates: "assets/templates"
-  css: "assets/css"
-  fonts: "assets/fonts"
-  refs: "_assets/refs"
-  meta: "assets/meta"
-  output_html: "html"
-  output_latex: "latex"
