@@ -198,10 +198,10 @@ $endif$
 \DeclareCaptionLabelFormat{lc}{\MakeLowercase{#1}~#2}
 \DeclareCaptionLabelSeparator{mysep}{.\quad}
 \DeclareCaptionLabelSeparator{mysepside}{.\newline}
-\captionsetup{
+\captionsetup[figure]{
 	labelfont = {bf},
 	%labelformat = lc,
-	labelsep = mysep,
+	labelsep = mysepside,
 	justification=RaggedRight,
 	font={sf, footnotesize, stretch=1.2},
 	singlelinecheck=off,
@@ -237,23 +237,16 @@ $endif$
 \DeclareCaptionStyle{widefigure}{
   labelfont = {bf},
 	%labelformat = lc,
-	labelsep = mysepside,
-	justification=RaggedRight,
-	font={sf, footnotesize, stretch=1.2},
-	singlelinecheck=off,
-}
-\DeclareCaptionStyle{margintable}{
-  labelfont = {bf},
-	%labelformat = lc,
 	labelsep = mysep,
 	justification=RaggedRight,
+  format=hang,
 	font={sf, footnotesize, stretch=1.2},
 	singlelinecheck=off,
 }
 \DeclareCaptionStyle{widetable}{
   labelfont = {bf},
 	%labelformat = lc,
-	labelsep = mysep,
+	labelsep = mysepside,
 	justification=RaggedRight,
 	font={sf, footnotesize, stretch=1.2},
 	singlelinecheck=off,
@@ -520,13 +513,12 @@ $endif$
 \fancyhead[LO]{
   \begin{minipage}[t][\ssphdmargin][t]{\ssphdtextwidth + \ssphdmarginparsep}
     \begingroup
-    \footnotesize\sffamily\mdseries\addfontfeatures{LetterSpace=10.0}
-    \rightmark
+    \footnotesize\sffamily\mdseries\addfontfeatures{LetterSpace=10.0}\rightmark
     \endgroup
   \end{minipage}%
   \begin{minipage}[t][\ssphdmargin][t]{\marginparwidth}
     \begingroup
-    \footnotesize\sffamily\addfontfeatures{LetterSpace=10.0}
+    \footnotesize\sffamily
     \hfill\thepage
     \endgroup
   \end{minipage}
@@ -534,14 +526,13 @@ $endif$
 \fancyhead[LE]{
   \begin{minipage}[t][\ssphdmargin][t]{\ssphdmarginparwidth + \ssphdmarginparsep}
     \begingroup
-    \footnotesize\sffamily\addfontfeatures{LetterSpace=10.0}
+    \footnotesize\sffamily
     \thepage
     \endgroup
   \end{minipage}%
   \begin{minipage}[t][\ssphdmargin][t]{\textwidth}
     \begingroup
-    \footnotesize\sffamily\addfontfeatures{LetterSpace=10.0}
-    \leftmark
+    \footnotesize\sffamily\addfontfeatures{LetterSpace=10.0}\leftmark
     \endgroup
   \end{minipage}
 }
@@ -551,7 +542,7 @@ $endif$
 \fancyhead[LO]{
   \begin{minipage}[t][1.5cm][t]{\ssphdblockwidth}
   \begingroup
-  \small\sffamily\addfontfeatures{LetterSpace=15.0}
+  \small\sffamily
   \hfill\thepage
   \endgroup
   \end{minipage}
@@ -559,7 +550,7 @@ $endif$
 \fancyhead[LE]{
   \begin{minipage}[t][1.5cm][t]{\ssphdblockwidth}
   \begingroup
-  \small\sffamily\addfontfeatures{LetterSpace=15.0}
+  \small\sffamily
   \thepage
   \endgroup
   \end{minipage}
@@ -827,7 +818,7 @@ $if(ssphd)$
   \endgroup
 \end{minipage}\hspace{\ssphdmarginparsep}%
 \begin{minipage}[t]{\ssphdcolumnwidth}
-    \hfill\sffamily\small\addfontfeatures{LetterSpace=15.0}\thepage
+    \hfill\sffamily\small\thepage
     \vskip \ssphdmarginparsep
 \end{minipage}
 $endif$

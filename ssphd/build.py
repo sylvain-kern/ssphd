@@ -621,7 +621,7 @@ class Document:
             elif 'wide' in classes:
                 env = 'figure*'
                 opt = ''
-                img = image, caption('caption')
+                img = pf.RawBlock('latex', '\\captionsetup{style=widefigure}'), image, caption('caption')
 
             elif 'margin' in classes:
                 env = 'wrapfigure'
@@ -637,10 +637,12 @@ class Document:
                     pf.RawBlock('latex', '\\begin{minipage}[t]{\\ssphdfigwidth}\\vspace{0pt}\\par'),
                     image,
                     pf.RawBlock('latex', '\\end{minipage}\\hfill\\begin{minipage}[t]{\\ssphdcapwidth}\\vspace{\\ssphdmarginparsep}\\par'),
+                    pf.RawBlock('latex', '\\captionsetup{labelsep=mysepside, format=plain}'),
                     caption('caption'),
                     pf.RawBlock('latex','\\end{minipage}'),
                     pf.RawBlock('latex', '\\else'),
                     pf.RawBlock('latex', '\\begin{minipage}[t]{\\ssphdcapwidth}\\vspace{\\ssphdmarginparsep}\\par'),
+                    pf.RawBlock('latex', '\\captionsetup{labelsep=mysepside, format=plain}'),
                     caption('caption'),
                     pf.RawBlock('latex', '\\end{minipage}\\hfill\\begin{minipage}[t]{\\ssphdfigwidth}\\vspace{0pt}\\par'),
                     image,
