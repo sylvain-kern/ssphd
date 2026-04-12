@@ -13,7 +13,7 @@
   </info>
   <macro name="author">
     <names variable="author">
-      <name et-al-use-last="true" initialize="false" initialize-with=""/>
+      <name et-al-use-last="true" initialize="true" initialize-with=". "/>
       <label form="long" prefix=" (" suffix=")"/>
       <substitute>
         <names variable="editor"/>
