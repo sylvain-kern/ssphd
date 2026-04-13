@@ -70,6 +70,7 @@ To produce the output(s), run
 ### Core features
 
 - refactor into a clean architecture to achieve true separation of concerns
+- Make a `v0.1` first release and open the repo to contributors
 
 ### New output formats support
 
