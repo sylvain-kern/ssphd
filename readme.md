@@ -6,11 +6,9 @@ Learn more about Single-Source Publishing (SSP) [here](https://coko.foundation/a
 
 ## Output format support
 
-| No functionality | Limited | Full    |
-| ---------------- | ------- | ------- |
-|                  |         | `html`  |
-|                  |         | `latex` |
-| `docx`           |         |         |
+| No functionality | Limited | Full           |
+| ---------------- | ------- | -------------- |
+| `docx`           |         | `html` `latex` |
 
 ## Getting started
 
