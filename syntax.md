@@ -10,7 +10,7 @@ Figures like
 ![Caption of the figure.](./foo.jpg){#fig:foo}
 ```
 
-can have two additional attributes:
+can have two additional class attributes:
 
 - `.margin`: to indicate a smaller figure placed in the margin.
 - `.wide`: to indicate a wide figure, which will take all available width.
@@ -29,7 +29,7 @@ Acronyms's syntax is similar to footnotes. To declare an acronym, use this line 
 +[NASA]: National Aeronautics and Space Administration
 ```
 
-It is used like this, anywhere in the doucment:
+It is used like this, anywhere in the document:
 
 
 ```markdown

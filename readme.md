@@ -51,7 +51,7 @@ Learn more about Single-Source Publishing (SSP) [here](https://coko.foundation/a
 
 ### Usage
 
-Create your `main.md`, using our [extended syntax of Pandoc markdown](./syntax.md).
+Create your `main.md`, using our [extended syntax of pandoc's markdown](./syntax.md).
 
 To produce the output(s), run
 
