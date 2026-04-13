@@ -83,8 +83,14 @@ $endif$
 }
 \renewcommand{\arraystretch}{1.8}
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
+% fontenc/inputenc are only needed for pdfLaTeX.
+% With LuaLaTeX (required by plex-otf), T1 fontenc interferes
+% with unicode-math and OpenType math font loading.
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\fi
 % \usepackage[scaled=0.85]{inter}
 % \usepackage[osf]{libertinus}
 % \usepackage{libertinust1math}
