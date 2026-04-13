@@ -1,6 +1,0 @@
-pypandoc
-pandocfilters
-rich
-bs4
-lunr
-plotly

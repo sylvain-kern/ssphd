@@ -1,15 +1,16 @@
 # ssphd
 
-An attempt to single-source a PhD manuscript.
+Single-source conversion tool for PhD manuscripts build on top of [`pandoc`](https://pandoc.org). 
 
 Learn more about Single-Source Publishing (SSP) [here](https://coko.foundation/articles/single-source-publishing.html).
 
 ## Output format support
 
-| Limited functionality | Full functionality |
-| --------------------- | ------------------ |
-| `html`                |                    |
-| `latex`               |                    |
+| No functionality | Limited | Full    |
+| ---------------- | ------- | ------- |
+|                  |         | `html`  |
+|                  |         | `latex` |
+| `docx`           |         |         |
 
 ## Getting started
 
@@ -44,10 +45,10 @@ Learn more about Single-Source Publishing (SSP) [here](https://coko.foundation/a
 
     for Windows users, you might need to put pandoc-crossref (`C:/cabal/bin/pandoc-crossref.exe`) manually to the PATH.
 
-- **Python packages**
+- **Package**
   
     ```bash
-    pip install -r requirements.txt
+    pip install -e .
     ```
 
 ### Usage
@@ -56,53 +57,30 @@ Create your `main.md`, using our [extended syntax of Pandoc markdown](./syntax.m
 
 To produce the output(s), run
 
-```bash
-python ./build.py main.md
-```
+- HTML output:
+  ```bash
+  ssphd main.md -H
+  ```
 
-This will produce a bunch of folders, like `main-html`, `main-latex` which contain the outputs.
-
-## Workflow
-
-```mermaid
-flowchart LR
-
-source(./main.md) --> pchunked[pandoc chunkedhtml]
-
-assdir --> |templates-chunk.html| pchunked
-
-pchunked --> chunk1(./-/chunk1.html)
-pchunked --> chunk2(./-/chunk2.html)
-pchunked --> chunk3(./-/chunk3.html)
-
-assdir(./_assets/) --> |copy| assdir_copied(./-/_assets/)
-
-
-```
+- LaTeX output:
+  ```bash
+  ssphd main.md -L
+  ```
 
 ## Roadmap
 
 ### Core features
 
-- add modularity (let the user enable/disable features)
-- package this and resolve dependencies
+- refactor into a clean architecture to achieve true separation of concerns
 
 ### New output formats support
 
 - `docx`
-- `latex`
-- `JATS`
 
-### Functionalities
+### Add functionalities
 
+- Interactive graphs (`mpld3`, `matplotlib` jupyter widget style, `plotly`, `dygraphs`) without compromising expressiveness
 - 3D objects visualization
-- Units conversion (like in ciechanow.ski exquisite articles)
+- Dynamic unit conversion (like in [ciechanow.ski](https://ciechanow.ski) exquisite articles)
 - More granular search (search over figures, graphs, data, bibliographic references)
-
-### Aesthetics
-
-- make this themable
-- implement native dark/light modes
-- do real work on 
-
-## Contributing
+- Multiple output formats at once (`ssphd -HL`)
