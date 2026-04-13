@@ -1,5 +1,0 @@
-include readme.md
-include license.md
-include requirements.txt
-recursive-include ssphd/assets *
-include ssphd/default.config.yaml
