@@ -23,9 +23,9 @@ Learn more about Single-Source Publishing (SSP) [here](https://coko.foundation/a
   install ghcup: https://www.haskell.org/ghcup/.
   
   ```bash
-   ghcup install ghc
-   ghcup install cabal
-   cabal v2-update
+  ghcup install ghc
+  ghcup install cabal
+  cabal v2-update
   ```
 
 - **Pandoc filters**
@@ -69,7 +69,7 @@ To produce the output(s), run
 
 ### Core features
 
-- refactor into a clean architecture to achieve true separation of concerns
+- Refactor into a clean architecture to achieve true separation of concerns
 - Make a `v0.1` first release and open the repo to contributors
 
 ### New output formats support
