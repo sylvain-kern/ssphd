@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$  color-mode="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="my-thing" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$    $keywords$$sep$, $endfor$" />
+$endif$
+  <base href="$base$">
+$if(description-meta)$
+  <meta name="description" content="$description-meta$" />
+$endif$
+  <title>$pagetitle$ &#183 $title$</title>
+  <link rel="stylesheet" href="./_assets/css/style.css" />
+  <link rel="stylesheet" href="./_assets/css/graphs.css" />
+  <link rel="stylesheet" href="./_assets/css/highlighting.css" />
+  <!-- <link rel="stylesheet" href="./_assets/css/dygraph.css" /> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+  <link  rel='stylesheet' href='https://unpkg.com/boxicons/css/boxicons.min.css'>
+  
+  <!-- <script src="https://cdn.jsdelivr.net/npm/dygraphs/dist/dygraph.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/lunr/lunr.min.js"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://mpld3.github.io/js/mpld3.v0.1.js"></script>
+  <!-- <script src="./_assets/js/graph_generator.js"></script> -->
+  <script>document.addEventListener("DOMContentLoaded", function () {
+    var mathElements = document.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+     var texText = mathElements[i].firstChild;
+     if (mathElements[i].tagName == "SPAN") {
+      katex.render(texText.data, mathElements[i], {
+       displayMode: mathElements[i].classList.contains('display'),
+       throwOnError: false,
+       macros: macros,
+       fleqn: true,
+      });
+   }}});
+   </script>
+</head>
+
+<body>
+    $if(previous.url)$
+    <div class='sidebar'>
+        <div class="header-container">
+            <header class='title-block'>
+                <a href="/" title="$title$">
+                    $title$
+                </a>
+            </header>
+        </div>
+
+        <div class="search-container">
+            <div class="searchbar-container">
+                <div class="searchbar">
+                    <input type="text" placeholder="Search">
+                    <span class="ctrl-k">
+                        <kbd class="ctrl">Ctrl</kbd>
+                        +
+                        <kbd class="k">K</kbd>
+                    </span>
+                </div>
+                <div class="results-container">
+                    <ul id="list" class="search-results-list"></ul>
+                    <div class="search-helper">
+                        <span>
+                            <kbd class="up">↑</kbd>
+                            <kbd class="down">↓</kbd>
+                            <span>navigate</span>
+                        </span>
+                        <span>
+                            <kbd class="enter">↩</kbd>
+                            <span>select</span>
+                        </span>
+                        <span>
+                            <kbd class="esc">Esc</kbd>
+                            <span>close</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav id="toc" role="doc-toc">
+            $table-of-contents$
+        </nav>
+        <footer>
+            footer
+        </footer>
+    </div>
+
+    <main>
+
+        <div class="buttons-top">
+            <div class="burger">
+                <button class="show" type="button" title="Table of contents">
+                    <i class='bx bx-list-ul' ></i>
+                </button>
+            </div>
+            <div class="breadcrumbs">
+                <a href="">
+                    <i class="bx bx-home-alt-2"></i>
+                </a>
+            </div>
+            <div class="buttons-right">
+                <button id="light-dark-switch" type="button" title="Switch to dark mode" accesskey="d">
+                    <i class='bx bx-moon'></i>
+                </button>
+                <a href='$previous.url$' class="previous" title="Previous: $previous.title$" accesskey="p">
+                    <i class='bx bx-arrow-back' ></i>
+                </a>
+                <a href='$next.url$' class="next" title="Next: $next.title$" accesskey="d">
+                    <i class='bx bx-arrow-back bx-rotate-180'></i></i>
+                </button>
+                <a href="" class="dl" title="Download pdf" accesskey="s">
+                    <i class='bx bx-download'></i>
+                </button>
+            </div>
+        </div>
+
+        $body$
+
+        <div class="bottom">
+            <div class="prevnext">
+                $if(previous.url)$
+                <a href="$previous.url$" class="pager prev">
+                    <span class="prefix">← prev</span>
+                    $previous.title$
+                </a>
+                $else$
+                <div class="empty-pager">
+                </div>
+                $endif$
+                $if(next.url)$
+                <a href="$next.url$" class="pager next">
+                    <span class="prefix">next →</span>
+                    $next.title$
+                </a>
+                $else$
+                <div class="empty-pager">
+                </div>
+                $endif$
+            </div>
+        </div>
+    </main>
+
+    $else$ $-- index.html
+    <main class="hero">
+        <div class="buttons-top">
+            <div class="buttons-right">
+                <button id="light-dark-switch" type="button" title="Switch to dark mode" accesskey="d">
+                    <i class='bx bx-moon'></i>
+                </button>
+                <a href='$previous.url$' class="previous" title="Previous: $previous.title$" accesskey="p">
+                    <i class='bx bx-arrow-back' ></i>
+                </a>
+                <a href='$next.url$' class="next" title="Next: $next.title$" accesskey="d">
+                    <i class='bx bx-arrow-back bx-rotate-180'></i>
+                </button>
+                <a href="" class="dl" title="Download pdf" accesskey="s">
+                    <i class='bx bx-download'></i>
+                </button>
+            </div>
+        </div>
+        <header>
+            <h1>$title$</h1>
+            <div class="author">$author$</div>
+            <div class="date">$date$</div>
+        </header>
+        $if(abstract)$
+        <div class="abstract-search">
+            <div class="abstract">
+                <h2 class="abstract-title">
+                    $abstract-title$
+                </h2>
+                <div class="abstract-content">
+                    $abstract$
+                </div>
+            </div>
+            <div class="search-cta">
+                <div class="search-container">
+                    <div class="searchbar-container">
+                        <div class="searchbar">
+                            <input type="text" placeholder="Search">
+                            <span class="ctrl-k">
+                                <kbd class="ctrl">Ctrl</kbd>
+                                +
+                                <kbd class="k">K</kbd>
+                            </span>
+                        </div>
+                        <div class="results-container">
+                            <ul id="list" class="search-results-list"></ul>
+                            <div class="search-helper">
+                                <span>
+                                    <kbd class="up">↑</kbd>
+                                    <kbd class="down">↓</kbd>
+                                    <span>navigate</span>
+                                </span>
+                                <span>
+                                    <kbd class="enter">↩</kbd>
+                                    <span>select</span>
+                                </span>
+                                <span>
+                                    <kbd class="esc">Esc</kbd>
+                                    <span>close</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        $else$
+        <div class="just-search">
+            <div class="search-container">
+                <div class="searchbar-container">
+                    <div class="searchbar">
+                        <input type="text" placeholder="Search">
+                        <span class="ctrl-k">
+                            <kbd class="ctrl">Ctrl</kbd>
+                            +
+                            <kbd class="k">K</kbd>
+                        </span>
+                    </div>
+                    <div class="results-container">
+                        <ul id="list" class="search-results-list"></ul>
+                        <div class="search-helper">
+                            <span>
+                                <kbd class="up">↑</kbd>
+                                <kbd class="down">↓</kbd>
+                                <span>navigate</span>
+                            </span>
+                            <span>
+                                <kbd class="enter">↩</kbd>
+                                <span>select</span>
+                            </span>
+                            <span>
+                                <kbd class="esc">Esc</kbd>
+                                <span>close</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        $endif$
+        <div class="contents">
+            <h2>$if(toc-title)$
+                $toc-title$
+                $else$
+                Contents
+                $endif$
+            </h2>
+            <nav>
+                $table-of-contents$
+            </nav>
+        </div>
+    </main>
+    $endif$
+
+</body>
+
+<script src="./_assets/js/get-scrollbar-width.js"></script>
+<script src="./_assets/js/sidebar.js"></script>
+<script src="./_assets/js/nav-highlight-current.js"></script>
+<script src="./_assets/js/code-blocks.js"></script>
+<script src="./_assets/js/search.js"></script>
+<script src="./_assets/js/toggle-light-dark.js"></script>
+<script src="./_assets/js/align-decimals.js"></script>
+</html>

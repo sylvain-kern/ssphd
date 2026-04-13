@@ -1,0 +1,31 @@
+# pandoc-crossref
+chapters: True
+linkReferences: True
+nameInLink: True
+figureTitle: |
+  <span class="captionprefix">Figure
+tableTitle: |
+  <span class="captionprefix">Table
+titleDelim: ".</span><br>"
+figPrefix:
+  - "figure"
+  - "figures"
+subfigGrid: True
+subfigureTemplate: $$figureTitle$$ $$i$$$$titleDelim$$ $$t$$
+subfigureChildTemplate: <span class="captionprefix">($$i$$)</span> $$t$$
+tblPrefix:
+  - "table"
+  - "tables"
+eqnPrefix:
+  - "equation"
+  - "equations"
+eqnPrefixTemplate: $$p$$&nbsp;$$i$$
+secPrefix:
+  - "section"
+  - "sections"
+sectionsDepth: 3
+secnumdepth: 3
+
+references-section-title: True
+link-citations: True
+notes-after-punctuation: True
