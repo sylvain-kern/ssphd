@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel", "setuptools_scm[toml]>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ssphd"
+version = "0.1.0"
+description = "A document processor for PhD thesis and academic writing"
+readme = "readme.md"
+authors = [
+    { name = "Sylvain Kern", email = "sylvain.kern98@gmail.com" }
+]
+license = {file = "license.md"}
+requires-python = ">=3.6"
+dependencies = [
+    "pypandoc",
+    "pandocfilters",
+    "rich",
+    "beautifulsoup4",
+    "lunr",
+    "PyYAML"
+]
+
+[project.scripts]
+ssphd = "ssphd.build:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+ssphd = [
+    "assets/templates/*.html",
+    "assets/templates/*.tex",
+    "assets/css/*.css",
+    "assets/js/*.js",
+    "assets/fonts/**/*",
+    "assets/csl/*.csl",
+    "assets/meta/*.yaml",
+    "default.config.yaml",
+]
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "node-and-date"
