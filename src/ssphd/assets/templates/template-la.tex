@@ -582,7 +582,7 @@ $endif$
 
 \titlespacing*{\chapter}{0mm}{-28pt -\ssphdmargin}{\ssphdmargin}
 \titlespacing*{\subsection}{0mm}{\baselineskip}{1mm}
-\titlespacing{\subsubsection}{\parindent}{0pt}{1ex}
+\titlespacing{\subsubsection}{0pt}{0pt}{1ex}
 \titleformat{\chapter}[block]
   {\begin{offsetfullwidth}\thispagestyle{empty}\huge\bfseries\setstretch{.9}\sffamily}
   {\hspace{-1.5em}\makebox[1.5em][l]{\sffamily\huge\thechapter}}
@@ -609,6 +609,21 @@ $endif$
   {1ex}
   {}
   [~\normalfont\textbullet]
+
+% Context-aware indentation for run-in subsubsections:
+% - flush left (no indent) when immediately after a bigger heading
+% - indented by \parindent when after a regular paragraph
+\makeatletter
+\let\ssphd@orig@subsubsection\subsubsection
+\def\subsubsection{%
+  \if@nobreak
+    \titlespacing{\subsubsection}{0pt}{0pt}{1ex}%
+  \else
+    \titlespacing{\subsubsection}{\parindent}{0pt}{1ex}%
+  \fi
+  \ssphd@orig@subsubsection
+}
+\makeatother
 
 \loadgeometry{margins}
 
