@@ -510,6 +510,30 @@ $endif$
 
 \usepackage{fancyhdr}
 
+% Custom pagestyle for wide geometry: LO=\rightmark, RO=\thepage, LE=\thepage, RE=\leftmark
+\fancypagestyle{wideheadings}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  % Odd pages (right): LO=\rightmark, RO=\thepage
+  \fancyhead[LO]{\begin{minipage}[t][\ssphdmargin][t]{.1\linewidth}
+  \begingroup
+    \footnotesize\sffamily\mdseries\addfontfeatures{LetterSpace=10.0}\rightmark
+    \endgroup
+  \end{minipage}}
+  \fancyhead[RO]{\begin{minipage}[t][\ssphdmargin][t]{.9\linewidth}
+    \hfill\small\sffamily\mdseries\thepage
+  \end{minipage}}
+  % Even pages (left): LE=\thepage, RE=\leftmark
+  \fancyhead[LE]{\begin{minipage}[t][\ssphdmargin][t]{.1\linewidth}
+    \small\sffamily\mdseries\thepage
+  \end{minipage}}
+  \fancyhead[RE]{\begin{minipage}[t][\ssphdmargin][t]{.9\linewidth}
+    \begingroup
+    \hfill\footnotesize\sffamily\mdseries\addfontfeatures{LetterSpace=10.0}\leftmark
+    \endgroup
+  \end{minipage}}
+}
+
 \loadgeometry{wide}
 \pagestyle{fancy}
 \fancyhf{}
@@ -522,7 +546,7 @@ $endif$
   \end{minipage}%
   \begin{minipage}[t][\ssphdmargin][t]{\marginparwidth}
     \begingroup
-    \footnotesize\sffamily
+    \small\sffamily
     \hfill\thepage
     \endgroup
   \end{minipage}
@@ -530,7 +554,7 @@ $endif$
 \fancyhead[LE]{
   \begin{minipage}[t][\ssphdmargin][t]{\ssphdmarginparwidth + \ssphdmarginparsep}
     \begingroup
-    \footnotesize\sffamily
+    \small\sffamily
     \thepage
     \endgroup
   \end{minipage}%
@@ -584,22 +608,22 @@ $endif$
 \titlespacing*{\subsection}{0mm}{\baselineskip}{1mm}
 \titlespacing{\subsubsection}{0pt}{0pt}{1ex}
 \titleformat{\chapter}[block]
-  {\begin{offsetfullwidth}\thispagestyle{empty}\huge\bfseries\setstretch{.9}\sffamily}
+  {\begin{offsetfullwidth}\thispagestyle{empty}\huge\bfseries\setstretch{1.1}\sffamily\addfontfeatures{LetterSpace=-3}}
   {\hspace{-1.5em}\makebox[1.5em][l]{\sffamily\huge\thechapter}}
   {0pt}
   {\raggedright}[\end{offsetfullwidth}\noindent]
 \titleformat{name=\chapter,numberless}[block]
-  {\begin{fullwidth}\thispagestyle{empty}\huge\bfseries\setstretch{.9}\sffamily}
+  {\begin{fullwidth}\thispagestyle{empty}\huge\bfseries\setstretch{1}\sffamily\addfontfeatures{LetterSpace=-3}}
   {\sffamily\huge}
   {0pt}
   {}[\end{fullwidth}]
 \titleformat{\section}[hang]
-	{\Large\sffamily\mdseries\setstretch{1}}
+	{\Large\sffamily\mdseries\setstretch{1}\addfontfeatures{LetterSpace=-2}}
 	{\thesection}
 	{1em}
 	{\raggedright}
 \titleformat{\subsection}
-	{\bfseries\sffamily\setstretch{1}}
+	{\bfseries\sffamily\setstretch{1}\addfontfeatures{LetterSpace=-2}}
 	{\raggedright\thesubsection}
 	{1em}
 	{\raggedright}
