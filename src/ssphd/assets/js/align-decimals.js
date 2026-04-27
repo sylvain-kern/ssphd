@@ -184,7 +184,7 @@ if (typeof module !== 'undefined' && module.exports) {
     const aligner = new DecimalAligner();
     aligner.injectStyles();
     
-    // Align tables with data-align-decimals attribute
-    aligner.alignAll('table[data-align-decimals]');
+    // Align all tables
+    aligner.alignAll('table');
   });
 }

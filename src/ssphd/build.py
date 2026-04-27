@@ -1057,12 +1057,12 @@ class Document:
 
     def references_section_latex(self, key, value, format_, meta):
         if key == "Div" and "refs" in value[0][0]:
-            return pf.RawBlock("latex", r"\loadgeometry{wide}\printbibheading[heading=bibintoc, title={References}]\begin{multicols}{2}\setstretch{1.2}\printbibliography[heading=none]\end{multicols}\loadgeometry{margins}")
+            return pf.RawBlock("latex", r"\pagestyle{wideheadings}\loadgeometry{wide}\printbibheading[heading=bibintoc, title={References}]\begin{multicols}{2}\setstretch{1.2}\printbibliography[heading=none]\end{multicols}\loadgeometry{margins}")
         
     
     def abbr_section_latex(self, key, value, format_, meta):
         if key == "Div" and "abbr" in value[0][0]:
-            return pf.RawBlock("latex", r"\loadgeometry{wide}\printglossary[title={Index of acronyms}, type=\acronymtype]\loadgeometry{margins}")
+            return pf.RawBlock("latex", r"\pagestyle{wideheadings}\loadgeometry{wide}\printglossary[title={Index of acronyms}, type=\acronymtype]\loadgeometry{margins}")
 
     def to_latex(self):
         if not os.path.exists(self.out_latex_path):
