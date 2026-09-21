@@ -94,10 +94,17 @@ $endif$
 % \usepackage[scaled=0.85]{inter}
 % \usepackage[osf]{libertinus}
 % \usepackage{libertinust1math}
+\usepackage{metalogo}
 \usepackage[
   DefaultFeatures={Ligatures=Common},
   TT={Scale=MatchLowercase, StylisticSet=4}
 ]{plex-otf}
+
+\makeatletter
+\SetMathAlphabet{\mathrm}{normal}{T1}{\rmdefault}{m}{n}
+\SetMathAlphabet{\mathrm}{bold}{T1}{\rmdefault}{bx}{n}
+\makeatother
+
 % \renewcommand\sffamily\intertabular
 \usepackage{graphicx}
 \usepackage{sidenotes}
@@ -245,6 +252,7 @@ $endif$
 	justification=RaggedRight,
   format=hang,
 	font={sf, footnotesize, stretch=1.2},
+  skip=8pt,
 	singlelinecheck=off,
 }
 \DeclareCaptionStyle{widetable}{
@@ -260,12 +268,14 @@ $endif$
   subrefformat=simple,
   labelformat=simple,
   format=hang,
+  belowskip=0pt,
   % justification=RaggedRight,
   singlelinecheck=on
 }
 \renewcommand\thesubfigure{(\alph{subfigure})}
 
 \usepackage{amsmath}
+
 \numberwithin{figure}{chapter}
 \numberwithin{table}{chapter}
 
@@ -290,6 +300,8 @@ $endif$
 
 \usepackage{enumitem}
 \setlist{nosep}
+
+\setlist[enumerate]{font=\sffamily}
 
 \usepackage{bookmark}
 \usepackage{lipsum}
@@ -435,12 +447,22 @@ $endif$
 \setlength{\headheight}{20mm}
 \setlength{\ssphdmarginparsep}{5mm}
 
-
 \setlength{\ssphdblockwidth}{\paperwidth - 2\ssphdmargin}
 \setlength{\ssphdcolumnwidth}{\ssphdblockwidth / \the\ssphdcolumns - \ssphdmarginparsep + \ssphdmarginparsep / \the\ssphdcolumns}
 \setlength{\ssphdtextwidth}{\ssphdblockwidth - \the\ssphdmargincolumns\ssphdcolumnwidth - \the\ssphdmargincolumns\ssphdmarginparsep}
 \setlength{\ssphdmarginparwidth}{\the\ssphdmargincolumns\ssphdcolumnwidth + \the\ssphdmargincolumns\ssphdmarginparsep - \ssphdmarginparsep}
 \setlength{\marginparsep}{\ssphdmarginparsep}
+
+\makeatletter
+\let\oldnormalsize\normalsize
+\renewcommand{\normalsize}{%
+  \oldnormalsize
+  \setlength{\abovedisplayskip}{0pt}
+  \setlength{\belowdisplayskip}{12pt plus 2pt minus 4pt}
+  \setlength{\abovedisplayshortskip}{0pt}
+  \setlength{\belowdisplayshortskip}{12pt plus 2pt minus 4pt}
+}
+\makeatother
 
 % for margin figures
 \newlength{\ssphdwrapfig}
@@ -475,9 +497,9 @@ $endif$
 \newgeometry{
   textwidth=\ssphdtextwidth,
   hoffset=0mm,
-  top=2\ssphdmargin,
-  headsep=\ssphdmargin - \headheight,
-  bottom=\ssphdmargin,
+  top=1.5\ssphdmargin,
+  headsep=.5\ssphdmargin - \headheight,
+  bottom=1.5\ssphdmargin,
   left=\ssphdmargin,
   marginparwidth=\ssphdmarginparwidth,
   marginparsep=\marginparsep,
@@ -487,9 +509,9 @@ $endif$
 \newgeometry{
   textwidth=\ssphdblockwidth,
   hoffset=0mm,
-  top=2\ssphdmargin,
-  headsep=\ssphdmargin - \headheight,
-  bottom=\ssphdmargin,
+  top=1.5\ssphdmargin,
+  headsep=.5\ssphdmargin - \headheight,
+  bottom=1.5\ssphdmargin,
   left=\ssphdmargin,
   marginparwidth=0pt,
   marginparsep=0pt,
@@ -501,7 +523,7 @@ $endif$
   hoffset=0mm,
   top=\ssphdmargin,
   headsep=0mm,
-  bottom=\ssphdmargin,
+  bottom=1.5\ssphdmargin,
   left=\ssphdmargin,
   marginparwidth=0pt,
   marginparsep=0pt,
@@ -604,7 +626,7 @@ $endif$
 
 %	header formatting
 
-\titlespacing*{\chapter}{0mm}{-28pt -\ssphdmargin}{\ssphdmargin}
+\titlespacing*{\chapter}{0mm}{-28pt -.5\ssphdmargin}{\ssphdmargin}
 \titlespacing*{\subsection}{0mm}{\baselineskip}{1mm}
 \titlespacing{\subsubsection}{0pt}{0pt}{1ex}
 \titleformat{\chapter}[block]
@@ -661,13 +683,13 @@ $endif$
   {\sffamily\setstretch{.9}\vskip 1mm}
   {\hspace{-2em}\makebox[2em][l]{\thecontentslabel}}
   {}
-  {\hfill\contentspage}[]
+  {\hspace{1ex}\titlerule*[1em]{·}\hspace{1ex}\contentspage}[]
 
 \titlecontents{subsection}[5em]
   {\sffamily\setstretch{.9}\vskip 1mm}
   {\hspace{-3em}\makebox[3em][l]{\thecontentslabel}}
   {}
-  {\hfill\contentspage}[]
+  {\hspace{1ex}\titlerule*[1em]{·}\hspace{1ex}\contentspage}[]
 
 
 \usepackage{emptypage}
@@ -852,34 +874,27 @@ $if(ssphd)$
 \end{minipage}\hspace{\ssphdmarginparsep}%
 \begin{minipage}[t]{\ssphdblockwidth - 3\ssphdcolumnwidth - 3\ssphdmarginparsep}
   \begingroup
+    {
     \raggedright%
-    \sffamily%
     \normalsize%
     \setlength{\parindent}{0pt}%
     \setlength{\parskip}{\ssphdmarginparsep}%
-    $ssphd.print.disclaimer.content$
+    $ssphd.print.disclaimer.content$\par
+    }
   \endgroup
 \end{minipage}\hspace{\ssphdmarginparsep}%
 \begin{minipage}[t]{\ssphdcolumnwidth}
-    \hfill\sffamily\small\thepage
+    \hfill\sffamily\thepage
     \vskip \ssphdmarginparsep
 \end{minipage}
 $endif$
 $if(acknowledgements)$
 \vskip 3\ssphdmarginparsep
-\noindent
-\begin{minipage}[t]{2\ssphdcolumnwidth + \ssphdmarginparsep}
-  \noindent\sffamily%
-  \textbf{$acknowledgements.title$}\\
-\end{minipage}\hspace{\ssphdmarginparsep}%
-\begin{minipage}[t]{\ssphdblockwidth - 2\ssphdcolumnwidth - 2\ssphdmarginparsep}
-    \raggedright%
-    \sffamily%
-    \normalsize%
-    \setlength{\parindent}{0pt}%
-    \setlength{\parskip}{\ssphdmarginparsep}%
-  $acknowledgements.content$
-\end{minipage}
+\noindent\raggedright
+\subsection*{$acknowledgements.title$}
+\setlength{\parindent}{0pt}%
+\setlength{\parskip}{\ssphdmarginparsep}%
+$acknowledgements.content$
 \endgroup
 $endif$
 
@@ -887,18 +902,11 @@ $if(abstract)$
 \loadgeometry{margins}
 \begingroup
 \thispagestyle{plain}
-~\vskip\dimexpr -\ssphdmargin -16pt\relax
-\raggedright
+~\vskip\dimexpr -\ssphdmargin\relax
+\raggedright\setstretch{1.2}
 $for(abstract)$
-\noindent
-\begin{minipage}[t]{\ssphdcolumnwidth}
-  \noindent\sffamily%
-  \textbf{$abstract.title$}
-\end{minipage}\hspace{\ssphdmarginparsep}%
-\begin{minipage}[t]{\ssphdblockwidth - 2\ssphdcolumnwidth - 3\ssphdmarginparsep}
-  \noindent\sffamily%
-  $abstract.content$
-\end{minipage}\newline\vskip 3\ssphdmarginparsep
+\noindent\subsection*{$abstract.title$}
+$abstract.content$\par\vskip 3\ssphdmarginparsep
 $endfor$
 \endgroup
 $endif$

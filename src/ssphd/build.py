@@ -3,13 +3,15 @@ import os
 import sys
 import pypandoc
 import argparse
+import yaml
+import tempfile
 import re
 import csv
 import json
 import pkg_resources
 import unicodedata
 import xml.etree.ElementTree as et
-import pandocfilters as pf  
+import pandocfilters as pf
 
 from bs4 import BeautifulSoup
 from rich.progress import track
@@ -77,6 +79,7 @@ class Document:
         # switch_backend('agg')
 
     ## FILTERS
+
 
     def add_title_to_references(self, key, value, format_, meta):
         if key == "Div" and "refs" in value[0][0]:
@@ -1059,10 +1062,98 @@ class Document:
         if key == "Div" and "refs" in value[0][0]:
             return pf.RawBlock("latex", r"\pagestyle{wideheadings}\loadgeometry{wide}\printbibheading[heading=bibintoc, title={References}]\begin{multicols}{2}\setstretch{1.2}\printbibliography[heading=none]\end{multicols}\loadgeometry{margins}")
         
+    def appendix_part_latex(self, key, value, format_, meta):
+        if key == "Div":
+            attrs, children = value
+            ident, classes, kvs = attrs
+            if ident == "appx":
+                appendix_cmd = pf.RawBlock("latex", "\\pagestyle{plain}\n\n\\appendix\n\n\\loadgeometry{margins}\\setstretch{1.3}")
+                return [appendix_cmd] + children
     
     def abbr_section_latex(self, key, value, format_, meta):
         if key == "Div" and "abbr" in value[0][0]:
             return pf.RawBlock("latex", r"\pagestyle{wideheadings}\loadgeometry{wide}\printglossary[title={Index of acronyms}, type=\acronymtype]\loadgeometry{margins}")
+        
+    def _meta_to_python(self, node):
+        """Convert a pandoc JSON MetaValue node into a plain Python value."""
+        if node is None:
+            return None
+        t = node.get("t")
+        c = node.get("c")
+        if t == "MetaMap":
+            return {k: self._meta_to_python(v) for k, v in c.items()}
+        if t == "MetaList":
+            return [self._meta_to_python(v) for v in c]
+        if t in ("MetaString", "MetaBool"):
+            return c
+        if t in ("MetaInlines", "MetaBlocks"):
+            def inline_to_text(inl):
+                if inl.get("t") == "Str":
+                    return inl.get("c", "")
+                if inl.get("t") == "Space":
+                    return " "
+                return ""
+            if t == "MetaInlines":
+                return "".join(inline_to_text(i) for i in c)
+            parts = []
+            for block in c:
+                if block.get("t") in ("Para", "Plain"):
+                    parts.append("".join(inline_to_text(i) for i in block.get("c", [])))
+            return "\n\n".join(parts)
+        return None
+
+    def _resolve_abstracts(self, doc_meta):
+        """Pull `abstract` entries from the already-parsed AST meta, filling
+        `content` from `source` (path relative to the document root) if missing/empty."""
+        abstracts = self._meta_to_python(doc_meta.get('abstract')) or []
+        resolved = []
+
+        for entry in abstracts:
+            content = entry.get('content')
+
+            if not content or not str(content).strip():
+                source = entry.get('source')
+                if source:
+                    source_path = source if os.path.isabs(source) else os.path.join(self.root_path, source)
+                    if os.path.exists(source_path):
+                        with open(source_path, 'r', encoding='utf-8') as f:
+                            content = f.read().strip()
+                    else:
+                        print(f"Warning: abstract source not found: {source_path}")
+                        content = ""
+                else:
+                    content = ""
+
+            resolved.append({
+                'language': entry.get('language'),
+                'title': entry.get('title'),
+                'content': content,
+            })
+
+        return resolved
+
+    def _inject_abstracts_into_ast(self, ast_json_str):
+        """Overwrite meta.abstract in the pandoc JSON AST with resolved content."""
+        doc = json.loads(ast_json_str)
+        resolved = self._resolve_abstracts(doc["meta"])
+
+        def to_meta_inlines(text):
+            return {"t": "MetaInlines", "c": [{"t": "Str", "c": text}]}
+
+        meta_abstract_list = [
+            {
+                "t": "MetaMap",
+                "c": {
+                    "language": to_meta_inlines(entry['language'] or ""),
+                    "title": to_meta_inlines(entry['title'] or ""),
+                    "content": to_meta_inlines(entry['content'] or ""),
+                }
+            }
+            for entry in resolved
+        ]
+
+        doc["meta"]["abstract"] = {"t": "MetaList", "c": meta_abstract_list}
+        return json.dumps(doc)
 
     def to_latex(self):
         if not os.path.exists(self.out_latex_path):
@@ -1077,6 +1168,7 @@ class Document:
             "--number-sections",
             f"--template={os.path.join(self.templates_path, 'template-la.tex')}",
         ]
+        
 
         if self.refs_file:
             print(self.refs_file)
@@ -1084,7 +1176,6 @@ class Document:
             args.append(f"--metadata=bibfile:{self.generate_bib_file(self.refs_file)}")
             
         self.abbreviation_dict = {}
-
         
         # Apply the Python filter to the AST
         self.ast_latex = self.filter([
@@ -1096,10 +1187,13 @@ class Document:
             self.table_filter_latex,
             self.references_section_latex,
             self.abbr_section_latex,
+            self.appendix_part_latex,
             self.replace_hrule
         ],self.ast)
         
         self.write_abbreviations_file_latex()
+
+        self.ast_latex = self._inject_abstracts_into_ast(self.ast_latex)
 
         # Convert the filtered AST, not the original
         pypandoc.convert_text(
